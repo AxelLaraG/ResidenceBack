@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="cvu">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="personalData">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="CURP" type="CURPType"/>
+                            <xs:element name="RFC" type="RFCType"/>
+                            <xs:element name="Sexo">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Masculino"/>
+                                        <xs:enumeration value="Femenino"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="Domicilio" type="xs:string"/>
+                            <xs:element name="FechaNacimiento">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:date"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="PaisNacimiento" type="xs:string"/>
+                            <xs:element name="Nacionalidad" type="xs:string"/>
+                            <xs:element name="EstadoCivil">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Soltero(a)"/>
+                                        <xs:enumeration value="Casado(a)"/>
+                                        <xs:enumeration value="Divorciado(a)"/>
+                                        <xs:enumeration value="Viudo(a)"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Validación CURP (18 caracteres con patrón) -->
+    <xs:simpleType name="CURPType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{4}[0-9]{6}[A-Z]{6}[0-9]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Validación RFC (13 caracteres alfanuméricos) -->
+    <xs:simpleType name="RFCType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{4}[0-9]{6}[A-Z0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

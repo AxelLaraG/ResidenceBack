@@ -1,0 +1,98 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:cvu="http://ejemplo.com/cvu#"
+         xml:base="http://ejemplo.com/cvu#"
+         ontologyIRI="http://ejemplo.com/cvu">
+
+    <owl:Ontology rdf:about="http://ejemplo.com/cvu"/>
+
+    <!-- Clase principal -->
+    <owl:Class rdf:about="cvu:InformacionGeneral"/>
+
+    <!-- Propiedades de datos -->
+    <owl:DatatypeProperty rdf:about="cvu:CURP">
+        <rdfs:domain rdf:resource="cvu:InformacionGeneral"/>
+        <rdfs:range rdf:resource="xsd:string"/>
+        <rdfs:comment xml:lang="es">Clave única de registro de población (18 caracteres).</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="cvu:RFC">
+        <rdfs:domain rdf:resource="cvu:InformacionGeneral"/>
+        <rdfs:range rdf:resource="xsd:string"/>
+        <rdfs:comment xml:lang="es">Registro Federal de Contribuyentes (13 caracteres).</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="cvu:FechaNacimiento">
+        <rdfs:domain rdf:resource="cvu:InformacionGeneral"/>
+        <rdfs:range rdf:resource="xsd:date"/>
+        <rdfs:comment xml:lang="es">Fecha de nacimiento en formato YYYY-MM-DD.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <!-- Clases enumeradas para valores restringidos -->
+    <owl:Class rdf:about="cvu:SexoEnum">
+        <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="cvu:Masculino"/>
+            <rdf:Description rdf:about="cvu:Femenino"/>
+        </owl:oneOf>
+    </owl:Class>
+
+    <owl:Class rdf:about="cvu:EstadoCivilEnum">
+        <owl:oneOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="cvu:Soltero"/>
+            <rdf:Description rdf:about="cvu:Casado"/>
+            <rdf:Description rdf:about="cvu:Divorciado"/>
+            <rdf:Description rdf:about="cvu:Viudo"/>
+        </owl:oneOf>
+    </owl:Class>
+
+    <!-- Propiedades de objeto que restringen Sexo y EstadoCivil -->
+    <owl:ObjectProperty rdf:about="cvu:tieneSexo">
+        <rdfs:domain rdf:resource="cvu:InformacionGeneral"/>
+        <rdfs:range rdf:resource="cvu:SexoEnum"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:about="cvu:tieneEstadoCivil">
+        <rdfs:domain rdf:resource="cvu:InformacionGeneral"/>
+        <rdfs:range rdf:resource="cvu:EstadoCivilEnum"/>
+    </owl:ObjectProperty>
+
+    <!-- Restricción en InformacionGeneral -->
+    <owl:Class rdf:about="cvu:InformacionGeneral">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="cvu:tieneSexo"/>
+                <owl:qualifiedCardinality rdf:datatype="xsd:nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="cvu:SexoEnum"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="cvu:tieneEstadoCivil"/>
+                <owl:qualifiedCardinality rdf:datatype="xsd:nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass rdf:resource="cvu:EstadoCivilEnum"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+
+    <owl:Class rdf:about="cvu:PersonaValida">
+        <rdfs:subClassOf rdf:resource="cvu:InformacionGeneral"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="cvu:FechaNacimiento"/>
+                <owl:allValuesFrom>
+                    <rdfs:Datatype rdf:about="xsd:date">
+                        <owl:withRestrictions>
+                            <rdf:Description>
+                                <xsd:maxInclusive>2023-12-31</xsd:maxInclusive>
+                            </rdf:Description>
+                        </owl:withRestrictions>
+                    </rdfs:Datatype>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+
+</rdf:RDF>

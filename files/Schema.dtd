@@ -1,0 +1,13 @@
+<!ELEMENT cvu (personalData)>
+<!ATTLIST cvu
+    xmlns:xsi CDATA #FIXED "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation CDATA #IMPLIED>
+<!ELEMENT personalData (CURP, RFC, Sexo, Domicilio, FechaNacimiento, PaisNacimiento, Nacionalidad, EstadoCivil)>
+<!ELEMENT CURP (#PCDATA)>
+<!ELEMENT RFC (#PCDATA)>
+<!ELEMENT Sexo (#PCDATA)>
+<!ELEMENT Domicilio (#PCDATA)>
+<!ELEMENT FechaNacimiento (#PCDATA)>
+<!ELEMENT PaisNacimiento (#PCDATA)>
+<!ELEMENT Nacionalidad (#PCDATA)>
+<!ELEMENT EstadoCivil (#PCDATA)>
