@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="cvu">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DatosPersonales">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Nombre" type="xs:string" />
+							<xs:element name="Genero" type="xs:string" />
+							<xs:element name="CURP" type="Alfanumerico18" />
+							<xs:element name="RFC" type="RFCType" />
+							<xs:element name="FechaNacimiento" type="DateType" />
+							<xs:element name="PaisNacimiento" type="xs:string" />
+							<xs:element name="ResumenBibliografico" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="Contacto" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Telefono" type="Telefono10" minOccurs="0"
+								maxOccurs="unbounded" />
+							<xs:element name="Correo">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="CorreoValido">
+											<xs:attribute name="Tipo" use="required">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="Institucional" />
+														<xs:enumeration value="Personal" />
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="AdscripcionesTecNM">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Adscripcion" minOccurs="1" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Institución" type="xs:string" />
+										<xs:element name="Puesto" type="xs:string" />
+										<xs:element name="Departamento" type="xs:string" />
+										<xs:element name="Vigencia">
+											<xs:complexType>
+												<xs:attribute name="FechaInicio" type="DateType"
+													use="required" />
+												<xs:attribute name="FechaFin" type="DateType"
+													use="optional" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="TitulosAcademicos">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FechaObtencion" type="DateType" />
+							<xs:element name="Titulo" type="xs:string" />
+							<xs:element name="Cedula" type="Digitos7Type" />
+							<xs:element name="LugarDeEstudios" type="xs:string" />
+						</xs:sequence>
+						<xs:attribute name="Tipo" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="LICENCIATURA" />
+									<xs:enumeration value="MAESTRÍA" />
+									<xs:enumeration value="DOCTORADO" />
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="ProductividadAcademica">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Articulos" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Articulo" type="ArticuloType"
+											minOccurs="0"
+											maxOccurs="unbounded" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+
+							<xs:element name="Capitulos" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Capitulo" type="CapituloType"
+											minOccurs="0"
+											maxOccurs="unbounded" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+
+							<xs:element name="TesisDirigida" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Tesis" type="TesisType" minOccurs="0"
+											maxOccurs="unbounded" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+
+
+							<xs:element name="Otros" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Otro" type="TesisType" minOccurs="0"
+											maxOccurs="unbounded" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!--18
+	caracteres-->
+	<xs:simpleType name="Alfanumerico18">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="18" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Teléfono
+	de 10 dígitos-->
+	<xs:simpleType name="Telefono10">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{10}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--7
+	dígitos-->
+	<xs:simpleType name="Digitos7Type">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{7}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Correo
+	electrónico-->
+	<xs:simpleType name="CorreoValido">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[^@]+@[^@]+\.[^@]+" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Fecha-->
+	<xs:simpleType name="DateType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{4}-\d{2}-\d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--RFC-->
+	<xs:simpleType name="RFCType">
+		<xs:restriction base="xs:string">
+			<xs:length value="13" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--50
+	caracteres-->
+	<xs:simpleType name="Alfanumerico50">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!--70
+	caracteres-->
+	<xs:simpleType name="Alfanumerico70">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="70" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Autores-->
+	<xs:complexType name="AutorType">
+		<xs:sequence>
+			<xs:element name="Autor" minOccurs="1" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Nombre" type="xs:string" />
+						<xs:element name="Apellido" type="xs:string" minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--Artículos-->
+	<xs:complexType name="ArticuloType">
+		<xs:sequence>
+			<xs:element name="Titulo" type="xs:string" />
+			<xs:element name="Autores" type="AutorType" />
+			<xs:element name="Resumen" type="xs:string" />
+			<xs:element name="Revista">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Titulo" type="xs:string" />
+						<xs:element name="Paginas" type="xs:string" minOccurs="0" />
+						<xs:element name="Pais" type="xs:string" />
+						<xs:element name="ISSN" type="xs:string" minOccurs="0" />
+						<xs:element name="DireccionElectronica" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Proposito" type="xs:string" />
+			<xs:element name="SectorDisciplina" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--Capitulos-->
+	<xs:complexType name="CapituloType">
+		<xs:sequence>
+			<xs:element name="Titulo" type="xs:string" />
+			<xs:element name="Autores" type="AutorType" />
+			<xs:element name="Resumen" type="xs:string" />
+			<xs:element name="Libro">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Titulo" type="xs:string" />
+						<xs:element name="Paginas" type="xs:string" minOccurs="0" />
+						<xs:element name="Pais" type="xs:string" />
+						<xs:element name="ISBN" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Proposito" type="xs:string" />
+			<xs:element name="SectorDisciplina" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--Tesis-->
+	<xs:complexType name="TesisType">
+		<xs:sequence>
+			<xs:element name="Titulo" type="xs:string" />
+			<xs:element name="Autores" type="AutorType" />
+			<xs:element name="Resumen" type="xs:string" />
+			<xs:element name="PublicadoEn" type="xs:string" />
+			<xs:element name="Proposito" type="xs:string" />
+			<xs:element name="SectorDisciplina" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

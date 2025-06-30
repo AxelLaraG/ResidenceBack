@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+
+    <!--18
+	caracteres-->
+    <xs:simpleType name="Alfanumerico18">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="18" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--Fecha-->
+	<xs:simpleType name="DateType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{4}-\d{2}-\d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+    <!--RFC-->
+	<xs:simpleType name="RFCType">
+		<xs:restriction base="xs:string">
+			<xs:length value="13" />
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:element name="cvu">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Identificación del profesor -->
+                <xs:element name="IdentificacionProfesor">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Nombre" type="xs:string" />
+                            <xs:element name="Genero" type="xs:string" />
+                            <xs:element name="RFC" type="RFCType" />
+                            <xs:element name="CURP" type="Alfanumerico18" />
+                            <xs:element name="NacidoEn" type="xs:string" />
+                            <xs:element name="FechaNacimiento" type="DateType" />
+                            <xs:element name="IESAdscripcion" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- Trayectoria académica -->
+                <xs:element name="TrayectoriaAcademica" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="EstudiosRealizados">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="NivelEstudios">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="Doctorado" />
+                                                    <xs:enumeration value="Maestría" />
+                                                    <xs:enumeration value="Licenciatura" />
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="EstudiosEn" type="xs:string" />
+                                        <xs:element name="Area" type="xs:string" />
+                                        <xs:element name="Disciplina" type="xs:string" />
+                                        <xs:element name="InstitucionOtorgante" type="xs:string" />
+                                        <xs:element name="Pais" type="xs:string" />
+                                        <xs:element name="FechaInicioEstudios" type="DateType" />
+                                        <xs:element name="FechaFinEstudios" type="DateType" />
+                                        <xs:element name="FechaObtencionTitulo" type="DateType" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- Trayectoria profesional -->
+                <xs:element name="TrayectoriaProfesional" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="DatosLaborales" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Nombramiento" type="xs:string" />
+                                        <xs:element name="TipoNombramiento" type="xs:string" />
+                                        <xs:element name="Dedicacion" type="xs:string" />
+                                        <xs:element name="InstitucionEducacionSuperior"
+                                            type="xs:string" />
+                                        <xs:element name="DependenciaEducacionSuperior"
+                                            type="xs:string" />
+                                        <xs:element name="UnidadAcademica" type="xs:string" />
+                                        <xs:element name="InicioContrato" type="DateType" />
+                                        <xs:element name="FinContrato" type="DateType" minOccurs="0" />
+                                        <xs:element name="Cronologia" type="xs:string" minOccurs="0" />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- Área y disciplina a la que se dedica -->
+                <xs:element name="AreaDisciplinaDedica">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Area" type="xs:string" />
+                            <xs:element name="Disciplina" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- Producción académica -->
+                <xs:element name="ProduccionAcademica" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element name="ArticuloRevistaIndexada" type="xs:anyType" />
+                            <xs:element name="CapituloLibro" type="xs:anyType" />
+                            <xs:element name="ArticuloArbitrado" type="xs:anyType" />
+                            <xs:element name="MemoriaExtensa" type="xs:anyType" />
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="Docencia" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="NombreCurso" type="xs:string" />
+                            <xs:element name="InstitucionEducacionSuperior" type="xs:string" />
+                            <xs:element name="DependenciaEducacionSuperior" type="xs:string" />
+                            <xs:element name="ProgramaEducativo" type="xs:string" />
+                            <xs:element name="Nivel" type="xs:string" />
+                            <xs:element name="NumeroAlumnos" type="xs:integer" />
+                            <xs:element name="FechaInicio" type="DateType" />
+                            <xs:element name="HorasAsesoriaMes" type="xs:integer" />
+                            <xs:element name="DuracionSemanas" type="xs:integer" />
+                            <xs:element name="HorasSemanalesCurso" type="xs:integer" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- Nueva sección: Tutoría -->
+                <xs:element name="Tutoria" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Tutoria" type="xs:string" />
+                            <xs:element name="NumeroEstudiantes" type="xs:integer" minOccurs="0" />
+                            <xs:element name="Nivel" type="xs:string" />
+                            <xs:element name="ProgramaEducativo" type="xs:string" />
+                            <xs:element name="FechaInicio" type="DateType" />
+                            <xs:element name="FechaTermino" type="DateType" />
+                            <xs:element name="TipoTutelaje" type="xs:string" />
+                            <xs:element name="EstadoTutelaje" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- Dirección individualizada -->
+                <xs:element name="DireccionIndividualizada" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="TituloTesisProyecto" type="xs:string" />
+                            <xs:element name="Grado" type="xs:string" />
+                            <xs:element name="FechaInicio" type="DateType" />
+                            <xs:element name="FechaTermino" type="DateType" />
+                            <xs:element name="NumeroAlumnos" type="xs:integer" />
+                            <xs:element name="ParaConsiderarCurriculum" type="xs:string" />
+                            <xs:element name="EstadoDireccionIndividualizada" type="xs:string" />
+                            <xs:element name="LGACS" type="xs:integer" />
+                            <xs:element name="Miembros" type="xs:integer" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- Gestión académica -->
+                <xs:element name="GestionAcademica" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="TipoGestion" type="xs:string" />
+                            <xs:element name="CargoComisionCuerpoColegiado" type="xs:string" />
+                            <xs:element name="FuncionEncomendada" type="xs:string" />
+                            <xs:element name="OrganoColegiadoPresentado" type="xs:string" />
+                            <xs:element name="Aprobado" type="xs:string" />
+                            <xs:element name="ResultadosObtenidos" type="xs:string" />
+                            <xs:element name="Estado" type="xs:string" />
+                            <xs:element name="FechaInicio" type="DateType" />
+                            <xs:element name="FechaTermino" minOccurs="0" type="DateType" />
+                            <xs:element name="FechaUltimoInformePresentado" minOccurs="0" type="DateType" />
+                            <xs:element name="HorasSemanaDedicadas" type="xs:integer" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- LGAC -->
+                <xs:element name="LGAC" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Linea" type="xs:string" />
+                            <xs:element name="ActividadesQueRealiza" type="xs:string" />
+                            <xs:element name="HorasSemanaDedicadas" type="xs:integer" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
