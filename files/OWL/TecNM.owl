@@ -1,0 +1,401 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns="http://www.semanticweb.org/ontologies/2024/TecNM#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:tecnm="http://www.semanticweb.org/ontologies/2024/TecNM#">
+    
+    <owl:Ontology rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM">
+        <rdfs:comment>Ontología para representar el Curriculum Vitae Único del Tecnológico Nacional de México (TecNM)</rdfs:comment>
+    </owl:Ontology>
+
+    <!-- ############################## -->
+    <!-- ### CLASES PRINCIPALES ### -->
+    <!-- ############################## -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#CVU">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Elemento raíz que representa el Curriculum Vitae del académico del TecNM</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Datos personales del académico -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Información personal básica del académico (nombre, género, CURP, RFC, etc.)</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Información de contacto -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#Contacto">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Datos de contacto del académico (teléfono, correo electrónico)</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Adscripciones institucionales -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionesTecNM">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Historial de adscripciones del académico dentro del TecNM</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Títulos académicos obtenidos -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#TitulosAcademicos">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Títulos académicos formales obtenidos por el académico</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Productividad académica -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#ProductividadAcademica">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Producción académica del investigador (artículos, capítulos, tesis dirigidas)</rdfs:comment>
+    </owl:Class>
+    
+    <!-- ############################## -->
+    <!-- ### SUBCLASES ESPECÍFICAS ### -->
+    <!-- ############################## -->
+    
+    <!-- Tipo de adscripción -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#Adscripcion">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionesTecNM"/>
+    </owl:Class>
+    
+    <!-- Tipo de producción académica -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#Articulo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#ProductividadAcademica"/>
+        <rdfs:comment>Artículo académico publicado en revistas especializadas</rdfs:comment>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#Capitulo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#ProductividadAcademica"/>
+        <rdfs:comment>Capítulo de libro publicado</rdfs:comment>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#TesisDirigida">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#ProductividadAcademica"/>
+        <rdfs:comment>Tesis académicas dirigidas a estudiantes</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Información de revista para artículos -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#Revista">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Revista académica donde se publicó un artículo</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Información de libro para capítulos -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#Libro">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Libro que contiene un capítulo publicado</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Información de autores -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#Autor">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Autor de una producción académica</rdfs:comment>
+    </owl:Class>
+    
+    <!-- ############################## -->
+    <!-- ### PROPIEDADES DE OBJETO ### -->
+    <!-- ############################## -->
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneDatosPersonales">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <rdfs:comment>Relaciona el CVU con los datos personales del académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneContacto">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Contacto"/>
+        <rdfs:comment>Relaciona el CVU con la información de contacto del académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneAdscripciones">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionesTecNM"/>
+        <rdfs:comment>Relaciona el CVU con las adscripciones institucionales del académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneTitulosAcademicos">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TitulosAcademicos"/>
+        <rdfs:comment>Relaciona el CVU con los títulos académicos obtenidos</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneProductividadAcademica">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#ProductividadAcademica"/>
+        <rdfs:comment>Relaciona el CVU con la producción académica del investigador</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneAdscripcion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionesTecNM"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Adscripcion"/>
+        <rdfs:comment>Relaciona las adscripciones con cada puesto específico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneArticulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#ProductividadAcademica"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Articulo"/>
+        <rdfs:comment>Relaciona la productividad académica con artículos publicados</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneCapitulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#ProductividadAcademica"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Capitulo"/>
+        <rdfs:comment>Relaciona la productividad académica con capítulos publicados</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneTesisDirigida">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#ProductividadAcademica"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TesisDirigida"/>
+        <rdfs:comment>Relaciona la productividad académica con tesis dirigidas</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#publicadoEnRevista">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Articulo"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Revista"/>
+        <rdfs:comment>Relaciona un artículo con la revista donde fue publicado</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#publicadoEnLibro">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Capitulo"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Libro"/>
+        <rdfs:comment>Relaciona un capítulo con el libro que lo contiene</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tieneAutor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Articulo"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Autor"/>
+        <rdfs:comment>Relaciona una producción académica con sus autores</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <!-- ############################## -->
+    <!-- ### PROPIEDADES DE DATOS ### -->
+    <!-- ############################## -->
+    
+    <!-- Propiedades para Datos Personales -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#nombre">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nombre completo del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#genero">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Género del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#curp">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Clave Única de Registro de Población (18 caracteres)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#rfc">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Registro Federal de Contribuyentes (13 caracteres)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#fechaNacimiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de nacimiento del académico (formato YYYY-MM-DD)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#paisNacimiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>País de nacimiento del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#resumenBibliografico">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Resumen biográfico o semblanza del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Contacto -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#telefono">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Contacto"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Número telefónico (10 dígitos)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#correoElectronico">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Contacto"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Dirección de correo electrónico válida</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tipoCorreo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Contacto"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Tipo de correo electrónico (Institucional o Personal)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Adscripciones -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#institucion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Adscripcion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Institución del TecNM donde está adscrito</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#puesto">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Adscripcion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Puesto o cargo desempeñado</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#departamento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Adscripcion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Departamento o área de adscripción</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#fechaInicioAdscripcion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Adscripcion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de inicio de la adscripción</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#fechaFinAdscripcion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Adscripcion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de finalización de la adscripción (si aplica)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Títulos Académicos -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#fechaObtencionTitulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TitulosAcademicos"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha en que se obtuvo el título académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tituloAcademico">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TitulosAcademicos"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nombre del título académico obtenido</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#cedulaProfesional">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TitulosAcademicos"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Número de cédula profesional (7 dígitos)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#lugarEstudios">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TitulosAcademicos"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Institución donde se obtuvieron los estudios</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tipoTitulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TitulosAcademicos"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Tipo de título académico (LICENCIATURA, MAESTRÍA, DOCTORADO)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Artículos -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tituloArticulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Articulo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Título del artículo académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#resumenArticulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Articulo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Resumen o abstract del artículo</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#propositoArticulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Articulo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Propósito u objetivo del artículo</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#sectorDisciplinaArticulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Articulo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Sector o disciplina relacionada con el artículo</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Revista -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#tituloRevista">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Revista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Título de la revista académica</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#paisRevista">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Revista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>País de publicación de la revista</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#issn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Revista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Número ISSN de la revista</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#direccionElectronicaRevista">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Revista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>URL o dirección electrónica de la revista</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Autor -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#nombreAutor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Autor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nombre del autor de una producción académica</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#apellidoAutor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Autor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Apellido del autor de una producción académica</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- ############################## -->
+    <!-- ### EJEMPLO DE INDIVIDUO ### -->
+    <!-- ############################## -->
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#CVUEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#CVU"/>
+        <tecnm:tieneDatosPersonales rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonalesEjemplo"/>
+        <tecnm:tieneAdscripciones rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionesEjemplo"/>
+        <tecnm:tieneTitulosAcademicos rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TituloAcademicoEjemplo"/>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonalesEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#DatosPersonales"/>
+        <tecnm:nombre>Juan Pérez López</tecnm:nombre>
+        <tecnm:genero>Masculino</tecnm:genero>
+        <tecnm:curp>PELJ800101HDFRPN01</tecnm:curp>
+        <tecnm:rfc>PELJ800101ABC</tecnm:rfc>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionesEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionesTecNM"/>
+        <tecnm:tieneAdscripcion rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionEjemplo"/>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#AdscripcionEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#Adscripcion"/>
+        <tecnm:institucion>TecNM Campus Ciudad de México</tecnm:institucion>
+        <tecnm:puesto>Profesor Investigador</tecnm:puesto>
+        <tecnm:fechaInicioAdscripcion rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2015-08-01</tecnm:fechaInicioAdscripcion>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/TecNM#TituloAcademicoEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/TecNM#TitulosAcademicos"/>
+        <tecnm:tipoTitulo>DOCTORADO</tecnm:tipoTitulo>
+        <tecnm:tituloAcademico>Doctor en Ciencias de la Computación</tecnm:tituloAcademico>
+        <tecnm:cedulaProfesional>1234567</tecnm:cedulaProfesional>
+    </rdf:Description>
+</rdf:RDF>

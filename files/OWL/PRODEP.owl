@@ -1,0 +1,568 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns="http://www.semanticweb.org/ontologies/2024/PRODEP#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:prodep="http://www.semanticweb.org/ontologies/2024/PRODEP#">
+    
+    <owl:Ontology rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP">
+        <rdfs:comment>Ontología para representar el esquema PRODEP basado en el XSD proporcionado</rdfs:comment>
+    </owl:Ontology>
+
+    <!-- ############################## -->
+    <!-- ### CLASES PRINCIPALES ### -->
+    <!-- ############################## -->
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Elemento raíz que representa el Curriculum Vitae Único del programa PRODEP</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Identificación del académico -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Datos personales y de identificación del académico</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Formación académica -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#EstudiosRealizados">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Historial de estudios formales del académico (licenciatura, maestría, doctorado)</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Experiencia laboral -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#DatosLaborales">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Información sobre los puestos de trabajo y nombramientos del académico</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Área de especialización -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#AreaDisciplinaActual">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Área y disciplina principal de investigación o trabajo del académico</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Producción académica -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Produccion">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Producción académica incluyendo artículos, libros, capítulos, memorias, etc.</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Actividades docentes -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Docencia">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Cursos impartidos por el académico</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Tutorías realizadas -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Tutorias">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Tutorías académicas proporcionadas a estudiantes</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Dirección de tesis/proyectos -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#DireccionIndividualizada">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Dirección de tesis, proyectos de investigación o trabajos terminales</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Gestión académica -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#GestionAcademica">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Actividades de gestión o administración académica realizadas</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Líneas de investigación -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#LineaGAC">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Líneas de Generación y Aplicación del Conocimiento (LGAC) en las que participa</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Beneficios externos -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#BeneficiosExternos">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Beneficios o apoyos recibidos de fuentes externas a la institución</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Proyectos de investigación -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#ProyectosDeInvestigacion">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Proyectos de investigación en los que ha participado</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Beneficios PROMEP/PRODEP -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#BeneficiosPROMEP">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Beneficios recibidos del programa PROMEP/PRODEP</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Cuerpo académico -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#CuerpoAcademico">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Información sobre el cuerpo académico al que pertenece</rdfs:comment>
+    </owl:Class>
+    
+    <!-- Programas educativos -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#ProgramasEducativos">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment>Programas educativos en los que participa</rdfs:comment>
+    </owl:Class>
+
+    <!-- ############################## -->
+    <!-- ### SUBCLASES ESPECÍFICAS ### -->
+    <!-- ############################## -->
+    
+    <!-- Tipo de estudio -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#EstudiosRealizados"/>
+    </owl:Class>
+    
+    <!-- Tipo de trabajo -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#DatosLaborales"/>
+    </owl:Class>
+    
+    <!-- Tipos de producción académica -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#ArticuloRevista">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Produccion"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#ArticuloArbitrado">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Produccion"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#CapituloLibro">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Produccion"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#MemoriaCongreso">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Produccion"/>
+    </owl:Class>
+    
+    <!-- Tipo de curso -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Curso">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Docencia"/>
+    </owl:Class>
+    
+    <!-- Tipo de tutoría -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Tutoria">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Tutorias"/>
+    </owl:Class>
+    
+    <!-- Tipo de proyecto dirigido -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#ProyectoDirigido">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#DireccionIndividualizada"/>
+    </owl:Class>
+    
+    <!-- Tipo de gestión -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#Gestion">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#GestionAcademica"/>
+    </owl:Class>
+    
+    <!-- Tipo de línea de investigación -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#LineaInvestigacion">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#LineaGAC"/>
+    </owl:Class>
+    
+    <!-- Tipo de beneficio externo -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#BeneficioExterno">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#BeneficiosExternos"/>
+    </owl:Class>
+    
+    <!-- Tipo de proyecto de investigación -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#ProyectoInvestigacion">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ProyectosDeInvestigacion"/>
+    </owl:Class>
+    
+    <!-- Tipo de beneficio PROMEP -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#BeneficioPROMEP">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#BeneficiosPROMEP"/>
+    </owl:Class>
+    
+    <!-- Tipo de programa educativo -->
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#ProgramaEducativo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ProgramasEducativos"/>
+    </owl:Class>
+
+    <!-- ############################## -->
+    <!-- ### PROPIEDADES DE OBJETO ### -->
+    <!-- ############################## -->
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneIdentificacion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <rdfs:comment>Relaciona el CVU con los datos de identificación del académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneEstudios">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#EstudiosRealizados"/>
+        <rdfs:comment>Relaciona el CVU con los estudios realizados por el académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneExperienciaLaboral">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#DatosLaborales"/>
+        <rdfs:comment>Relaciona el CVU con la experiencia laboral del académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneAreaDisciplina">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#AreaDisciplinaActual"/>
+        <rdfs:comment>Relaciona el CVU con el área y disciplina principal del académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneProduccionAcademica">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Produccion"/>
+        <rdfs:comment>Relaciona el CVU con la producción académica del investigador</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneDocencia">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Docencia"/>
+        <rdfs:comment>Relaciona el CVU con las actividades docentes del académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneTutorias">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Tutorias"/>
+        <rdfs:comment>Relaciona el CVU con las tutorías proporcionadas por el académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneDireccionIndividualizada">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#DireccionIndividualizada"/>
+        <rdfs:comment>Relaciona el CVU con la dirección de tesis o proyectos</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneGestionAcademica">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#GestionAcademica"/>
+        <rdfs:comment>Relaciona el CVU con las actividades de gestión académica</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneLineasInvestigacion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#LineaGAC"/>
+        <rdfs:comment>Relaciona el CVU con las líneas de investigación del académico</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneBeneficiosExternos">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#BeneficiosExternos"/>
+        <rdfs:comment>Relaciona el CVU con los beneficios externos recibidos</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneProyectosInvestigacion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ProyectosDeInvestigacion"/>
+        <rdfs:comment>Relaciona el CVU con los proyectos de investigación</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneBeneficiosPROMEP">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#BeneficiosPROMEP"/>
+        <rdfs:comment>Relaciona el CVU con los beneficios del programa PROMEP/PRODEP</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneCuerpoAcademico">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CuerpoAcademico"/>
+        <rdfs:comment>Relaciona el CVU con el cuerpo académico al que pertenece</rdfs:comment>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tieneProgramasEducativos">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ProgramasEducativos"/>
+        <rdfs:comment>Relaciona el CVU con los programas educativos en los que participa</rdfs:comment>
+    </owl:ObjectProperty>
+
+    <!-- ############################## -->
+    <!-- ### PROPIEDADES DE DATOS ### -->
+    <!-- ############################## -->
+    
+    <!-- Propiedades para Identificación -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#nombre">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nombre completo del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#genero">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Género del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#rfc">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Registro Federal de Contribuyentes (RFC)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#curp">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Clave Única de Registro de Población (CURP)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#lugarNacimiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Lugar de nacimiento del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#fechaNacimiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de nacimiento del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#institucionEducativa">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Institución de Educación Superior (IES) a la que pertenece</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Estudios -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#nivelEstudio">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nivel del estudio realizado (licenciatura, maestría, doctorado)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#campoEstudio">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Campo o área del estudio realizado</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#institucionEstudio">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Institución donde se realizó el estudio</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#paisEstudio">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>País donde se realizó el estudio</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#fechaInicioEstudio">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de inicio del estudio</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#fechaFinEstudio">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de finalización del estudio</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#fechaTitulacion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de obtención del título</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Trabajo -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#nombramiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Tipo de nombramiento del puesto de trabajo</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tipoNombramiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Detalle del tipo de nombramiento</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#dedicacion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Tipo de dedicación (tiempo completo, medio tiempo, etc.)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#institucionLaboral">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Institución donde se desempeña el trabajo</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#dependencia">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Dependencia o departamento dentro de la institución</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#unidadAcademica">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Unidad académica específica</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#inicioContrato">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de inicio del contrato</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#finContrato">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de finalización del contrato (si aplica)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#cronologia">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Secuencia cronológica del puesto</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Área Disciplina -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#areaConocimiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#AreaDisciplinaActual"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Área principal de conocimiento del académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#disciplina">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#AreaDisciplinaActual"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Disciplina específica dentro del área de conocimiento</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Artículos -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#autoresArticulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ArticuloRevista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Lista de autores del artículo</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tituloArticulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ArticuloRevista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Título del artículo</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#estadoArticulo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ArticuloRevista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Estado actual del artículo (publicado, en prensa, etc.)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#nombreRevista">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ArticuloRevista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nombre de la revista donde se publicó</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#issn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ArticuloRevista"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>ISSN de la revista</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Cursos -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#nombreCurso">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Curso"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nombre del curso impartido</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#nivelCurso">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Curso"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nivel educativo del curso (licenciatura, posgrado, etc.)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#fechaInicioCurso">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Curso"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+        <rdfs:comment>Fecha de inicio del curso</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Tutorías -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tipoTutoria">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Tutoria"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Tipo de tutoría proporcionada</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#numeroEstudiantes">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Tutoria"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:comment>Número de estudiantes atendidos</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Proyectos Dirigidos -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#tituloProyecto">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ProyectoDirigido"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Título del proyecto o tesis dirigido</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#gradoProyecto">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#ProyectoDirigido"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Grado académico asociado al proyecto (licenciatura, maestría, etc.)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- Propiedades para Cuerpo Académico -->
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#nombreCuerpoAcademico">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CuerpoAcademico"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Nombre del cuerpo académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#claveCuerpoAcademico">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CuerpoAcademico"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Clave oficial del cuerpo académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#gradoConsolidacion">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CuerpoAcademico"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Grado de consolidación del cuerpo académico</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <!-- ############################## -->
+    <!-- ### EJEMPLO DE INDIVIDUO ### -->
+    <!-- ############################## -->
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#CVUEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#CVU"/>
+        <prodep:tieneIdentificacion rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#IdentificacionEjemplo"/>
+        <prodep:tieneEstudios rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#EstudiosEjemplo"/>
+        <prodep:tieneExperienciaLaboral rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#TrabajoEjemplo"/>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#IdentificacionEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Identificacion"/>
+        <prodep:nombre>María García López</prodep:nombre>
+        <prodep:genero>Femenino</prodep:genero>
+        <prodep:rfc>GALM800101ABC</prodep:rfc>
+        <prodep:curp>GALM800101MDFRPL01</prodep:curp>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#EstudiosEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Estudio"/>
+        <prodep:nivelEstudio>Doctorado</prodep:nivelEstudio>
+        <prodep:campoEstudio>Ciencias de la Computación</prodep:campoEstudio>
+        <prodep:institucionEstudio>Universidad Nacional Autónoma de México</prodep:institucionEstudio>
+    </rdf:Description>
+    
+    <rdf:Description rdf:about="http://www.semanticweb.org/ontologies/2024/PRODEP#TrabajoEjemplo">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/2024/PRODEP#Trabajo"/>
+        <prodep:nombramiento>Profesor Investigador</prodep:nombramiento>
+        <prodep:institucionLaboral>Instituto Tecnológico de Estudios Superiores</prodep:institucionLaboral>
+    </rdf:Description>
+</rdf:RDF>
