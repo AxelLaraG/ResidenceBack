@@ -1,8 +1,20 @@
-from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi import FastAPI, HTTPException, File, UploadFile, status
 from fastapi.responses import Response
+from pydantic import BaseModel
 from validation import validation_main
 import xml.etree.ElementTree as ET
 from fastapi.middleware.cors import CORSMiddleware
+
+
+users = {
+    "axmadlar@gmail.com":"12345678",
+    "usuario2@gmail.com":"12345678",
+    "usuario3@gmail.com":"12345678"
+}
+
+class UserCredentials(BaseModel):
+    email: str
+    password: str
 
 app = FastAPI()
 
@@ -13,6 +25,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.post("/login")
+async def login(credentials: UserCredentials):
+    if credentials.email not in users:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Email incorrecto",
+        )
+    
+    if users[credentials.email] != credentials.password:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Contraseña incorrecta",
+        )
+    
+    return {"message": "Inicio de sesión exitoso", "email": credentials.email}
 
 @app.post("/xml_gen")
 async def xml_generator(datos: dict):
