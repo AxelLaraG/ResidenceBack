@@ -318,10 +318,13 @@
 														type="DateType" />
 													<xs:element name="Sexo" type="Sexo2Type" />
 													<xs:element name="CorreoElectrónico"
-														type="CorreoType" />
-													<xs:element name="Lada" type="DiezDigitos" />
-													<xs:element name="Telefono" type="DiezDigitos" />
-													<xs:element name="Movil" type="DiezDigitos" />
+														type="CorreoContactoType" />
+													<xs:element name="Lada"
+														type="Horas10DigitosType" />
+													<xs:element name="Telefono"
+														type="Horas10DigitosType" />
+													<xs:element name="Movil"
+														type="Horas10DigitosType" />
 													<xs:element name="MedioPreferente">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
@@ -527,37 +530,48 @@
 				<xs:element name="TrayectoriaAcademica">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="NivelDeEscolaridad" minOccurs="1" maxOccurs="1">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:enumeration value="Doctorado" />
-										<xs:enumeration value="Especialidad" />
-										<xs:enumeration value="Licenciatura" />
-										<xs:enumeration value="Maestría" />
-										<xs:enumeration value="Preparatoria" />
-										<xs:enumeration value="Técnico Superior" />
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:element>
-
-							<xs:element name="Titulo" type="xs:string" minOccurs="1" maxOccurs="1" />
-
-							<xs:element name="EstadoDelGrado" minOccurs="1" maxOccurs="1">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:enumeration value="Créditos terminados" />
-										<xs:enumeration value="Grado obtenido" />
-										<xs:enumeration value="Título o grado en proceso" />
-										<xs:enumeration value="Truncado" />
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:element>
-
-							<xs:element name="Instituciones" minOccurs="1" maxOccurs="1">
+							<xs:element name="Trayectoria" minOccurs="1" maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Institucion" type="InstitucionType"
-											minOccurs="1" maxOccurs="unbounded" />
+										<xs:element name="NivelDeEscolaridad" minOccurs="1"
+											maxOccurs="unbounded">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Doctorado" />
+													<xs:enumeration value="Especialidad" />
+													<xs:enumeration value="Licenciatura" />
+													<xs:enumeration value="Maestría" />
+													<xs:enumeration value="Preparatoria" />
+													<xs:enumeration value="Técnico Superior" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+
+										<xs:element name="Titulo" type="xs:string" minOccurs="1"
+											maxOccurs="1" />
+
+										<xs:element name="EstadoDelGrado" minOccurs="1"
+											maxOccurs="1">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Créditos terminados" />
+													<xs:enumeration value="Grado obtenido" />
+													<xs:enumeration
+														value="Título o grado en proceso" />
+													<xs:enumeration value="Truncado" />
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+
+										<xs:element name="Instituciones" minOccurs="1" maxOccurs="1">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Institucion"
+														type="InstitucionType"
+														minOccurs="1" maxOccurs="unbounded" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
@@ -565,16 +579,19 @@
 							<xs:element name="Cursos" minOccurs="0" maxOccurs="1">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Curso" type="CursoType" minOccurs="0"
+										<xs:element name="Curso" type="CursoType"
+											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="Certificaciones" minOccurs="0" maxOccurs="1">
+							<xs:element name="Certificaciones" minOccurs="0"
+								maxOccurs="1">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Certificacion" type="CertificacionType"
+										<xs:element name="Certificacion"
+											type="CertificacionType"
 											minOccurs="0" maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
@@ -584,16 +601,19 @@
 							<xs:element name="Logros" minOccurs="0" maxOccurs="1">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Logro" type="LogroType" minOccurs="0"
+										<xs:element name="Logro" type="LogroType"
+											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="IdiomasLenguas" minOccurs="0" maxOccurs="1">
+							<xs:element name="IdiomasLenguas" minOccurs="0"
+								maxOccurs="1">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Idioma" type="IdiomaType" minOccurs="0"
+										<xs:element name="Idioma" type="IdiomaType"
+											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
@@ -743,11 +763,18 @@
 		</xs:simpleContent>
 	</xs:complexType>
 
+	<xs:complexType name="CorreoContactoType">
+		<xs:simpleContent>
+			<xs:extension base="CorreoContenido">
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
 	<!--Número
 	de teléfono-->
 	<xs:simpleType name="DiezDigitos">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="\\d{10}" />
+			<xs:pattern value="\d{10}" />
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -1830,5 +1857,8 @@
 			<xs:maxLength value="2000" />
 		</xs:restriction>
 	</xs:simpleType>
+
+	<!--Lada
+	Type-->
 
 </xs:schema>

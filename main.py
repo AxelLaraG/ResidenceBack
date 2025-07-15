@@ -6,11 +6,23 @@ import xml.etree.ElementTree as ET
 from fastapi.middleware.cors import CORSMiddleware
 
 
-users = {
-    "axmadlar@gmail.com":"12345678",
-    "usuario2@gmail.com":"12345678",
-    "usuario3@gmail.com":"12345678"
-}
+users = [
+    {"id":1,
+    "email":"adminTec@gmail.com",
+    "name":"FedericoDelRazoLopez",
+    "password":"12345678",
+    "role":"admin"},
+    {"id":2,
+     "name":"JuanPerezLopez",
+    "email":"user@gmail.com",
+    "password":"12345678",
+    "role":"user"},
+    {"id":3,
+     "name":"MariaGarciaHernandez",
+    "email":"adminPRODEP@gmail.com",
+    "password":"12345678",
+    "role":"admin"}
+    ]
 
 class UserCredentials(BaseModel):
     email: str
@@ -28,19 +40,24 @@ app.add_middleware(
 
 @app.post("/login")
 async def login(credentials: UserCredentials):
-    if credentials.email not in users:
+    user = next((u for u in users if u["email"] == credentials.email), None)
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Email incorrecto",
+            detail = "Email incorrecto"
         )
     
-    if users[credentials.email] != credentials.password:
+    if user["password"] != credentials.password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Contraseña incorrecta",
+            detail = "Contraseña incorrecta"
         )
     
-    return {"message": "Inicio de sesión exitoso", "email": credentials.email}
+    return {
+        "role":user["role"],
+        "id":user["id"]
+    }
+
 
 @app.post("/xml_gen")
 async def xml_generator(datos: dict):

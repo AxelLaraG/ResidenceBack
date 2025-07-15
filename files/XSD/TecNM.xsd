@@ -22,7 +22,8 @@
 						<xs:sequence>
 							<xs:element name="Telefono" type="Telefono10" minOccurs="0"
 								maxOccurs="unbounded" />
-							<xs:element name="Correo">
+
+							<xs:element name="Correo" minOccurs="1" maxOccurs="2">
 								<xs:complexType>
 									<xs:simpleContent>
 										<xs:extension base="CorreoValido">
@@ -38,6 +39,7 @@
 									</xs:simpleContent>
 								</xs:complexType>
 							</xs:element>
+
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -66,7 +68,7 @@
 					</xs:complexType>
 				</xs:element>
 
-				<xs:element name="TitulosAcademicos">
+				<xs:element name="TitulosAcademicos" minOccurs="1" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="FechaObtencion" type="DateType" />

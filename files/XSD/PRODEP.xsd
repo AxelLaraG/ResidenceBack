@@ -331,7 +331,7 @@
             <xs:element name="Resultados" type="xs:string" />
             <xs:element name="Estado" type="xs:string" />
             <xs:element name="FechaInicio" type="DateType" />
-            <xs:element name="FechaTermino" type="DateType" />
+            <xs:element name="FechaTermino" type="DateType" minOccurs="0" />
             <xs:element name="FechaDeUltimoInforme" type="DateType" />
             <xs:element name="HorasPorSemana" type="xs:string" />
         </xs:sequence>
