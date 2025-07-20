@@ -11,13 +11,11 @@
 						<xs:sequence>
 							<xs:element name="Nombre" type="xs:string" />
 
-							<xs:element name="Semblanza" minOccurs="1" maxOccurs="1"
-								type="SemblanzaType" />
+							<xs:element name="Semblanza" type="Max2000Caracteres" />
 
-							<xs:element name="Contacto" type="ContactoType" minOccurs="1"
-								maxOccurs="1" />
+							<xs:element name="ContactoDocente" type="ContactoType" />
 
-							<xs:element name="Habilidades" minOccurs="0" maxOccurs="1">
+							<xs:element name="Habilidades" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="Habilidad" type="HabilidadType"
@@ -26,34 +24,32 @@
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="Intereses" minOccurs="0" maxOccurs="1">
+							<xs:element name="Intereses" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Interes" type="xs:string" minOccurs="0"
+										<xs:element name="Interes" type="xs:string"
+											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="AreaDeConocimiento" minOccurs="1" maxOccurs="1">
+							<xs:element name="AreaDeConocimiento" minOccurs="1">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Area" type="xs:string" minOccurs="1"
-											maxOccurs="1" />
-										<xs:element name="Campo" type="xs:string" minOccurs="1"
-											maxOccurs="1" />
-										<xs:element name="Disciplina" type="xs:string" minOccurs="1"
-											maxOccurs="1" />
-										<xs:element name="Subdisciplina" type="xs:string"
-											minOccurs="1" maxOccurs="1" />
+										<xs:element name="Area" type="xs:string" />
+										<xs:element name="Campo" type="xs:string" />
+										<xs:element name="Disciplina" type="xs:string" />
+										<xs:element name="Subdisciplina" type="xs:string" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="IdentificadoresDeAutor" minOccurs="0" maxOccurs="1">
+							<xs:element name="IdentificadoresDeAutor" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Identificador" type="IdentificadorType"
+										<xs:element name="Identificador"
+											type="IdentificadorType"
 											minOccurs="0" maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
@@ -66,66 +62,63 @@
 							<xs:element name="InformacionGeneral">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="CURP" type="CURPType" minOccurs="1"
-											maxOccurs="1" />
-										<xs:element name="Nombre" type="xs:string" minOccurs="1"
-											maxOccurs="1" />
+										<xs:element name="CURP" type="MinMax18Caracteres"
+											minOccurs="1"
+										/>
+										<xs:element name="Nombre" type="xs:string"
+											minOccurs="1"
+										/>
 										<xs:element name="PrimerApellido" type="xs:string"
-											minOccurs="1" maxOccurs="1" />
+											minOccurs="1" />
 										<xs:element name="SegundoApellido" type="xs:string"
-											minOccurs="1" maxOccurs="1" />
+											minOccurs="0" />
 										<xs:element name="FechaDeNacimiento" type="DateType"
-											minOccurs="1" maxOccurs="1" />
-										<xs:element name="Sexo" type="SexoType" minOccurs="1"
-											maxOccurs="1" />
+											minOccurs="1" />
+										<xs:element name="Sexo" type="Sexo2Options"
+											minOccurs="1"
+										/>
 										<xs:element name="PaisDeNacimiento" type="xs:string"
-											minOccurs="1" maxOccurs="1" />
+											minOccurs="1" />
 										<xs:element name="EntidadFederativa" type="xs:string"
-											minOccurs="1" maxOccurs="1" />
-										<xs:element name="RFC" type="RFCType" minOccurs="1"
-											maxOccurs="1" />
+											minOccurs="1" />
+										<xs:element name="RFC" type="MinMax13Caracteres"
+											minOccurs="1"
+										/>
 										<xs:element name="EstadoCivil" type="EstadoCivilType"
-											minOccurs="1" maxOccurs="1" />
+											minOccurs="1" />
 										<xs:element name="Nacionalidad" type="xs:string"
-											minOccurs="1" maxOccurs="1" />
+											minOccurs="1" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="Domicilio" minOccurs="1" maxOccurs="1">
+							<xs:element name="Domicilio">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:choice>
 											<!-- Contenido para México -->
-											<xs:element name="Mexico">
+											<xs:element name="DomicilioMexico">
 												<xs:complexType>
 													<xs:sequence>
 														<xs:element name="CodigoPostal"
-															type="CodigoPostalType" minOccurs="1"
-															maxOccurs="1" />
-														<xs:element name="Estado" type="xs:string"
-															minOccurs="1" maxOccurs="1" />
+															type="MinMax5Digitos" />
+														<xs:element name="Estado"
+															type="xs:string" />
 														<xs:element name="MunicipioAlcaldia"
-															type="xs:string" minOccurs="1"
-															maxOccurs="1" />
+															type="xs:string" />
 														<xs:element name="Localidad"
-															type="xs:string" minOccurs="1"
-															maxOccurs="1" />
+															type="xs:string" />
 														<xs:element name="Asentamiento"
-															type="xs:string" minOccurs="0"
-															maxOccurs="1" />
+															type="xs:string" minOccurs="0" />
 														<xs:element name="TipoAsentamiento"
 															type="xs:string" minOccurs="0"
-															maxOccurs="1" />
-														<xs:element name="Tipo"
-															type="TipoDomicilioType" minOccurs="1"
-															maxOccurs="1" />
-														<!-- Referencias y Descripcion se agregan
-														opcionalmente solo si
-														InformacionExtra=Verdadero -->
-														<xs:choice minOccurs="0" maxOccurs="1">
+														/>
+														<xs:element name="TipoDomicilio"
+															type="TipoDomicilioType" />
+														<xs:choice minOccurs="0">
 															<xs:sequence>
-																<xs:element name="Referencias"
+																<xs:element
+																	name="ReferenciasDomicilio"
 																	minOccurs="0" maxOccurs="3">
 																	<xs:complexType>
 																		<xs:attribute
@@ -138,63 +131,62 @@
 																			use="optional" />
 																	</xs:complexType>
 																</xs:element>
-																<xs:element name="Descripcion"
-																	type="Descripcion500Type"
-																	minOccurs="0" maxOccurs="1" />
+																<xs:element
+																	name="DescripcionDomicilio"
+																	type="Max500Caracteres"
+																	minOccurs="0" />
 															</xs:sequence>
 														</xs:choice>
-														<!-- Elección entre Urbano y Rural -->
-														<xs:choice minOccurs="1" maxOccurs="1">
-															<xs:element name="Urbano" minOccurs="0"
-																maxOccurs="1">
+														<xs:choice minOccurs="1">
+															<xs:element name="DomicilioUrbano"
+																minOccurs="0">
 																<xs:complexType>
 																	<xs:sequence>
 																		<xs:element
 																			name="TipoDeVialidad"
 																			type="xs:string"
 																			minOccurs="1"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="NombreDeLaVialidad"
 																			type="xs:string"
 																			minOccurs="1"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="NumeroExterior"
 																			type="NumeroExteriorType"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="NumeroInterior"
 																			type="NumeroInteriorType"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																	</xs:sequence>
 																</xs:complexType>
 															</xs:element>
-															<xs:element name="Rural" minOccurs="0"
-																maxOccurs="1">
+															<xs:element name="DomicilioRural"
+																minOccurs="0"
+															>
 																<xs:complexType>
 																	<xs:sequence>
 																		<xs:element
 																			name="TipoDeVialidad"
 																			type="xs:string"
-																			minOccurs="1"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="NombreDeLaVialidad"
 																			type="xs:string"
-																			minOccurs="1"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="Administracion"
 																			type="xs:string"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="DerechoDeTransito"
 																			minOccurs="0"
-																			maxOccurs="1">
+																		>
 																			<xs:simpleType>
 																				<xs:restriction
 																					base="xs:string">
@@ -208,20 +200,20 @@
 																		<xs:element name="Codigo"
 																			type="xs:string"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="OrigenTramo"
 																			type="xs:string"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="DestinoTramo"
 																			type="xs:string"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element name="Margen"
 																			minOccurs="0"
-																			maxOccurs="1">
+																		>
 																			<xs:simpleType>
 																				<xs:restriction
 																					base="xs:string">
@@ -236,17 +228,17 @@
 																			name="Cadenamiento"
 																			type="xs:string"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="NumeroExterior"
 																			type="NumeroExteriorType"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																		<xs:element
 																			name="NumeroInterior"
 																			type="NumeroInteriorType"
 																			minOccurs="0"
-																			maxOccurs="1" />
+																		/>
 																	</xs:sequence>
 																</xs:complexType>
 															</xs:element>
@@ -256,35 +248,34 @@
 														use="optional">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
-																<xs:enumeration value="Verdadero" />
-																<xs:enumeration value="Falso" />
+																<xs:enumeration value="True" />
+																<xs:enumeration value="False" />
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:attribute>
 												</xs:complexType>
 											</xs:element>
 											<!-- Contenido para Extranjero -->
-											<xs:element name="Extranjero">
+											<xs:element name="DomicilioExtranjero">
 												<xs:complexType>
 													<xs:sequence>
-														<xs:element name="Pais" type="xs:string"
-															minOccurs="1" maxOccurs="1" />
+														<xs:element name="Pais"
+															type="xs:string" />
 														<xs:element name="CodigoPostal"
-															type="xs:string" minOccurs="1"
-															maxOccurs="1" />
-														<xs:element name="Estado" type="xs:string"
-															minOccurs="1" maxOccurs="1" />
-														<xs:element name="Ciudad" type="xs:string"
-															minOccurs="1" maxOccurs="1" />
-														<xs:element name="Condado" type="xs:string"
-															minOccurs="1" maxOccurs="1" />
-														<xs:element name="Calle" type="xs:string"
-															minOccurs="1" maxOccurs="1" />
-														<xs:element name="Numero" type="xs:string"
-															minOccurs="1" maxOccurs="1" />
-														<xs:element name="Descripcion"
-															type="Descripcion500Type" minOccurs="1"
-															maxOccurs="1" />
+															type="xs:string" />
+														<xs:element name="Estado"
+															type="xs:string" />
+														<xs:element name="Ciudad"
+															type="xs:string" />
+														<xs:element name="Condado"
+															type="xs:string" />
+														<xs:element name="Calle"
+															type="xs:string" />
+														<xs:element name="Numero"
+															type="xs:string" />
+														<xs:element
+															name="Descripcion"
+															type="Max500Caracteres" />
 													</xs:sequence>
 												</xs:complexType>
 											</xs:element>
@@ -301,29 +292,36 @@
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="ContactosDeEmergencia" minOccurs="0" maxOccurs="1">
+							<xs:element name="ContactosDeEmergencia" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Contacto" minOccurs="0"
+										<xs:element name="ContactoEmergencia" minOccurs="0"
 											maxOccurs="unbounded">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="Nombre" type="NombreMin2Type" />
-													<xs:element name="PrimerApellido"
-														type="NombreMin2Type" />
-													<xs:element name="SegundoApellido"
-														type="NombreMin2Type" />
-													<xs:element name="Parentesco" type="xs:string" />
-													<xs:element name="FechaDeNacimiento"
+													<xs:element name="Nombre"
+														type="Min2Caracteres" />
+													<xs:element
+														name="PrimerApellido"
+														type="Min2Caracteres" />
+													<xs:element
+														name="SegundoApellido"
+														type="Min2Caracteres" minOccurs="0" />
+													<xs:element name="Parentesco"
+														type="xs:string" />
+													<xs:element
+														name="FechaDeNacimiento"
 														type="DateType" />
-													<xs:element name="Sexo" type="Sexo2Type" />
-													<xs:element name="CorreoElectrónico"
+													<xs:element name="Sexo"
+														type="Sexo4Options" />
+													<xs:element
+														name="CorreoContacto"
 														type="CorreoContactoType" />
 													<xs:element name="Lada"
 														type="Horas10DigitosType" />
-													<xs:element name="Telefono"
+													<xs:element name="TelefonoContacto"
 														type="Horas10DigitosType" />
-													<xs:element name="Movil"
+													<xs:element name="MovilContacto"
 														type="Horas10DigitosType" />
 													<xs:element name="MedioPreferente">
 														<xs:simpleType>
@@ -336,12 +334,14 @@
 														</xs:simpleType>
 													</xs:element>
 													<xs:choice>
-														<xs:element name="Mexico">
+														<xs:element name="ContactoMexico">
 															<xs:complexType>
 																<xs:sequence>
-																	<xs:element name="CodigoPostal"
-																		type="CodigoPostalType" />
-																	<xs:element name="Estado"
+																	<xs:element
+																		name="CodigoPostal"
+																		type="MinMax5Digitos" />
+																	<xs:element
+																		name="Estado"
 																		type="xs:string" />
 																	<xs:element
 																		name="MunicipioAlcaldia"
@@ -352,13 +352,13 @@
 																</xs:sequence>
 															</xs:complexType>
 														</xs:element>
-														<xs:element name="Extranjero">
+														<xs:element name="ContactoExtranjero">
 															<xs:complexType>
 																<xs:sequence>
 																	<xs:element name="Pais"
 																		type="xs:string" />
 																	<xs:element name="CodigoPostal"
-																		type="CPMin5Max10Type" />
+																		type="Min5Max10Digitos" />
 																	<xs:element name="Estado"
 																		type="xs:string" />
 																	<xs:element name="Ciudad"
@@ -397,25 +397,24 @@
 								</xs:complexType>
 							</xs:element>
 
-
-							<xs:element name="DependientesEconomicos" minOccurs="0" maxOccurs="1">
+							<xs:element name="DependientesEconomicos" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Dependiente" minOccurs="0"
+										<xs:element name="DependienteEconomico" minOccurs="0"
 											maxOccurs="unbounded">
 											<xs:complexType>
 												<xs:choice>
-													<xs:element name="Mexican">
+													<xs:element name="DependienteMexicano">
 														<xs:complexType>
 															<xs:sequence>
 																<xs:element name="CURP"
-																	type="CURPType" />
+																	type="MinMax18Caracteres" />
 																<xs:element name="Nombre"
 																	type="xs:string" />
 																<xs:element name="PrimerApellido"
 																	type="xs:string" />
 																<xs:element name="SegundoApellido"
-																	type="xs:string" />
+																	type="xs:string" minOccurs="0" />
 																<xs:element name="FechaDeNacimiento"
 																	type="DateType" />
 																<xs:element name="Edad"
@@ -444,7 +443,7 @@
 																	</xs:simpleType>
 																</xs:element>
 																<xs:element name="Sexo"
-																	type="Sexo2Type" />
+																	type="Sexo4Options" />
 																<xs:element name="Orden">
 																	<xs:simpleType>
 																		<xs:restriction
@@ -458,20 +457,26 @@
 														</xs:complexType>
 													</xs:element>
 
-													<xs:element name="Foreign">
+													<xs:element name="DependienteExtranjero">
 														<xs:complexType>
 															<xs:sequence>
-																<xs:element name="Nombre"
+																<xs:element
+																	name="Nombre"
 																	type="xs:string" />
-																<xs:element name="PrimerApellido"
+																<xs:element
+																	name="PrimerApellido"
 																	type="xs:string" />
-																<xs:element name="SegundoApellido"
+																<xs:element
+																	name="SegundoApellido"
 																	type="xs:string" />
-																<xs:element name="FechaDeNacimiento"
+																<xs:element
+																	name="FechaDeNacimiento"
 																	type="DateType" />
-																<xs:element name="Edad"
+																<xs:element
+																	name="Edad"
 																	type="xs:positiveInteger" />
-																<xs:element name="Parentesco">
+																<xs:element
+																	name="Parentesco">
 																	<xs:simpleType>
 																		<xs:restriction
 																			base="xs:string">
@@ -494,9 +499,11 @@
 																		</xs:restriction>
 																	</xs:simpleType>
 																</xs:element>
-																<xs:element name="Sexo"
-																	type="Sexo2Type" />
-																<xs:element name="Orden">
+																<xs:element
+																	name="Sexo"
+																	type="Sexo4Options" />
+																<xs:element
+																	name="Orden">
 																	<xs:simpleType>
 																		<xs:restriction
 																			base="xs:integer">
@@ -509,7 +516,9 @@
 														</xs:complexType>
 													</xs:element>
 												</xs:choice>
-												<xs:attribute name="Nacionalidad" use="required">
+												<xs:attribute
+													name="Nacionalidad"
+													use="required">
 													<xs:simpleType>
 														<xs:restriction base="xs:string">
 															<xs:enumeration value="Mexican" />
@@ -530,7 +539,8 @@
 				<xs:element name="TrayectoriaAcademica">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="Trayectoria" minOccurs="1" maxOccurs="unbounded">
+							<xs:element name="Trayectoria" minOccurs="1"
+								maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="NivelDeEscolaridad" minOccurs="1"
@@ -547,11 +557,9 @@
 											</xs:simpleType>
 										</xs:element>
 
-										<xs:element name="Titulo" type="xs:string" minOccurs="1"
-											maxOccurs="1" />
+										<xs:element name="Titulo" type="xs:string" />
 
-										<xs:element name="EstadoDelGrado" minOccurs="1"
-											maxOccurs="1">
+										<xs:element name="EstadoDelGrado">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
 													<xs:enumeration value="Créditos terminados" />
@@ -563,34 +571,27 @@
 											</xs:simpleType>
 										</xs:element>
 
-										<xs:element name="Instituciones" minOccurs="1" maxOccurs="1">
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="Institucion"
-														type="InstitucionType"
-														minOccurs="1" maxOccurs="unbounded" />
-												</xs:sequence>
-											</xs:complexType>
-										</xs:element>
+										<xs:element name="InstitucionCompleja"
+											type="InstitucionType"
+											minOccurs="1" maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="Cursos" minOccurs="0" maxOccurs="1">
+							<xs:element name="CursosTomados" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Curso" type="CursoType"
+										<xs:element name="CursoComplejo" type="CursoType"
 											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="Certificaciones" minOccurs="0"
-								maxOccurs="1">
+							<xs:element name="CertificacionesTomadas" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Certificacion"
+										<xs:element name="CertificacionCompleja"
 											type="CertificacionType"
 											minOccurs="0" maxOccurs="unbounded" />
 									</xs:sequence>
@@ -598,21 +599,20 @@
 
 							</xs:element>
 
-							<xs:element name="Logros" minOccurs="0" maxOccurs="1">
+							<xs:element name="LogrosAlcanzados" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Logro" type="LogroType"
+										<xs:element name="LogroComplejo" type="LogroType"
 											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="IdiomasLenguas" minOccurs="0"
-								maxOccurs="1">
+							<xs:element name="IdiomasLenguas" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Idioma" type="IdiomaType"
+										<xs:element name="IdiomaComplejo" type="IdiomaType"
 											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
@@ -626,36 +626,38 @@
 				<xs:element name="TrayectoriaProfesional">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="Empleos" minOccurs="0" maxOccurs="1">
+							<xs:element name="Empleos" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Empleo" type="EmpleoType" minOccurs="0"
+										<xs:element name="EmpleoComplejo" type="EmpleoType"
+											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="Produccion">
+							<xs:element name="Produccion" minOccurs="1" maxOccurs="unbounded">
 								<xs:complexType>
 									<xs:choice>
 										<!-- Producción Humanista -->
 										<xs:sequence>
 											<xs:element name="Articulo" type="ArticuloType"
 												minOccurs="0" maxOccurs="unbounded" />
-											<xs:element name="Libro" type="LibroType" minOccurs="0"
-												maxOccurs="unbounded" />
+											<xs:element name="Libro" type="LibroType"
+												minOccurs="0" maxOccurs="unbounded" />
 											<xs:element name="Capitulo" type="CapituloType"
 												minOccurs="0" maxOccurs="unbounded" />
 										</xs:sequence>
 
 										<!-- Producción Tecnológica -->
 										<xs:sequence>
-											<xs:element name="Desarrollo" type="DesarrolloType"
+											<xs:element name="Desarrollo"
+												type="DesarrolloType"
 												minOccurs="0" maxOccurs="unbounded" />
 											<xs:element name="PropiedadIntelectual"
 												type="PropiedadIntelectualType"
 												minOccurs="0" maxOccurs="unbounded" />
-											<xs:element name="TransferenciaTecnologica"
+											<xs:element name="Transferencia"
 												type="TransferenciaType" minOccurs="0"
 												maxOccurs="unbounded" />
 										</xs:sequence>
@@ -673,7 +675,7 @@
 
 							</xs:element>
 
-							<xs:element name="Evaluaciones" minOccurs="0" maxOccurs="1">
+							<xs:element name="EvaluacionesRealizadas" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="Evaluacion" type="EvaluacionType"
@@ -682,7 +684,7 @@
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="Estancias" minOccurs="0" maxOccurs="1">
+							<xs:element name="EstanciasTomadas" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="Estancia" type="EstanciaType"
@@ -692,7 +694,7 @@
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="HCTI" minOccurs="0" maxOccurs="1">
+							<xs:element name="HCTI" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="Comunidad" type="ComunidadHCTIType"
@@ -701,20 +703,19 @@
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="AccesoUniversalAlConocimiento" minOccurs="0"
-								maxOccurs="1">
+							<xs:element name="AccesoUniversalAlConocimiento" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="Acceso"
+										<xs:element name="AccesoConocimiento"
 											type="AccesoAlConocimientoType" />
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
 
-							<xs:element name="ENI" minOccurs="0" maxOccurs="1">
+							<xs:element name="ENI_GEMA_Sisdai" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="ENI" type="ENI_GEMA_SisdaiType"
+										<xs:element name="ElementoDelENI" type="ENI_GEMA_SisdaiType"
 											minOccurs="0"
 											maxOccurs="unbounded" />
 									</xs:sequence>
@@ -731,31 +732,30 @@
 	<!--Complex
 	Types-->
 
-	<!--Semblanza-->
-	<xs:simpleType name="SemblanzaType">
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="2000" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<!--Contacto-->
+	<!--Contacto
+	del Docente-->
 	<xs:complexType name="ContactoType">
 		<xs:sequence>
-			<xs:element name="Correo" type="CorreoType" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="Movil" type="TelefonoType" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="Telefono" type="TelefonoType" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="RedSocial" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="CorreoDocente" type="CorreoDocenteType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="MovilDocente" type="TelefonoType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="TelefonoDocente" type="TelefonoType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="RedSocialDocente" type="xs:string" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 
-	<!--Correo-->
+	<!--Correo
+	Cualquiera-->
 	<xs:simpleType name="CorreoContenido">
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[^@]+@[^@]+\.[^@]+" />
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:complexType name="CorreoType">
+	<!--Correo
+	del Docente-->
+	<xs:complexType name="CorreoDocenteType">
 		<xs:simpleContent>
 			<xs:extension base="CorreoContenido">
 				<xs:attribute name="Principal" use="required" type="xs:boolean" />
@@ -763,6 +763,8 @@
 		</xs:simpleContent>
 	</xs:complexType>
 
+	<!--Correo
+	del Contacto-->
 	<xs:complexType name="CorreoContactoType">
 		<xs:simpleContent>
 			<xs:extension base="CorreoContenido">
@@ -770,14 +772,8 @@
 		</xs:simpleContent>
 	</xs:complexType>
 
-	<!--Número
-	de teléfono-->
-	<xs:simpleType name="DiezDigitos">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="\d{10}" />
-		</xs:restriction>
-	</xs:simpleType>
-
+	<!--Teléfono
+	Docente-->
 	<xs:complexType name="TelefonoType">
 		<xs:simpleContent>
 			<xs:extension base="DiezDigitos">
@@ -786,7 +782,8 @@
 		</xs:simpleContent>
 	</xs:complexType>
 
-	<!--Habilidad-->
+	<!--Habilidades
+	del Docente-->
 	<xs:complexType name="HabilidadType">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
@@ -824,44 +821,6 @@
 		</xs:simpleContent>
 	</xs:complexType>
 
-	<!--CURP-->
-	<xs:simpleType name="CURPType">
-		<xs:restriction base="xs:string">
-			<xs:length value="18" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<!--RFC-->
-	<xs:simpleType name="RFCType">
-		<xs:restriction base="xs:string">
-			<xs:length value="13" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<!--Fecha-->
-	<xs:simpleType name="DateType">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="\d{4}-\d{2}-\d{2}" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<!--Sexo-->
-	<xs:simpleType name="SexoType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="masculino" />
-			<xs:enumeration value="femenino" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="Sexo2Type">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Masculino" />
-			<xs:enumeration value="Femenino" />
-			<xs:enumeration value="No binario" />
-			<xs:enumeration value="Otro" />
-		</xs:restriction>
-	</xs:simpleType>
-
 	<!--Estado
 	Civil-->
 	<xs:simpleType name="EstadoCivilType">
@@ -876,33 +835,12 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<!--Código
-	postal-->
-	<xs:simpleType name="CodigoPostalType">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="\d{1,5}" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="CPMin5Max10Type">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="\d{5,10}" />
-		</xs:restriction>
-	</xs:simpleType>
-
 	<!--Tipo
 	Domicilio-->
 	<xs:simpleType name="TipoDomicilioType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Urbano" />
 			<xs:enumeration value="Rural" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<!--Descripción-->
-	<xs:simpleType name="Descripcion500Type">
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="500" />
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -929,24 +867,17 @@
 		</xs:simpleContent>
 	</xs:complexType>
 
-	<!--Mínimo
-	2 caracteres-->
-	<xs:simpleType name="NombreMin2Type">
-		<xs:restriction base="xs:string">
-			<xs:minLength value="2" />
-		</xs:restriction>
-	</xs:simpleType>
-
 	<!--Institución-->
 	<xs:complexType name="InstitucionType">
 		<xs:choice>
-			<!-- Institución Nacional -->
-			<xs:element name="Nacional">
+			<xs:element name="InstitucionNacional">
 				<xs:complexType>
 					<xs:choice>
-						<!-- Pública-Federal o Privada -->
 						<xs:element name="SectorSimple">
 							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Nombre" type="xs:string" />
+								</xs:sequence>
 								<xs:attribute name="Sector" use="required">
 									<xs:simpleType>
 										<xs:restriction base="xs:string">
@@ -962,9 +893,11 @@
 						<xs:element name="SectorEstatal">
 							<xs:complexType>
 								<xs:sequence>
+									<xs:element name="Nombre" type="xs:string" />
 									<xs:element name="Entidad" type="xs:string" />
 								</xs:sequence>
-								<xs:attribute name="Sector" use="required" fixed="Pública-Estatal" />
+								<xs:attribute name="SectorInstitucionEstatal" use="required"
+									fixed="Pública-Estatal" />
 							</xs:complexType>
 						</xs:element>
 
@@ -972,10 +905,12 @@
 						<xs:element name="SectorMunicipal">
 							<xs:complexType>
 								<xs:sequence>
+									<xs:element name="Nombre" type="xs:string" />
 									<xs:element name="Entidad" type="xs:string" />
 									<xs:element name="MunicipioAlcaldia" type="xs:string" />
 								</xs:sequence>
-								<xs:attribute name="Sector" use="required" fixed="Pública-Municipal" />
+								<xs:attribute name="Sector" use="required"
+									fixed="Pública-Municipal" />
 							</xs:complexType>
 						</xs:element>
 					</xs:choice>
@@ -983,9 +918,10 @@
 			</xs:element>
 
 			<!-- Institución Extranjera -->
-			<xs:element name="Extranjera">
+			<xs:element name="InstitucionExtranjera">
 				<xs:complexType>
 					<xs:sequence>
+						<xs:element name="Nombre" type="xs:string" />
 						<xs:element name="Pais" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
@@ -1006,36 +942,19 @@
 	<xs:complexType name="CursoType">
 		<xs:sequence>
 			<xs:element name="TipoDeFormacionContinua" type="xs:string" />
-			<xs:element name="NombreDelCurso" type="xs:string" />
+			<xs:element name="Nombre" type="xs:string" />
 			<xs:element name="Anio" type="AnioType" />
 			<xs:element name="HorasTotales" type="Horas4DigitosType" />
-			<xs:element name="Institucion" type="InstitucionType" />
+			<xs:element name="InstitucionCompleja" type="InstitucionType" />
 		</xs:sequence>
 	</xs:complexType>
-
-	<!--Menor
-	a año N-->
-	<xs:simpleType name="AnioType">
-		<xs:restriction base="xs:gYear">
-			<xs:maxInclusive value="2025" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<!--Entre
-	0 y 9999-->
-	<xs:simpleType name="Horas4DigitosType">
-		<xs:restriction base="xs:integer">
-			<xs:minInclusive value="0" />
-			<xs:maxInclusive value="9999" />
-		</xs:restriction>
-	</xs:simpleType>
 
 	<!--Certificaciones-->
 	<xs:complexType name="CertificacionType">
 		<xs:sequence>
 			<xs:element name="NumeroDeFolio" type="Folio50Type" />
 			<xs:element name="ConsejoOtorgado" type="xs:string" />
-			<xs:element name="NombreDeLaCertificacion" type="xs:string" />
+			<xs:element name="Nombre" type="xs:string" />
 			<xs:element name="Especialidad" type="xs:string" />
 			<xs:element name="Vigencia" type="VigenciaType" />
 		</xs:sequence>
@@ -1049,40 +968,26 @@
 		</xs:attribute>
 	</xs:complexType>
 
-	<!--50
-	caracteres alfanuméricos-->
-	<xs:simpleType name="Folio50Type">
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="50" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<!--Vigencias-->
-	<xs:complexType name="VigenciaType">
-		<xs:attribute name="Inicio" type="DateType" use="required" />
-		<xs:attribute name="Fin" type="DateType" use="required" />
-	</xs:complexType>
-
 	<!--Logros-->
 	<xs:complexType name="LogroType">
 		<xs:choice>
-			<xs:element name="SECIHTI">
+			<xs:element name="LogroSECIHTI">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="NombreDistincion" type="xs:string" />
+						<xs:element name="Nombre" type="xs:string" />
 						<xs:element name="Anio" type="AnioType" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 
-			<xs:element name="Otros">
+			<xs:element name="LogroOtros">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="Anio" type="AnioType" />
 						<xs:element name="Nombre" type="xs:string" />
-						<xs:element name="Institución" type="InstitucionType" />
+						<xs:element name="InstitucionCompleja" type="InstitucionType" />
 						<xs:element name="Pais" type="xs:string" />
-						<xs:element name="Descripcion" type="DescripcionType" />
+						<xs:element name="Descripcion" type="Max500Caracteres" />
 
 					</xs:sequence>
 				</xs:complexType>
@@ -1099,14 +1004,6 @@
 		</xs:attribute>
 	</xs:complexType>
 
-	<!--500
-	caracteres-->
-	<xs:simpleType name="DescripcionType">
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="500"></xs:maxLength>
-		</xs:restriction>
-	</xs:simpleType>
-
 	<!--Idiomas
 	o lenguas-->
 	<xs:complexType name="IdiomaType">
@@ -1117,7 +1014,7 @@
 			<xs:element name="NivelDeLectura" type="xs:string" />
 			<xs:element name="NivelDeEscritura" type="xs:string" />
 
-			<xs:element name="Certificacion" minOccurs="0">
+			<xs:element name="CertificacionIdioma" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
 						<xs:element name="Institucion" type="xs:string" minOccurs="0" />
@@ -1137,9 +1034,9 @@
 	<!--Empleos-->
 	<xs:complexType name="EmpleoType">
 		<xs:sequence>
-			<xs:element name="Institucion" type="InstitucionType" />
+			<xs:element name="InstitucionCompleja" type="InstitucionType" />
 			<xs:element name="FechaInicio" type="xs:date" />
-			<xs:element name="NombreDelPuestoONombramiento" type="Texto1000Type" />
+			<xs:element name="Nombre" type="Texto1000Type" />
 			<xs:element name="Logros" type="Texto1000Type" minOccurs="0" />
 
 			<xs:element name="FechaFin" type="xs:date" minOccurs="0" />
@@ -1161,46 +1058,27 @@
 		</xs:attribute>
 	</xs:complexType>
 
-	<!--1000
-	caracteres-->
-	<xs:simpleType name="Texto1000Type">
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="1000" />
-		</xs:restriction>
-	</xs:simpleType>
-
 	<!--Artículos-->
 	<xs:complexType name="ArticuloType">
 		<xs:sequence>
+			<xs:element name="ISNNImpreso" type="Folio50Type" minOccurs="0" />
+			<xs:element name="ISNNElectronico" type="Folio50Type" minOccurs="0" />
 
-			<!-- ISNN -->
-			<xs:choice>
-				<xs:sequence>
-					<xs:element name="ISNNImpreso" type="Folio50Type" />
-				</xs:sequence>
-				<xs:sequence>
-					<xs:element name="ISNNElectronico" type="Folio50Type" />
-				</xs:sequence>
-				<xs:sequence>
-					<xs:element name="ISNNImpreso" type="Folio50Type" />
-					<xs:element name="ISNNElectronico" type="Folio50Type" />
-				</xs:sequence>
-			</xs:choice>
 
 			<!-- Campos principales -->
 			<xs:element name="DOI" type="AlfaNum70Type" />
 			<xs:element name="NombreDeLaRevista" type="xs:string" />
 			<xs:element name="TituloDeArticulo" type="xs:string" />
-			<xs:element name="AnioDeLaPublicacion" type="AnioType" />
+			<xs:element name="Anio" type="AnioType" />
 
 			<!-- Apoyo SECIHTI -->
 			<xs:element name="Programa" type="xs:string" minOccurs="0" />
 
-			<xs:element name="RolDeParticipacion" type="xs:string" />
-			<xs:element name="EstatusDePublicacion" type="xs:string" />
+			<xs:element name="Rol" type="xs:string" />
+			<xs:element name="Estatus" type="xs:string" />
 			<xs:element name="Objetivo" type="xs:string" />
 
-			<xs:element name="Citas" type="CitasType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Citas" type="CitasType" minOccurs="0" />
 
 			<xs:element name="Autores" type="AutoresType" />
 
@@ -1221,59 +1099,13 @@
 		<xs:attribute name="ApoyoSECIHTI" use="required" type="xs:boolean" />
 	</xs:complexType>
 
-	<!--70
-	Caracteres-->
-	<xs:simpleType name="AlfaNum70Type">
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="70" />
-		</xs:restriction>
-	</xs:simpleType>
-
-	<!--Citas-->
-	<xs:complexType name="CitasType">
-		<xs:sequence>
-			<xs:element name="URLCita" type="xs:string" />
-			<xs:element name="CitaA" type="xs:integer" />
-			<xs:element name="CitaB" type="xs:integer" />
-			<xs:element name="TotalDeCitas" type="xs:integer" />
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="CitasLibroType">
-		<xs:sequence>
-			<xs:element name="URLCita" type="xs:string" />
-			<xs:element name="CitaA" type="xs:integer" />
-			<xs:element name="CitaB" type="xs:integer" />
-			<xs:element name="TotalDeCitas" type="xs:integer" />
-			<xs:element name="EjeSECIHTI" type="xs:string" />
-		</xs:sequence>
-	</xs:complexType>
-
-
-	<!--Autores-->
-	<xs:complexType name="AutoresType">
-		<xs:sequence>
-			<xs:element name="Autor" type="AutorType" minOccurs="1" maxOccurs="unbounded" />
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="AutorType">
-		<xs:sequence>
-			<xs:element name="Nombre" type="xs:string" />
-			<xs:element name="PrimerApellido" type="xs:string" />
-			<xs:element name="SegundoApellido" type="xs:string" minOccurs="0" />
-			<xs:element name="ORCID" type="xs:string" />
-		</xs:sequence>
-		<xs:attribute name="Orden" use="required" type="xs:integer" />
-	</xs:complexType>
-
 	<!--Libros-->
 	<xs:complexType name="LibroType">
 		<xs:sequence>
 			<xs:element name="ISBN" type="Folio50Type" />
 			<xs:element name="DOI" type="AlfaNum70Type" />
 			<xs:element name="Titulo" type="xs:string" />
-			<xs:element name="AnioDeLaPublicacion" type="AnioType" />
+			<xs:element name="Anio" type="AnioType" />
 			<xs:element name="Editorial" type="xs:string" />
 			<xs:element name="Pais" type="xs:string" />
 			<xs:element name="Idioma" type="xs:string" />
@@ -1284,11 +1116,11 @@
 			<!-- Programa solo si ApoyoSECIHTI=True, validación fuera del XSD -->
 			<xs:element name="Programa" type="xs:string" minOccurs="0" />
 
-			<xs:element name="RolDeParticipacion" type="xs:string" />
+			<xs:element name="Rol" type="xs:string" />
 			<xs:element name="EstadoDePublicacion" type="xs:string" />
 			<xs:element name="Objetivo" type="xs:string" />
 
-			<xs:element name="Citas" type="CitasLibroType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="CitasLibro" type="CitasLibroType" minOccurs="0" />
 			<xs:element name="Autores" type="AutoresType" />
 		</xs:sequence>
 
@@ -1303,7 +1135,7 @@
 			<xs:element name="ISBN" type="Folio50Type" />
 			<xs:element name="DOI" type="AlfaNum70Type" />
 			<xs:element name="Titulo" type="xs:string" />
-			<xs:element name="AnioDeLaPublicacion" type="AnioType" />
+			<xs:element name="Anio" type="AnioType" />
 			<xs:element name="Editorial" type="xs:string" />
 			<xs:element name="TituloDelCapitulo" type="xs:string" />
 			<xs:element name="NumeroDeCapitulo" type="Folio50Type" />
@@ -1311,11 +1143,11 @@
 			<!-- Programa solo si ApoyoSECIHTI=True -->
 			<xs:element name="Programa" type="xs:string" minOccurs="0" />
 
-			<xs:element name="RolDeParticipacion" type="xs:string" />
+			<xs:element name="Rol" type="xs:string" />
 			<xs:element name="EstadoDePublicacion" type="xs:string" />
 			<xs:element name="Objetivo" type="xs:string" />
 
-			<xs:element name="Citas" type="CitasType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Citas" type="CitasType" minOccurs="0" />
 			<xs:element name="Autores" type="AutoresType" />
 			<xs:element name="EjeSECIHTI" type="xs:string" />
 		</xs:sequence>
@@ -1344,8 +1176,8 @@
 	<xs:complexType name="DesarrolloProductoType">
 		<xs:sequence>
 			<xs:element name="Nombre" type="xs:string" />
-			<xs:element name="TipoDeDesarrollo" type="xs:string" />
-			<xs:element name="DescripcionDeDesarrollo" type="Texto1000Type" />
+			<xs:element name="Tipo" type="xs:string" />
+			<xs:element name="Descripcion" type="Texto1000Type" />
 			<xs:element name="ObjetivosDelProducto" type="Texto1000Type" />
 			<xs:element name="ProblemaQueAtiende" type="Texto1000Type" />
 			<xs:element name="PersonasBeneficiadas" type="BeneficiariosType" />
@@ -1370,7 +1202,6 @@
 		</xs:sequence>
 		<xs:attribute name="ApoyoSECIHTI" use="required" type="xs:boolean" />
 	</xs:complexType>
-
 
 	<!--Inovación-->
 	<xs:complexType name="InnovacionProductoType">
@@ -1435,6 +1266,13 @@
 		</xs:sequence>
 	</xs:complexType>
 
+	<!--Solicitantes-->
+	<xs:complexType name="SolicitantesType">
+		<xs:sequence>
+			<xs:element name="Solicitante" type="ActorType" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:complexType name="ActorType">
 		<xs:sequence>
 			<xs:element name="Nombre" type="xs:string" />
@@ -1448,9 +1286,12 @@
 	Intelectual-->
 	<xs:complexType name="PropiedadIntelectualType">
 		<xs:choice>
-			<xs:element name="PropiedadMexico" type="PropiedadMexicoType" />
-			<xs:element name="PropiedadInternacional" type="PropiedadInternacionalType" />
-			<xs:element name="PropiedadAmbas" type="PropiedadAmbasType" />
+			<xs:element name="PropiedadMexico" type="PropiedadMexicoType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="PropiedadInternacional" type="PropiedadInternacionalType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="PropiedadAmbas" type="PropiedadAmbasType" minOccurs="0"
+				maxOccurs="unbounded" />
 		</xs:choice>
 		<xs:attribute name="Tipo" use="required">
 			<xs:simpleType>
@@ -1470,7 +1311,7 @@
 			<xs:element name="TipoDeProteccion" type="xs:string" />
 			<xs:element name="Titulo" type="xs:string" />
 			<xs:element name="Resumen" type="Texto1000Type" />
-			<xs:element name="Solicitantes" type="ActoresType" />
+			<xs:element name="Solicitantes" type="SolicitantesType" />
 			<xs:element name="Rol" type="xs:string" />
 			<xs:element name="NumeroDeSolicitud" type="AlfaNum20Type" />
 			<xs:element name="FechaDePresentacion" type="xs:date" />
@@ -1522,7 +1363,7 @@
 			<xs:element name="DescripcionDeActividades" type="Texto1000Type" />
 			<xs:element name="PeriodoDeParticipacion" type="VigenciaType" />
 			<xs:element name="Resultados" type="Texto1000Type" />
-			<xs:element name="Institucion" type="InstitucionType" maxOccurs="unbounded" />
+			<xs:element name="InstitucionCompleja" type="InstitucionType" maxOccurs="unbounded" />
 			<xs:element name="Actores" type="ActoresType" />
 			<xs:element name="EjesTematicos" type="xs:string" />
 		</xs:sequence>
@@ -1531,8 +1372,8 @@
 	<!--Evaluacion-->
 	<xs:complexType name="EvaluacionType">
 		<xs:choice>
-			<xs:element name="SECIHTI" type="EvaSECIHTI" />
-			<xs:element name="Otros" type="EvaOtros" />
+			<xs:element name="EvaSECIHTI" type="EvaSECIHTI" />
+			<xs:element name="EvaOtros" type="EvaOtros" />
 		</xs:choice>
 		<xs:attribute name="Tipo" use="required">
 			<xs:simpleType>
@@ -1552,7 +1393,7 @@
 			<xs:element name="FechaAsignacion" type="DateType" />
 			<xs:element name="FechaAceptacion" type="DateType" />
 			<xs:element name="FechaDeEvaluacion" type="DateType" />
-			<xs:element name="Descripcion" type="Descripcion500Type" />
+			<xs:element name="Descripcion" type="Max500Caracteres" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -1579,7 +1420,7 @@
 	<!--Estancias-->
 	<xs:complexType name="EstanciaType">
 		<xs:sequence>
-			<xs:element name="Institucion" type="InstitucionType" />
+			<xs:element name="InstitucionCompleja" type="InstitucionType" />
 			<xs:element name="Nombre" type="xs:string" />
 			<xs:element name="FechaInicio" type="DateType" />
 			<xs:element name="FechaFinalizacion" type="DateType" />
@@ -1592,7 +1433,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="Logros" type="Descripcion500Type" />
+			<xs:element name="Logros" type="Max500Caracteres" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -1660,7 +1501,7 @@
 	no SNP-->
 	<xs:complexType name="CursoNoSNPType">
 		<xs:sequence>
-			<xs:element name="Institucion" type="InstitucionType" />
+			<xs:element name="InstitucionCompleja" type="InstitucionType" />
 			<xs:element name="Programa" type="xs:string" />
 			<xs:element name="Curso" type="xs:string" />
 			<xs:element name="Horas" type="Horas4DigitosType" />
@@ -1674,10 +1515,10 @@
 	tomados-->
 	<xs:complexType name="DiplomadosType">
 		<xs:sequence>
-			<xs:element name="Institucion" type="InstitucionType" />
+			<xs:element name="InstitucionCompleja" type="InstitucionType" />
 			<xs:element name="Diplomado" type="xs:string" />
 			<xs:element name="Curso" type="xs:string" />
-			<xs:element name="Año" type="xs:string" />
+			<xs:element name="Anio" type="xs:string" />
 			<xs:element name="Horas" type="Horas10DigitosType" />
 		</xs:sequence>
 	</xs:complexType>
@@ -1686,10 +1527,11 @@
 	de Titulación-->
 	<xs:complexType name="TrabajosDeTitulacionType">
 		<xs:choice>
-			<xs:element name="TrabajoSNP" type="TrabajoSNPType" />
-			<xs:element name="TrabajoNoSNP" type="TrabajoNoSNPType" />
+			<xs:element name="TrabajoSNP" type="TrabajoSNPType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="TrabajoNoSNP" type="TrabajoNoSNPType" minOccurs="0"
+				maxOccurs="unbounded" />
 		</xs:choice>
-		<xs:attribute name="Programa" use="required">
+		<xs:attribute name="Tipo" use="required">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:enumeration value="SNP" />
@@ -1708,7 +1550,7 @@
 			<xs:element name="Programas" type="xs:string" />
 			<xs:element name="Titulo" type="xs:string" />
 			<xs:element name="EstadoDelTrabajo" type="xs:string" />
-			<xs:element name="Autor" type="AutoresTrabajoType" maxOccurs="unbounded" />
+			<xs:element name="AutorTrabajo" type="AutoresTrabajoType" maxOccurs="unbounded" />
 			<xs:element name="GradoAcademicoDelTrabajo" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
@@ -1718,10 +1560,10 @@
 	<xs:complexType name="TrabajoNoSNPType">
 		<xs:sequence>
 			<xs:element name="Tipo" type="xs:string" />
-			<xs:element name="Institucion" type="InstitucionType" /> <!-- Reutilizable -->
+			<xs:element name="InstitucionCompleja" type="InstitucionType" /> <!-- Reutilizable -->
 			<xs:element name="Titulo" type="xs:string" />
 			<xs:element name="EstadoDelTrabajo" type="xs:string" />
-			<xs:element name="Autor" type="AutoresTrabajoType" maxOccurs="unbounded" />
+			<xs:element name="AutorTrabajo" type="AutoresTrabajoType" maxOccurs="unbounded" />
 			<xs:element name="GradoAcademicoDelTrabajo" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
@@ -1767,11 +1609,13 @@
 	<!--Acceso
 	Universal al conocimiento-->
 	<xs:complexType name="AccesoAlConocimientoType">
-		<xs:choice>
-			<xs:element name="Difusión" type="DifusionType" />
-			<xs:element name="Divulgacion" type="DivulgacionType" />
-			<xs:element name="Participacion" type="ParticipacionType" />
-		</xs:choice>
+		<xs:sequence>
+			<xs:element name="Difusion" type="DifusionType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="Divulgacion" type="DivulgacionType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="Participacion" type="ParticipacionType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
 	</xs:complexType>
 
 	<!--Difusión
@@ -1797,7 +1641,7 @@
 			<xs:element name="NotasPeriodisticas" type="Texto4000Type" />
 			<xs:element name="ProductoObtenido" type="xs:string" maxOccurs="unbounded" />
 		</xs:sequence>
-		<xs:attribute name="TipoDivulgacion" use="required">
+		<xs:attribute name="Tipo" use="required">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:enumeration value="Nacional" />
@@ -1821,11 +1665,11 @@
 	<!--ENI
 	GEMA Sisdai-->
 	<xs:complexType name="ENI_GEMA_SisdaiType">
-		<xs:choice>
-			<xs:element name="ENI" type="ENIType" />
-			<xs:element name="GEMA" type="GEMAType" />
-			<xs:element name="Sisdai" type="SisdaiType" />
-		</xs:choice>
+		<xs:sequence>
+			<xs:element name="ENI" type="ENIType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="GEMA" type="GEMAType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="Sisdai" type="SisdaiType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
 	</xs:complexType>
 
 	<!--ENI-->
@@ -1846,19 +1690,198 @@
 	<xs:complexType name="SisdaiType">
 		<xs:sequence>
 			<xs:element name="Bibliotecas" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="Descripcion" type="Texto2000Type" />
+			<xs:element name="Descripcion" type="Max2000Caracteres" />
 		</xs:sequence>
 	</xs:complexType>
 
-	<!--2000
-	caracteres-->
-	<xs:simpleType name="Texto2000Type">
+	<!--DATOS
+	REUTILIZABLES-->
+
+	<!--Máximo
+	2000 caracteres-->
+	<xs:simpleType name="Max2000Caracteres">
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="2000" />
 		</xs:restriction>
 	</xs:simpleType>
 
-	<!--Lada
-	Type-->
+	<!--Mínimo
+	y máximo 10 dígitos-->
+	<xs:simpleType name="DiezDigitos">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{10}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Mínimo
+	y Máximo 18 caracteres-->
+	<xs:simpleType name="MinMax18Caracteres">
+		<xs:restriction base="xs:string">
+			<xs:length value="18" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Mínimo
+	y Máximo 13 caracteres-->
+	<xs:simpleType name="MinMax13Caracteres">
+		<xs:restriction base="xs:string">
+			<xs:length value="13" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Fecha
+	AAAA-MM-DD-->
+	<xs:simpleType name="DateType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{4}-\d{2}-\d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Sexo
+	con 2 opciones-->
+	<xs:simpleType name="Sexo2Options">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="masculino" />
+			<xs:enumeration value="femenino" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Sexo con 4 opciones-->
+	<xs:simpleType name="Sexo4Options">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Masculino" />
+			<xs:enumeration value="Femenino" />
+			<xs:enumeration value="No binario" />
+			<xs:enumeration value="Otro" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--5
+	dígitos-->
+	<xs:simpleType name="MinMax5Digitos">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{1,5}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Minimo
+	5 Máximo 10 dígitos-->
+	<xs:simpleType name="Min5Max10Digitos">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{5,10}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Máximo
+	500 caracteres-->
+	<xs:simpleType name="Max500Caracteres">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="500" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Mínimo
+	2 caracteres sin Máximo-->
+	<xs:simpleType name="Min2Caracteres">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Menor
+	a N-->
+	<xs:simpleType name="AnioType">
+		<xs:restriction base="xs:gYear">
+			<xs:maxInclusive value="2025" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Entre
+	0 y 9999-->
+	<xs:simpleType name="Horas4DigitosType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0" />
+			<xs:maxInclusive value="9999" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Máximo
+	50 caracteres-->
+	<xs:simpleType name="Folio50Type">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Vigencias-->
+	<xs:complexType name="VigenciaType">
+		<xs:attribute name="Inicio" type="DateType" use="required" />
+		<xs:attribute name="Fin" type="DateType" use="required" />
+	</xs:complexType>
+
+	<!--1000
+	caracteres-->
+	<xs:simpleType name="Texto1000Type">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1000" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--70
+	Caracteres-->
+	<xs:simpleType name="AlfaNum70Type">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="70" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Citas-->
+	<xs:complexType name="CitasType">
+		<xs:sequence>
+			<xs:element name="Cita" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="URLCita" type="xs:string" />
+						<xs:element name="CitaA" type="xs:integer" />
+						<xs:element name="CitaB" type="xs:integer" />
+						<xs:element name="TotalDeCitas" type="xs:integer" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CitasLibroType">
+		<xs:sequence>
+			<xs:element name="CitaLibro" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="URLCita" type="xs:string" />
+						<xs:element name="CitaA" type="xs:integer" />
+						<xs:element name="CitaB" type="xs:integer" />
+						<xs:element name="TotalDeCitas" type="xs:integer" />
+						<xs:element name="EjeSECIHTI" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--Autores-->
+	<xs:complexType name="AutoresType">
+		<xs:sequence>
+			<xs:element name="Autor" type="AutorType" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AutorType">
+		<xs:sequence>
+			<xs:element name="Nombre" type="xs:string" />
+			<xs:element name="PrimerApellido" type="xs:string" />
+			<xs:element name="SegundoApellido" type="xs:string" minOccurs="0" />
+			<xs:element name="ORCID" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="Orden" use="required" type="xs:integer" />
+	</xs:complexType>
 
 </xs:schema>

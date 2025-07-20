@@ -1,40 +1,760 @@
-<!ELEMENT cvu (MiPerfil, TrayectoriaAcademica, TrayectoriaProfesional)>
+<!--Elemento Raiz-->
+<!ELEMENT cvu (
+    MiPerfil,
+    TrayectoriaAcademica,
+    TrayectoriaProfesional
+)>
 
-<!-- Elemento MiPerfil -->
-<!ELEMENT MiPerfil (Nombre, Semblanza, Contacto, Habilidades?, Intereses?, AreaDeConocimiento, InformacionGeneral, Domicilio, ContactosDeEmergencia?, DependientesEconomicos?)>
+<!--Apartados Principales-->
 
-<!ELEMENT Nombre (#PCDATA)>
-<!ELEMENT Semblanza (#PCDATA)>
-<!ELEMENT Contacto (Correo*, Movil*, Telefono*, RedSocial?)>
-<!ELEMENT Correo (#PCDATA)>
-<!ATTLIST Correo Principal (true|false) #REQUIRED>
-<!ELEMENT Movil (#PCDATA)>
-<!ATTLIST Movil Principal (true|false) #REQUIRED>
-<!ELEMENT Telefono (#PCDATA)>
-<!ATTLIST Telefono Principal (true|false) #REQUIRED>
-<!ELEMENT RedSocial (#PCDATA)>
+<!--Apartado MI PERFIL-->
+<!ELEMENT MiPerfil (
+    Nombre, 
+    Semblanza,
+    ContactoDocente,
+    Habilidades?,
+    Intereses?,
+    AreaDeConocimiento,
+    IdentificadoresDeAutor?,
+    InformacionGeneral,
+    Domicilio,
+    ContactosDeEmergencia?,
+    DependientesEconomicos?
+)>
 
+<!--Apartado TRAYECTORIA ACADÉMICA-->
+<!ELEMENT TrayectoriaAcademica (
+    Trayectoria+,
+    CursosTomados?,
+    CertificacionesTomadas?,
+    LogrosAlcanzados?,
+    IdiomasLenguas?
+)>
+
+<!--Apartado TRAYECTORIA PROFESIONAL-->
+<!ELEMENT TrayectoriaProfesional (
+    Empleos?,
+    Produccion*,
+    EvaluacionesRealizadas?,
+    EstanciasTomadas?,
+    HCTI?,
+    AccesoUniversalAlConocimiento?,
+    ENI_GEMA_Sisdai?
+)>
+
+<!--Elementos Complejos-->
+
+<!ELEMENT DependientesEconomicos (DependienteEconomico*)>
+
+<!ELEMENT DependienteEconomico (DependienteMexicano | DependienteExtranjero)>
+
+<!ELEMENT DependienteMexicano (
+    CURP,
+    Nombre,
+    PrimerApellido,
+    SegundoApellido?,
+    FechaDeNacimiento,
+    Edad,
+    Parentesco,
+    Sexo,
+    Orden
+)>
+
+<!ELEMENT DependienteExtranjero (
+    Nombre,
+    PrimerApellido,
+    SegundoApellido?,
+    FechaDeNacimiento,
+    Edad,
+    Parentesco,
+    Sexo,
+    Orden
+)>
+
+<!--Datos de Contacto-->
+<!ELEMENT ContactoDocente (
+    CorreoDocente*,
+    MovilDocente*,
+    TelefonoDocente*,
+    RedSocialDocente?
+)>
+
+<!--Habilidades-->
 <!ELEMENT Habilidades (Habilidad*)>
-<!ELEMENT Habilidad (#PCDATA)>
-<!ATTLIST Habilidad experiencia (25|50|75|100) #REQUIRED>
 
+<!--Intereses-->
 <!ELEMENT Intereses (Interes*)>
-<!ELEMENT Interes (#PCDATA)>
 
-<!ELEMENT AreaDeConocimiento (Area, Campo, Disciplina, Subdisciplina)>
+<!--Área de Conocimiento-->
+<!ELEMENT AreaDeConocimiento (
+    Area,
+    Campo,
+    Disciplina,
+    Subdisciplina
+)>
+
+<!--Identificadores de Autor-->
+<!ELEMENT IdentificadoresDeAutor (Identificador*)>
+
+<!--Informacion General-->
+<!ELEMENT InformacionGeneral (
+    CURP,
+    Nombre,
+    PrimerApellido,
+    SegundoApellido,
+    FechaDeNacimiento,
+    Sexo,
+    PaisDeNacimiento,
+    EntidadFederativa,
+    RFC,
+    EstadoCivil,
+    Nacionalidad
+)>
+
+<!--Domicilio-->
+<!ELEMENT Domicilio (DomicilioMexico | DomicilioExtranjero)>
+
+<!--Domicilio Mexicano-->
+<!ELEMENT DomicilioMexico (
+    CodigoPostal,
+    Estado,
+    MunicipioAlcaldia,
+    Localidad,
+    Asentamiento?,
+    TipoAsentamiento?,
+    TipoDomicilio,
+    ReferenciasDomicilio*,
+    DescripcionDomicilio*,
+    (DomicilioUrbano* | DomicilioRural*)
+)>
+
+<!--Domicilio Urbano-->
+<!ELEMENT DomicilioUrbano (
+    TipoDeVialidad,
+    NombreDeLaVialidad,
+    NumeroExterior,
+    NumeroInterior
+)>
+
+<!--Domicilio rural-->
+<!ELEMENT DomicilioRural (
+    TipoDeVialidad,
+    NombreDeLaVialidad,
+    Administracion?,
+    DerechoDeTransito?,
+    Codigo?,
+    OrigenTramo?,
+    DestinoTramo?,
+    Margen?,
+    Cadenamiento?,
+    NumeroExterior?,
+    NumeroInterior?
+)>
+
+<!--DomicilioExtranjero-->
+<!ELEMENT DomicilioExtranjero (
+    Pais,
+    CodigoPostal,
+    Estado,
+    Ciudad,
+    Condado,
+    Calle,
+    Numero,
+    Descripcion
+)>
+
+<!--Contactos de Emergencia-->
+<!ELEMENT ContactosDeEmergencia (ContactoEmergencia*)>
+<!ELEMENT ContactoEmergencia (
+    Nombre,
+    PrimerApellido,
+    SegundoApellido,
+    Parentesco,
+    FechaDeNacimiento,
+    Sexo,
+    CorreoContacto,
+    Lada,
+    TelefonoContacto,
+    MovilContacto,
+    MedioPreferente,
+    (ContactoMexico | ContactoExtranjero)
+)>
+
+
+<!--Contacto Mexicano-->
+<!ELEMENT ContactoMexico (
+    CodigoPostal,
+    Estado,
+    MunicipioAlcaldia,
+    TipoAsentamiento
+)>
+
+<!--Contacto Extranjero-->
+<!ELEMENT ContactoExtranjero (
+    Pais,
+    CodigoPostal,
+    Estado,
+    Ciudad,
+    Condado,
+    Calle,
+    Numero,
+    Referencias
+)>
+
+<!--Trayectoria del Docente-->
+<!ELEMENT Trayectoria (
+    NivelDeEscolaridad,
+    Titulo,
+    EstadoDelGrado,
+    InstitucionCompleja+
+)>
+
+<!--Institucion Compleja-->
+<!ELEMENT InstitucionCompleja (
+    (InstitucionNacional | InstitucionExtranjera)
+)>
+
+<!--Institucion Nacional-->
+<!ELEMENT InstitucionNacional (
+    (SectorSimple | SectorEstatal | SectorMunicipal)
+)>
+
+<!--Sector Simple-->
+<!ELEMENT SectorSimple (
+    Nombre
+)>
+
+<!--Sector Estatal-->
+<!ELEMENT SectorEstatal (
+    Nombre,
+    Entidad
+)>
+
+<!--Sector Municipal-->
+<!ELEMENT SectorMunicipal (
+    Nombre,
+    Entidad,
+    MunicipioAlcaldia
+)>
+
+<!--Institucion Extranjera-->
+<!ELEMENT InstitucionExtranjera (
+    Nombre,
+    Pais
+)>
+
+<!--Cursos tomados-->
+<!ELEMENT CursosTomados (
+    CursoComplejo*
+)>
+
+<!--Curso Complejo-->
+<!ELEMENT CursoComplejo (
+    TipoDeFormacionContinua,
+    Nombre,
+    Anio,
+    HorasTotales,
+    InstitucionCompleja
+)>
+
+<!-- Certificaciones Tomadas -->
+
+<!ELEMENT CertificacionesTomadas (
+    CertificacionCompleja*
+)>
+
+<!-- Certificacion Compleja -->
+
+<!ELEMENT CertificacionCompleja (
+    NumeroDeFolio,
+    ConsejoOtorgado,
+    Nombre,
+    Especialidad,
+    Vigencia
+)>
+
+<!-- Logros alcanzados-->
+
+<!ELEMENT LogrosAlcanzados (
+    LogroComplejo*
+)>
+
+<!-- Logro Complejo -->
+
+<!ELEMENT LogroComplejo ((LogroSECIHTI | LogroOtros))>
+
+<!-- Logros de SECIHTI-->
+
+<!ELEMENT LogroSECIHTI (
+    Nombre,
+    Anio
+)>
+
+<!--Logro Otros-->
+<!ELEMENT LogroOtros (
+    Anio,
+    Nombre,
+    InstitucionCompleja,
+    Pais,
+    Descripcion
+)>
+
+<!--Idiomas o Lenguas del Docente-->
+<!ELEMENT IdiomasLenguas (IdiomaComplejo*)>
+
+<!--Idioma Complejo--> 
+<!ELEMENT IdiomaComplejo (
+    Idioma,
+    GradoDeDominio,
+    NivelDeConversacion,
+    NivelDeLectura,
+    NivelDeEscritura,
+    CertificacionIdioma?
+)>
+
+<!--Certificacion de Idioma-->
+<!ELEMENT CertificacionIdioma (
+    Institucion,
+    FechaDeEvaluacion,
+    Documento,
+    Vigencia,
+    Puntos,
+    Nivel
+)>
+
+<!--Empleos-->
+<!ELEMENT Empleos (EmpleoComplejo*)>
+
+<!--Empleo Complejo-->
+<!ELEMENT EmpleoComplejo (
+    InstitucionCompleja,
+    FechaInicio,
+    Nombre,
+    Logros?,
+    FechaFin?
+)>
+
+<!--Produccion-->
+<!ELEMENT Produccion (
+    (Articulo*,Libro*,Capitulo*)|
+    (Desarrollo*,PropiedadIntelectual*,Transferencia*)
+)>
+
+<!--Articulo-->
+<!ELEMENT Articulo (
+    ISNNImpreso?,
+    ISNNElectronico?,
+    DOI,
+    NombreDeLaRevista,
+    TituloDeArticulo,
+    Anio,
+    Programa?,
+    Rol,
+    Estatus,
+    Objetivo,
+    Citas?,
+    Autores,
+    EjeSECIHTI
+)>
+
+<!--Citas Complejas-->
+<!ELEMENT Citas (Cita*)>
+
+<!--Cita-->
+<!ELEMENT Cita (
+    URLCita,
+    CitaA,
+    CitaB,
+    TotalDeCitas
+)>
+
+<!--Autores-->
+<!ELEMENT Autores (Autor*)>
+
+<!ELEMENT Autor (
+    Nombre,
+    PrimerApellido,
+    SegundoApellido?,
+    ORCID
+)>
+
+<!--Libros-->
+<!ELEMENT Libro (
+    ISBN,
+    DOI,
+    Titulo,
+    Anio,
+    Editorial,
+    Pais,
+    Idioma,
+    ISBNTraducido,
+    IdiomaTraducido,
+    TituloTraducido,
+    Programa?,
+    Rol,
+    EstadoDePublicacion,
+    Objetivo,
+    CitasLibro?,
+    Autores
+)>
+
+<!--Citas Libro-->
+<!ELEMENT CitasLibro (CitaLibro*)>
+
+<!--Cita Libro-->
+<!ELEMENT CitaLibro (
+    URLCita,
+    CitaA,
+    CitaB,
+    TotalDeCitas,
+    EjeSECIHTI
+)>
+
+<!-- Capítulos -->
+<!ELEMENT Capitulo (
+    ISBN,
+    DOI,
+    Titulo,
+    Anio,
+    Editorial,
+    TituloDelCapitulo,
+    NumeroDeCapitulo,
+    Programa?,
+    Rol,
+    EstadoDePublicacion,
+    Objetivo,
+    Citas?,
+    Autores,
+    EjeSECIHTI
+)>
+
+<!--Desarrollos-->
+<!ELEMENT Desarrollo (DesarrolloProducto | InnovacionProducto)>
+
+<!-- Producto de Desarrollo -->
+<!ELEMENT DesarrolloProducto (
+    Nombre,
+    Tipo,
+    Descripcion,
+    ObjetivosDelProducto,
+    ProblemaQueAtiende,
+    PersonasBeneficiadas,
+    Justificacion,
+    ImpactoEnBeneficiados,
+    Programa?,
+    TipoDeApoyo?,
+    TituloUltimoProyectoApoyado?,
+    NumeroUltimoProyectoApoyado?,
+    NivelDeMadurezTecnologica,
+    OtrosResultadosRelevantes,
+    Rol,
+    ActividadesRealizadas,
+    PeriodoDeParticipacion,
+    PrincipalesResultados,
+    Actores,
+    EjeSECIHTI
+)>
+
+<!--Actores-->
+<!ELEMENT Actores (Actor*)>
+
+<!ELEMENT Actor (
+    Nombre,
+    PrimerApellido,
+    SegundoApellido?,
+    Rol
+)>
+
+<!--Producto de Inovación-->
+<!ELEMENT InnovacionProducto (
+    Nombre,
+    ObjetivosDelProducto,
+    ProblemaQueAtiende,
+    PersonasBeneficiadas,
+    Justificacion,
+    ImpactoEnBeneficiados,
+    DescripcionDeLaInnovacion,
+    SectorSCIAN,
+    SubsectorSCIAN,
+    Rama,
+    Subrama,
+    Clase,
+    SectorOCDE,
+    Division,
+    Grupo,
+    ClaseOCDE,
+    Programa?,
+    TipoDeApoyo?,
+    TituloUltimoProyectoApoyado?,
+    NumeroUltimoProyectoApoyado?,
+    NivelDeMadurezTecnologica,
+    OtrosResultadosRelevantes,
+    Rol,
+    ActividadesRealizadas,
+    PeriodoDeParticipacion,
+    PrincipalesResultados,
+    Actores,
+    EjeTematico
+)>
+
+<!--PropiedadIntelectual-->
+<!ELEMENT PropiedadIntelectual (
+    PropiedadMexico*,
+    PropiedadInternacional*,
+    PropiedadAmbas
+)>
+
+<!--PropiedadMexico-->
+<!ELEMENT PropiedadMexico (
+    TipoDeProteccion,
+    Titulo,
+    Resumen,
+    Solicitantes,
+    Rol,
+    NumeroDeSolicitud,
+    FechaDePresentacion,
+    Estado,
+    EjesTematicos
+)>
+
+<!ELEMENT Solicitantes (Solicitante*)>
+
+<!ELEMENT Solicitante (
+    Nombre,
+    PrimerApellido,
+    SegundoApellido?,
+    Rol
+)>
+
+<!--Propiedad Internacional-->
+<!ELEMENT PropiedadInternacional (
+    TipoDeProteccion,
+    Titulo,
+    Resumen,
+    Solicitantes,
+    Rol,
+    NumeroDeSolicitud,
+    NumeroDePublicacion,
+    Estado,
+    EjesTematicos
+)>
+
+<!--Propiedad Ambas-->
+<!ELEMENT PropiedadAmbas (
+    TipoDeProteccion,
+    Titulo,
+    Resumen,
+    Solicitantes,
+    Rol,
+    NumeroDeSolicitudMexico,
+    FechaDePresentacionMexico,
+    NumeroDeSolicitudInternacional,
+    NumeroDePublicacionInternacional,
+    Estado,
+    EjesTematicos
+)>
+
+<!--Transferencia-->
+<!ELEMENT Transferencia (
+    TipoDeActividad,
+    DescripcionDeLaActividad,
+    Rol,
+    DescripcionDeActividades,
+    PeriodoDeParticipacion,
+    Resultados,
+    InstitucionCompleja,
+    Actores,
+    EjesTematicos
+)>
+
+
+<!ELEMENT EvaluacionesRealizadas (Evaluacion*)>
+
+<!ELEMENT Evaluacion (
+    EvaSECIHTI,
+    EvaOtros
+)>
+
+<!ELEMENT EvaSECIHTI (
+    Nombre,
+    FechaAsignacion,
+    FechaAceptacion,
+    FechaDeEvaluacion,
+    Descripcion
+)>
+
+<!ELEMENT EvaOtros (
+    Institucion,
+    ProductoEvaluado,
+    FechaInicio,
+    FechaFinalizacion,
+    CargoDesempeniado
+)>
+
+<!ELEMENT EstanciasTomadas (Estancia*)>
+
+<!ELEMENT Estancia (
+    InstitucionCompleja,
+    Nombre,
+    FechaInicio,
+    FechaFinalizacion,
+    Tipo,
+    Logros
+)>
+
+<!ELEMENT HCTI (Comunidad*)>
+
+<!ELEMENT Comunidad (
+    Docencia|
+    TrabajosDeTitulacion|
+    DesarrolloInstitucional
+)>
+
+<!ELEMENT Docencia (
+    CursosImpartidos*,
+    DiplomadosTomados*
+)>
+
+<!ELEMENT CursosImpartidos (
+    CursoSNP?,
+    CursoNoSNP?
+)>
+
+<!ELEMENT CursoSNP (
+    Institucion,
+    Programa,
+    Curso,
+    Horas,
+    FechaInicio,
+    FechaFinalizacion,
+    Nivel?
+)>
+
+<!ELEMENT CursoNoSNP (
+    InstitucionCompleja,
+    Programa,
+    Curso,
+    Horas,
+    FechaInicio,
+    FechaFinalizacion,
+    Nivel?
+)>
+
+<!ELEMENT DiplomadosTomados (
+    InstitucionCompleja,
+    Diplomado,
+    Curso,
+    Anio,
+    Horas
+)>
+
+<!ELEMENT TrabajosDeTitulacion (
+    TrabajoSNP*,
+    TrabajoNoSNP*
+)>
+
+<!ELEMENT TrabajoSNP (
+    Tipo,
+    Institucion,
+    Programas,
+    Titulo,
+    EstadoDelTrabajo,
+    AutorTrabajo+,
+    GradoAcademicoDelTrabajo
+)>
+
+<!ELEMENT AutorTrabajo (
+    Nombre,
+    PrimerApellido,
+    SegundoApellido?,
+    Rol
+)>
+
+<!ELEMENT TrabajoNoSNP (
+    Tipo,
+    InstitucionCompleja,
+    Titulo,
+    EstadoDelTrabajo,
+    AutorTrabajo,
+    GradoAcademicoDelTrabajo
+)>
+
+<!ELEMENT DesarrolloInstitucional (
+    Proyectos,
+    PlanesDeEstudio,
+    EjesProgramaticos
+)>
+
+<!ELEMENT AccesoUniversalAlConocimiento (AccesoConocimiento*)>
+
+<!ELEMENT AccesoConocimiento (
+    Difusion*,
+    Divulgacion*,
+    Participacion*
+)>
+
+<!ELEMENT Difusion (
+    Articulo*,
+    Libro*,
+    Capitulo*
+)>
+
+<!ELEMENT Divulgacion (
+    Titulo,
+    Tipo,
+    Participacion,
+    TipoEvento,
+    InstitucionOrganizadora,
+    DirigidoA,
+    Fecha,
+    Medio,
+    NotasPeriodisticas,
+    ProductoObtenido+
+)>
+
+<!ELEMENT Participacion (
+    Nombre,
+    Congreso,
+    Titulo,
+    TipoParticipacion,
+    Pais,
+    Fecha
+)>
+
+<!ELEMENT ENI_GEMA_Sisdai (ElementoDelENI*)>
+
+<!ELEMENT ElementoDelENI (
+    ENI*,
+    GEMA*,
+    Sisdai*
+)>
+
+<!ELEMENT ENI (URL)>
+<!ELEMENT GEMA (URL)>
+
+<!ELEMENT Sisdai (
+    Bibliotecas,
+    Descripcion
+)>
+
+<!--Elementos simples -->
+<!ELEMENT Nombre (#PCDATA)>
+<!ELEMENT PrimerApellido (#PCDATA)>
+<!ELEMENT SegundoApellido (#PCDATA)>
+<!ELEMENT Semblanza (#PCDATA)>
+<!ELEMENT CorreoDocente (#PCDATA)>
+<!ELEMENT CorreoContacto (#PCDATA)>
+<!ELEMENT MovilDocente (#PCDATA)>
+<!ELEMENT TelefonoDocente (#PCDATA)>
+<!ELEMENT RedSocialDocente (#PCDATA)>
+<!ELEMENT Habilidad (#PCDATA)>
+<!ELEMENT Interes (#PCDATA)>
 <!ELEMENT Area (#PCDATA)>
 <!ELEMENT Campo (#PCDATA)>
 <!ELEMENT Disciplina (#PCDATA)>
 <!ELEMENT Subdisciplina (#PCDATA)>
-
-<!ELEMENT IdentificadoresDeAutor (Identificador*)>
 <!ELEMENT Identificador (#PCDATA)>
-<!ATTLIST Identificador organizacion (ORC|Thomson|arXiv|PubMed|Open) #REQUIRED>
-
-<!ELEMENT InformacionGeneral (CURP, Nombre, PrimerApellido, SegundoApellido, FechaDeNacimiento, Sexo, PaisDeNacimiento, EntidadFederativa, RFC, EstadoCivil, Nacionalidad)>
 <!ELEMENT CURP (#PCDATA)>
-<!ELEMENT PrimerApellido (#PCDATA)>
-<!ELEMENT SegundoApellido (#PCDATA)>
 <!ELEMENT FechaDeNacimiento (#PCDATA)>
 <!ELEMENT Sexo (#PCDATA)>
 <!ELEMENT PaisDeNacimiento (#PCDATA)>
@@ -42,183 +762,86 @@
 <!ELEMENT RFC (#PCDATA)>
 <!ELEMENT EstadoCivil (#PCDATA)>
 <!ELEMENT Nacionalidad (#PCDATA)>
-
-<!ELEMENT Domicilio (Mexico|Extranjero)>
-<!ATTLIST Domicilio Ubicacion (México|Extranjero) #REQUIRED>
-
-<!-- Domicilio en México -->
-<!ELEMENT Mexico (CodigoPostal, Estado, MunicipioAlcaldia, Localidad, Asentamiento?, TipoAsentamiento?, Tipo, Referencias*, Descripcion?)>
-<!ATTLIST Mexico InformacionExtra (Verdadero|Falso) #IMPLIED>
 <!ELEMENT CodigoPostal (#PCDATA)>
 <!ELEMENT Estado (#PCDATA)>
 <!ELEMENT MunicipioAlcaldia (#PCDATA)>
 <!ELEMENT Localidad (#PCDATA)>
 <!ELEMENT Asentamiento (#PCDATA)>
 <!ELEMENT TipoAsentamiento (#PCDATA)>
-<!ELEMENT Tipo (#PCDATA)>
-<!ELEMENT Referencias EMPTY>
-<!ATTLIST Referencias
-    TipoDeCalle CDATA #IMPLIED
-    NombreDeLaCalle CDATA #IMPLIED>
-<!ELEMENT Descripcion (#PCDATA)>
-
-<!-- Domicilio en el extranjero -->
-<!ELEMENT Extranjero (Pais, CodigoPostal, Estado, Ciudad, Condado, Calle, Numero, Descripcion)>
+<!ELEMENT TipoDomicilio (#PCDATA)>
+<!ELEMENT ReferenciasDomicilio (#PCDATA)>
+<!ELEMENT DescripcionDomicilio (#PCDATA)>
+<!ELEMENT NumeroExterior (#PCDATA)>
+<!ELEMENT NumeroInterior (#PCDATA)>
+<!ELEMENT TipoDeVialidad (#PCDATA)>
+<!ELEMENT NombreDeLaVialidad (#PCDATA)>
+<!ELEMENT Administracion (#PCDATA)>
+<!ELEMENT DerechoDeTransito (#PCDATA)>
+<!ELEMENT Codigo (#PCDATA)>
+<!ELEMENT OrigenTramo (#PCDATA)>
+<!ELEMENT DestinoTramo (#PCDATA)>
+<!ELEMENT Margen (#PCDATA)>
+<!ELEMENT Cadenamiento (#PCDATA)>
 <!ELEMENT Pais (#PCDATA)>
 <!ELEMENT Ciudad (#PCDATA)>
 <!ELEMENT Condado (#PCDATA)>
 <!ELEMENT Calle (#PCDATA)>
 <!ELEMENT Numero (#PCDATA)>
-
-<!ELEMENT ContactosDeEmergencia (Contacto*)>
-<!ELEMENT Contacto (Nombre, PrimerApellido, SegundoApellido, Parentesco, FechaDeNacimiento, Sexo, CorreoElectrónico, Lada, Telefono, Movil, MedioPreferente, (Mexico|Extranjero))>
-<!ATTLIST Contacto Ubicacion (Mexico|Extranjero) #REQUIRED>
+<!ELEMENT Descripcion (#PCDATA)>
 <!ELEMENT Parentesco (#PCDATA)>
-<!ELEMENT CorreoElectronico (#PCDATA)>
 <!ELEMENT Lada (#PCDATA)>
+<!ELEMENT TelefonoContacto (#PCDATA)>
+<!ELEMENT MovilContacto (#PCDATA)>
 <!ELEMENT MedioPreferente (#PCDATA)>
-
-<!ELEMENT DependientesEconomicos (Dependiente*)>
-<!ELEMENT Dependiente (Mexican|Foreign)>
-<!ATTLIST Dependiente Nacionalidad (Mexican|Foreign) #REQUIRED>
-<!ELEMENT Mexican (CURP, Nombre, PrimerApellido, SegundoApellido, FechaDeNacimiento, Edad, Parentesco, Sexo, Orden)>
-<!ELEMENT Foreign (Nombre, PrimerApellido, SegundoApellido, FechaDeNacimiento, Edad, Parentesco, Sexo, Orden)>
-<!ELEMENT Edad (#PCDATA)>
-<!ELEMENT Orden (#PCDATA)>
-
-<!-- Trayectoria Académica -->
-<!ELEMENT TrayectoriaAcademica (NivelDeEscolaridad, Titulo, EstadoDelGrado, Instituciones, Cursos?, Certificaciones?, Logros?, IdiomasLenguas?)>
+<!ELEMENT Referencias (#PCDATA)>
 <!ELEMENT NivelDeEscolaridad (#PCDATA)>
 <!ELEMENT Titulo (#PCDATA)>
 <!ELEMENT EstadoDelGrado (#PCDATA)>
-<!ELEMENT Instituciones (Institucion+)>
-<!ELEMENT Institucion (Nacional|Extranjera)>
-<!ATTLIST Institucion TipoDeInstitucion (Nacional|Extranjera) #REQUIRED>
-
-<!-- Instituciones Nacionales -->
-<!ELEMENT Nacional (SectorSimple|SectorEstatal|SectorMunicipal)>
-<!ELEMENT SectorSimple EMPTY>
-<!ATTLIST SectorSimple Sector (Pública-Federal|Privada) #REQUIRED>
-<!ELEMENT SectorEstatal (Entidad)>
-<!ATTLIST SectorEstatal Sector CDATA #FIXED "Pública-Estatal">
-<!ELEMENT SectorMunicipal (Entidad, MunicipioAlcaldia)>
-<!ATTLIST SectorMunicipal Sector CDATA #FIXED "Pública-Municipal">
 <!ELEMENT Entidad (#PCDATA)>
-
-<!-- Instituciones Extranjeras -->
-<!ELEMENT Extranjera (Pais)>
-
-<!-- Cursos -->
-<!ELEMENT Cursos (Curso*)>
-<!ELEMENT Curso (TipoDeFormacionContinua, NombreDelCurso, Anio, HorasTotales, Institucion)>
 <!ELEMENT TipoDeFormacionContinua (#PCDATA)>
-<!ELEMENT NombreDelCurso (#PCDATA)>
 <!ELEMENT Anio (#PCDATA)>
 <!ELEMENT HorasTotales (#PCDATA)>
-
-<!-- Certificaciones -->
-<!ELEMENT Certificaciones (Certificacion*)>
-<!ELEMENT Certificacion (NumeroDeFolio, ConsejoOtorgado, NombreDeLaCertificacion, Especialidad, Vigencia)>
-<!ATTLIST Certificacion Tipo (Certificacion|Recertificacion) #REQUIRED>
 <!ELEMENT NumeroDeFolio (#PCDATA)>
 <!ELEMENT ConsejoOtorgado (#PCDATA)>
-<!ELEMENT NombreDeLaCertificacion (#PCDATA)>
 <!ELEMENT Especialidad (#PCDATA)>
-<!ELEMENT Vigencia EMPTY>
-<!ATTLIST Vigencia
-    Inicio CDATA #REQUIRED
-    Fin CDATA #REQUIRED>
-
-<!-- Logros -->
-<!ELEMENT Logros (Logro*)>
-<!ELEMENT Logro (SECIHTI|Otros)>
-<!ATTLIST Logro Tipo (SECIHTI|Otros) #REQUIRED>
-<!ELEMENT SECIHTI (NombreDistincion, Anio)>
-<!ELEMENT Otros (Anio, Nombre, Institución, Pais, Descripcion)>
-<!ELEMENT NombreDistincion (#PCDATA)>
-<!ELEMENT Institucion (#PCDATA)>
-<!ELEMENT Descripcion (#PCDATA)>
-
-<!-- Idiomas -->
-<!ELEMENT IdiomasLenguas (Idioma*)>
-<!ELEMENT Idioma (Idioma, GradoDeDominio, NivelDeConversacion, NivelDeLectura, NivelDeEscritura, Certificacion?)>
-<!ATTLIST Idioma Certificacion CDATA #FIXED "False">
+<!ELEMENT Vigencia (#PCDATA)>
+<!ELEMENT Idioma (#PCDATA)>
 <!ELEMENT GradoDeDominio (#PCDATA)>
 <!ELEMENT NivelDeConversacion (#PCDATA)>
 <!ELEMENT NivelDeLectura (#PCDATA)>
 <!ELEMENT NivelDeEscritura (#PCDATA)>
-<!ELEMENT Certificacion (Institucion?, FechaDeEvaluacion, Documento, Vigencia, Puntos, Nivel)>
-<!ATTLIST Certificacion Certificacion CDATA #FIXED "True">
+<!ELEMENT Institucion (#PCDATA)>
+<!ELEMENT FechaDeEvaluacion (#PCDATA)>
 <!ELEMENT Documento (#PCDATA)>
 <!ELEMENT Puntos (#PCDATA)>
 <!ELEMENT Nivel (#PCDATA)>
-
-<!-- Trayectoria Profesional -->
-<!ELEMENT TrayectoriaProfesional (Empleos?, Produccion, Evaluaciones?, Estancias?, HCTI?, AccesoUniversalAlConocimiento?, ENI?)>
-<!ELEMENT Empleos (Empleo*)>
-<!ELEMENT Empleo (Institucion, FechaInicio, NombreDelPuestoONombramiento, Logros?, FechaFin?)>
-<!ATTLIST Empleo
-    EmpleoActual (true|false) #REQUIRED
-    EmpleoPrincipal (true|false) #IMPLIED
-    FechaFinalizacion (true|false) #IMPLIED>
-<!ELEMENT NombreDelPuestoONombramiento (#PCDATA)>
-
-<!ELEMENT Produccion ((Articulo*, Libro*, Capitulo*) | (Desarrollo*, PropiedadIntelectual*, TransferenciaTecnologica*))>
-<!ATTLIST Produccion Tipo (Humanista|Tecnológica) #REQUIRED>
-
-<!-- Artículos -->
-<!ELEMENT Articulo ((ISNNImpreso | ISNNElectronico | (ISNNImpreso, ISNNElectronico)), DOI, NombreDeLaRevista, TituloDeArticulo, AnioDeLaPublicacion, Programa?, RolDeParticipacion, EstatusDePublicacion, Objetivo, Citas?, Autores, EjeSECIHTI)>
-<!ATTLIST Articulo
-    ISNN (Impreso|Electrónico|Ambos) #REQUIRED
-    ApoyoSECIHTI (true|false) #REQUIRED>
+<!ELEMENT FechaInicio (#PCDATA)>
+<!ELEMENT Logros (#PCDATA)>
+<!ELEMENT FechaFin (#PCDATA)>
 <!ELEMENT ISNNImpreso (#PCDATA)>
 <!ELEMENT ISNNElectronico (#PCDATA)>
 <!ELEMENT DOI (#PCDATA)>
 <!ELEMENT NombreDeLaRevista (#PCDATA)>
 <!ELEMENT TituloDeArticulo (#PCDATA)>
-<!ELEMENT AnioDeLaPublicacion (#PCDATA)>
 <!ELEMENT Programa (#PCDATA)>
-<!ELEMENT RolDeParticipacion (#PCDATA)>
-<!ELEMENT EstatusDePublicacion (#PCDATA)>
+<!ELEMENT Rol (#PCDATA)>
+<!ELEMENT Estatus (#PCDATA)>
 <!ELEMENT Objetivo (#PCDATA)>
-<!ELEMENT Citas (URLCita, CitaA, CitaB, TotalDeCitas)>
+<!ELEMENT EjeSECIHTI (#PCDATA)>
 <!ELEMENT URLCita (#PCDATA)>
 <!ELEMENT CitaA (#PCDATA)>
 <!ELEMENT CitaB (#PCDATA)>
 <!ELEMENT TotalDeCitas (#PCDATA)>
-<!ELEMENT Autores (Autor+)>
-<!ELEMENT Autor (Nombre, PrimerApellido, SegundoApellido?, ORCID)>
-<!ATTLIST Autor Orden CDATA #REQUIRED>
 <!ELEMENT ORCID (#PCDATA)>
-<!ELEMENT EjeSECIHTI (#PCDATA)>
-
-<!-- Libros -->
-<!ELEMENT Libro (ISBN, DOI, Titulo, AnioDeLaPublicacion, Editorial, Pais, Idioma, ISBNTraducido, IdiomaTraducido, TituloTraducido, Programa?, RolDeParticipacion, EstadoDePublicacion, Objetivo, Citas?, Autores)>
-<!ATTLIST Libro
-    ApoyoSECIHTI (true|false) #REQUIRED
-    Dictaminado (true|false) #REQUIRED>
 <!ELEMENT ISBN (#PCDATA)>
 <!ELEMENT Editorial (#PCDATA)>
 <!ELEMENT ISBNTraducido (#PCDATA)>
 <!ELEMENT IdiomaTraducido (#PCDATA)>
 <!ELEMENT TituloTraducido (#PCDATA)>
 <!ELEMENT EstadoDePublicacion (#PCDATA)>
-
-<!-- Capítulos -->
-<!ELEMENT Capitulo (ISBN, DOI, Titulo, AnioDeLaPublicacion, Editorial, TituloDelCapitulo, NumeroDeCapitulo, Programa?, RolDeParticipacion, EstadoDePublicacion, Objetivo, Citas?, Autores, EjeSECIHTI)>
-<!ATTLIST Capitulo
-    ApoyoSECIHTI (true|false) #REQUIRED
-    Dictaminado (true|false) #REQUIRED>
 <!ELEMENT TituloDelCapitulo (#PCDATA)>
 <!ELEMENT NumeroDeCapitulo (#PCDATA)>
-
-<!-- Desarrollo -->
-<!ELEMENT Desarrollo (DesarrolloProducto|InnovacionProducto)>
-<!ATTLIST Desarrollo Producto (Desarrollo|Innovación) #REQUIRED>
-<!ELEMENT DesarrolloProducto (Nombre, TipoDeDesarrollo, DescripcionDeDesarrollo, ObjetivosDelProducto, ProblemaQueAtiende, PersonasBeneficiadas, Justificacion, ImpactoEnBeneficiados, Programa?, TipoDeApoyo?, TituloUltimoProyectoApoyado?, NumeroUltimoProyectoApoyado?, NivelDeMadurezTecnologica, OtrosResultadosRelevantes, Rol, ActividadesRealizadas, PeriodoDeParticipacion, PrincipalesResultados, Actores, EjeSECIHTI)>
-<!ATTLIST DesarrolloProducto ApoyoSECIHTI (true|false) #REQUIRED>
-<!ELEMENT TipoDeDesarrollo (#PCDATA)>
-<!ELEMENT DescripcionDeDesarrollo (#PCDATA)>
+<!ELEMENT Tipo (#PCDATA)>
 <!ELEMENT ObjetivosDelProducto (#PCDATA)>
 <!ELEMENT ProblemaQueAtiende (#PCDATA)>
 <!ELEMENT PersonasBeneficiadas (#PCDATA)>
@@ -229,19 +852,9 @@
 <!ELEMENT NumeroUltimoProyectoApoyado (#PCDATA)>
 <!ELEMENT NivelDeMadurezTecnologica (#PCDATA)>
 <!ELEMENT OtrosResultadosRelevantes (#PCDATA)>
-<!ELEMENT Rol (#PCDATA)>
 <!ELEMENT ActividadesRealizadas (#PCDATA)>
-<!ELEMENT PeriodoDeParticipacion EMPTY>
-<!ATTLIST PeriodoDeParticipacion
-    Inicio CDATA #REQUIRED
-    Fin CDATA #REQUIRED>
+<!ELEMENT PeriodoDeParticipacion (#PCDATA)>
 <!ELEMENT PrincipalesResultados (#PCDATA)>
-<!ELEMENT Actores (Actor+)>
-<!ELEMENT Actor (Nombre, PrimerApellido, SegundoApellido?, Rol)>
-
-<!-- Innovación -->
-<!ELEMENT InnovacionProducto (Nombre, ObjetivosDelProducto, ProblemaQueAtiende, PersonasBeneficiadas, Justificacion, ImpactoEnBeneficiados, DescripcionDeLaInnovacion, SectorSCIAN, SubsectorSCIAN, Rama, Subrama, Clase, SectorOCDE, Division, Grupo, ClaseOCDE, Programa?, TipoDeApoyo?, TituloUltimoProyectoApoyado?, NumeroUltimoProyectoApoyado?, NivelDeMadurezTecnologica, OtrosResultadosRelevantes, Rol, ActividadesRealizadas, PeriodoDeParticipacion, PrincipalesResultados, Actores, EjeTematico)>
-<!ATTLIST InnovacionProducto ApoyoSECIHTI (true|false) #REQUIRED>
 <!ELEMENT DescripcionDeLaInnovacion (#PCDATA)>
 <!ELEMENT SectorSCIAN (#PCDATA)>
 <!ELEMENT SubsectorSCIAN (#PCDATA)>
@@ -253,94 +866,93 @@
 <!ELEMENT Grupo (#PCDATA)>
 <!ELEMENT ClaseOCDE (#PCDATA)>
 <!ELEMENT EjeTematico (#PCDATA)>
-
-<!-- Propiedad Intelectual -->
-<!ELEMENT PropiedadIntelectual (PropiedadMexico|PropiedadInternacional|PropiedadAmbas)>
-<!ATTLIST PropiedadIntelectual Tipo (México|Internacional|Ambas) #REQUIRED>
-<!ELEMENT PropiedadMexico (TipoDeProteccion, Titulo, Resumen, Solicitantes, Rol, NumeroDeSolicitud, FechaDePresentacion, Estado, EjesTematicos)>
 <!ELEMENT TipoDeProteccion (#PCDATA)>
 <!ELEMENT Resumen (#PCDATA)>
-<!ELEMENT Solicitantes (Actor+)>
 <!ELEMENT NumeroDeSolicitud (#PCDATA)>
 <!ELEMENT FechaDePresentacion (#PCDATA)>
-<!ELEMENT Estado (#PCDATA)>
 <!ELEMENT EjesTematicos (#PCDATA)>
-
-<!ELEMENT PropiedadInternacional (TipoDeProteccion, Titulo, Resumen, Solicitantes, Rol, NumeroDeSolicitud, NumeroDePublicacion, Estado, EjesTematicos)>
 <!ELEMENT NumeroDePublicacion (#PCDATA)>
-
-<!ELEMENT PropiedadAmbas (TipoDeProteccion, Titulo, Resumen, Solicitantes, Rol, NumeroDeSolicitudMexico, FechaDePresentacionMexico, NumeroDeSolicitudInternacional, NumeroDePublicacionInternacional, Estado, EjesTematicos)>
 <!ELEMENT NumeroDeSolicitudMexico (#PCDATA)>
 <!ELEMENT FechaDePresentacionMexico (#PCDATA)>
 <!ELEMENT NumeroDeSolicitudInternacional (#PCDATA)>
 <!ELEMENT NumeroDePublicacionInternacional (#PCDATA)>
-
-<!-- Transferencia Tecnológica -->
-<!ELEMENT TransferenciaTecnologica (TipoDeActividad, DescripcionDeLaActividad, Rol, DescripcionDeActividades, PeriodoDeParticipacion, Resultados, Institucion+, Actores, EjesTematicos)>
 <!ELEMENT TipoDeActividad (#PCDATA)>
 <!ELEMENT DescripcionDeLaActividad (#PCDATA)>
 <!ELEMENT DescripcionDeActividades (#PCDATA)>
 <!ELEMENT Resultados (#PCDATA)>
-
-<!-- Evaluaciones -->
-<!ELEMENT Evaluaciones (Evaluacion*)>
-<!ELEMENT Evaluacion (SECIHTI|Otros)>
-<!ATTLIST Evaluacion Tipo (SECIHTI|Otros) #REQUIRED>
-<!ELEMENT SECIHTI (Nombre, FechaAsignacion, FechaAceptacion, FechaDeEvaluacion, Descripcion)>
-<!ELEMENT Otros (Institucion, ProductoEvaluado, FechaInicio, FechaFinalizacion, CargoDesempeniado)>
+<!ELEMENT FechaAsignacion (#PCDATA)>
+<!ELEMENT FechaAceptacion (#PCDATA)>
 <!ELEMENT ProductoEvaluado (#PCDATA)>
+<!ELEMENT FechaFinalizacion (#PCDATA)>
 <!ELEMENT CargoDesempeniado (#PCDATA)>
-
-<!-- Estancias -->
-<!ELEMENT Estancias (Estancia*)>
-<!ELEMENT Estancia (Institucion, Nombre, FechaInicio, FechaFinalizacion, Tipo, Logros)>
-<!ELEMENT Tipo (#PCDATA)>
-
-<!-- HCTI -->
-<!ELEMENT HCTI (Comunidad*)>
-<!ELEMENT Comunidad (Docencia|TrabajosDeTitulacion|DesarrolloInstitucional)>
-<!ATTLIST Comunidad Tipo (Docencia|TrabajosDeTitulacion|DesarrolloInstitucional) #REQUIRED>
-<!ELEMENT Docencia (CursosImpartidos*, DiplomadosTomados*)>
-<!ELEMENT CursosImpartidos (CursoSNP|CursoNoSNP)>
-<!ATTLIST CursosImpartidos Tipo (SNP|NoSNP) #REQUIRED>
-<!ELEMENT CursoSNP (Institucion, Programa, Curso, Horas, FechaInicio, FechaFinalizacion, Nivel?)>
-<!ELEMENT CursoNoSNP (Institucion, Programa, Curso, Horas, FechaInicio, FechaFinalizacion, Nivel?)>
-<!ELEMENT DiplomadosTomados (Institucion, Diplomado, Curso, Año, Horas)>
 <!ELEMENT Diplomado (#PCDATA)>
-<!ELEMENT Anio (#PCDATA)>
-
-<!ELEMENT TrabajosDeTitulacion (TrabajoSNP|TrabajoNoSNP)>
-<!ATTLIST TrabajosDeTitulacion Programa (SNP|NoSNP) #REQUIRED>
-<!ELEMENT TrabajoSNP (Tipo, Institucion, Programas, Titulo, EstadoDelTrabajo, Autor+, GradoAcademicoDelTrabajo)>
+<!ELEMENT Curso (#PCDATA)>
+<!ELEMENT Horas (#PCDATA)>
 <!ELEMENT Programas (#PCDATA)>
 <!ELEMENT EstadoDelTrabajo (#PCDATA)>
 <!ELEMENT GradoAcademicoDelTrabajo (#PCDATA)>
-<!ELEMENT TrabajoNoSNP (Tipo, Institucion, Titulo, EstadoDelTrabajo, Autor+, GradoAcademicoDelTrabajo)>
-
-<!ELEMENT DesarrolloInstitucional (Proyectos, PlanesDeEstudio, EjesProgramaticos)>
 <!ELEMENT Proyectos (#PCDATA)>
 <!ELEMENT PlanesDeEstudio (#PCDATA)>
 <!ELEMENT EjesProgramaticos (#PCDATA)>
-
-<!-- Acceso Universal al Conocimiento -->
-<!ELEMENT AccesoUniversalAlConocimiento (Difusión|Divulgacion|Participacion)>
-<!ELEMENT Difusion (Articulo*, Libro*, Capitulo*)>
-<!ELEMENT Divulgacion (Titulo, TipoParticipacion, TipoEvento, InstitucionOrganizadora, DirigidoA, Fecha, Medio, NotasPeriodisticas, ProductoObtenido+)>
-<!ATTLIST Divulgacion TipoDivulgacion (Nacional|Internacional) #REQUIRED>
-<!ELEMENT TipoParticipacion (#PCDATA)>
 <!ELEMENT TipoEvento (#PCDATA)>
 <!ELEMENT InstitucionOrganizadora (#PCDATA)>
 <!ELEMENT DirigidoA (#PCDATA)>
+<!ELEMENT Fecha (#PCDATA)>
 <!ELEMENT Medio (#PCDATA)>
 <!ELEMENT NotasPeriodisticas (#PCDATA)>
 <!ELEMENT ProductoObtenido (#PCDATA)>
-
-<!ELEMENT Participacion (NombreCongreso, Titulo, TipoParticipacion, Pais, Fecha)>
-<!ELEMENT NombreCongreso (#PCDATA)>
-
-<!-- ENI, GEMA, Sisdai -->
-<!ELEMENT ENI (ENI|GEMA|Sisdai)>
-<!ELEMENT ENI (URL)>
-<!ELEMENT GEMA (URL)>
-<!ELEMENT Sisdai (Bibliotecas*, Descripcion)>
+<!ELEMENT Congreso (#PCDATA)>
+<!ELEMENT TipoParticipacion (#PCDATA)>
+<!ELEMENT URL (#PCDATA)>
 <!ELEMENT Bibliotecas (#PCDATA)>
+<!ELEMENT Edad (#PCDATA)>
+<!ELEMENT Orden (#PCDATA)>
+
+<!--Atributos-->
+<!ATTLIST ContactoEmergencia Ubicacion (Mexico | Extranjero) #REQUIRED>
+<!ATTLIST NumeroInterior ParteNumerica CDATA #IMPLIED>
+<!ATTLIST NumeroInterior ParteAlfanumerica CDATA #IMPLIED>
+<!ATTLIST NumeroExterior ParteNumerica CDATA #IMPLIED>
+<!ATTLIST NumeroExterior NumeroExteriorAnterior CDATA #IMPLIED>
+<!ATTLIST NumeroExterior ParteAlfanumerica CDATA #IMPLIED>
+<!ATTLIST Domicilio Ubicacion (México | Extranjero) #REQUIRED>
+<!ATTLIST DomicilioMexico InformacionExtra (True | False | true | false) #IMPLIED>
+<!ATTLIST ReferenciasDomicilio TipoDeCalle CDATA #IMPLIED>
+<!ATTLIST ReferenciasDomicilio NombreDeLaCalle CDATA #IMPLIED>
+<!ATTLIST Habilidad experiencia (25 | 50 | 75 | 100) #REQUIRED>
+<!ATTLIST TelefonoDocente Principal (true | false | True | False) #REQUIRED>
+<!ATTLIST MovilDocente Principal (true | false | true | false) #REQUIRED>
+<!ATTLIST CorreoDocente Principal (true | false | True | False) #REQUIRED>
+<!ATTLIST Identificador organizacion (ORC|Thomson|arXiv|PubMed|Open) #REQUIRED>
+<!ATTLIST InstitucionCompleja TipoDeInstitucion (Nacional | Extranjera) #REQUIRED>
+<!ATTLIST SectorSimple Sector (Pública-Federal | Privada) #REQUIRED>
+<!ATTLIST SectorEstatal Sector (Pública-Estatal) #REQUIRED>
+<!ATTLIST SectorMunicipal Sector CDATA #FIXED "Pública-Municipal">
+<!ATTLIST Vigencia Inicio CDATA #REQUIRED>
+<!ATTLIST Vigencia Fin CDATA #REQUIRED>
+<!ATTLIST CertificacionCompleja Tipo (Certificacion | Recertificacion) #REQUIRED>
+<!ATTLIST LogroComplejo Tipo (SECIHTI | Otros) #REQUIRED>
+<!ATTLIST IdiomaComplejo Certificacion (True | False | true | false) #IMPLIED>
+<!ATTLIST EmpleoComplejo EmpleoActual (True | False | true | false) #REQUIRED>
+<!ATTLIST EmpleoComplejo EmpleoPrincipal (True | False | true | false) #IMPLIED>
+<!ATTLIST EmpleoComplejo FechaFinalizacion (True | False | true | false) #IMPLIED>
+<!ATTLIST Produccion Tipo (Humanista | Tecnológica) #REQUIRED>
+<!ATTLIST Articulo ISNN (Impreso | Electrónico | Ambos) #REQUIRED>
+<!ATTLIST Articulo ApoyoSECIHTI (True | False | true | false) #REQUIRED>
+<!ATTLIST Autor Orden CDATA #REQUIRED>
+<!ATTLIST Libro ApoyoSECIHTI (True | False | true | false) #REQUIRED>
+<!ATTLIST Libro Dictaminado (True | False | true | false) #REQUIRED>
+<!ATTLIST Capitulo ApoyoSECIHTI (True | False | true | false) #REQUIRED>
+<!ATTLIST Capitulo Dictaminado (True | False | true | false) #REQUIRED>
+<!ATTLIST Desarrollo Producto (Desarrollo|Innovación) #REQUIRED>
+<!ATTLIST PeriodoDeParticipacion Inicio CDATA #REQUIRED>
+<!ATTLIST PeriodoDeParticipacion Fin CDATA #REQUIRED>
+<!ATTLIST DesarrolloProducto ApoyoSECIHTI (True | False | true | false) #REQUIRED>
+<!ATTLIST PropiedadIntelectual Tipo (México | Internacional | Ambas) #REQUIRED>
+<!ATTLIST Evaluacion Tipo (SECIHTI | Otros) #REQUIRED>
+<!ATTLIST Comunidad Tipo (Docencia | TrabajosDeTitulacion | DesarrolloInstitucional) #REQUIRED>
+<!ATTLIST CursosImpartidos Tipo (SNP | NoSNP) #REQUIRED>
+<!ATTLIST TrabajosDeTitulacion Tipo (SNP | NoSNP) #REQUIRED>
+<!ATTLIST Divulgacion Tipo (Nacional | Internacional) #REQUIRED>
+<!ATTLIST DependienteEconomico Nacionalidad (Mexican | Foreign) #REQUIRED>
+<!ATTLIST CertificacionIdioma Certificacion (True | False) #IMPLIED>

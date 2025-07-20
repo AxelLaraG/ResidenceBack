@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cvu xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../XSD/Rizoma.xsd">
+    <MiPerfil>
+        <Nombre>María García Hernández</Nombre>
+
+        <Semblanza>Investigadora especializada en inteligencia artificial con más de 15 años de
+            experiencia en desarrollo de algoritmos de aprendizaje automático. Doctora en Ciencias
+            de la Computación por la Universidad Nacional Autónoma de México. Miembro del Sistema
+            Nacional de Investigadores nivel II. Líder del Laboratorio de Innovación en IA del
+            Centro de Investigación en Computación.</Semblanza>
+
+        <ContactoDocente>
+            <CorreoDocente Principal="true">ana.lopez@instituto.edu.mx</CorreoDocente>
+            <CorreoDocente Principal="false">analopez@gmail.com</CorreoDocente>
+            <MovilDocente Principal="true">5512345678</MovilDocente>
+            <TelefonoDocente Principal="false">5556789012</TelefonoDocente>
+            <RedSocialDocente>@DraAnaMLopez</RedSocialDocente>
+        </ContactoDocente>
+
+        <Habilidades>
+            <Habilidad experiencia="75">Machine Learning</Habilidad>
+            <Habilidad experiencia="100">Deep Learning</Habilidad>
+            <Habilidad experiencia="50">Procesamiento de Lenguaje Natural</Habilidad>
+            <Habilidad experiencia="75">Visión por Computadora</Habilidad>
+        </Habilidades>
+
+        <Intereses>
+            <Interes>Inteligencia Artificial Ética</Interes>
+            <Interes>Educación en STEM</Interes>
+            <Interes>Innovación Tecnológica</Interes>
+        </Intereses>
+
+        <AreaDeConocimiento>
+            <Area>Ciencias Físico-Matemáticas</Area>
+            <Campo>Ciencias de la Computación</Campo>
+            <Disciplina>Inteligencia Artificial</Disciplina>
+            <Subdisciplina>Aprendizaje Automático</Subdisciplina>
+        </AreaDeConocimiento>
+
+        <IdentificadoresDeAutor>
+            <Identificador organizacion="ORC">0000-0002-1825-0097</Identificador>
+            <Identificador organizacion="arXiv">alopez-garcia</Identificador>
+        </IdentificadoresDeAutor>
+
+        <InformacionGeneral>
+            <CURP>LOGA750315MDFPRN01</CURP>
+            <Nombre>Ana María</Nombre>
+            <PrimerApellido>López</PrimerApellido>
+            <SegundoApellido>García</SegundoApellido>
+            <FechaDeNacimiento>1975-03-15</FechaDeNacimiento>
+            <Sexo>femenino</Sexo>
+            <PaisDeNacimiento>México</PaisDeNacimiento>
+            <EntidadFederativa>Ciudad de México</EntidadFederativa>
+            <RFC>LOGA750315ABC</RFC>
+            <EstadoCivil>Casado(a)</EstadoCivil>
+            <Nacionalidad>Mexicana</Nacionalidad>
+        </InformacionGeneral>
+
+        <Domicilio Ubicacion="México">
+            <DomicilioMexico InformacionExtra="True">
+                <CodigoPostal>07300</CodigoPostal>
+                <Estado>Ciudad de México</Estado>
+                <MunicipioAlcaldia>Gustavo A. Madero</MunicipioAlcaldia>
+                <Localidad>Lindavista</Localidad>
+                <TipoDomicilio>Urbano</TipoDomicilio>
+                <ReferenciasDomicilio TipoDeCalle="Calle" NombreDeLaCalle="Eje 5 Norte" />
+                <DescripcionDomicilio>Edificio de departamentos color blanco, portón negro</DescripcionDomicilio>
+                <DomicilioUrbano>
+                    <TipoDeVialidad>Avenida</TipoDeVialidad>
+                    <NombreDeLaVialidad>Instituto Politécnico Nacional</NombreDeLaVialidad>
+                    <NumeroExterior>2508</NumeroExterior>
+                    <NumeroInterior>302</NumeroInterior>
+                </DomicilioUrbano>
+            </DomicilioMexico>
+        </Domicilio>
+
+        <ContactosDeEmergencia>
+            <ContactoEmergencia Ubicacion="Mexico">
+                <Nombre>Juan</Nombre>
+                <PrimerApellido>López</PrimerApellido>
+                <SegundoApellido>Pérez</SegundoApellido>
+                <Parentesco>Cónyugue</Parentesco>
+                <FechaDeNacimiento>1974-07-22</FechaDeNacimiento>
+                <Sexo>Masculino</Sexo>
+                <CorreoContacto>juan.lopez@email.com</CorreoContacto>
+                <Lada>55</Lada>
+                <TelefonoContacto>12345678</TelefonoContacto>
+                <MovilContacto>5512345678</MovilContacto>
+                <MedioPreferente>Movil</MedioPreferente>
+                <ContactoMexico>
+                    <CodigoPostal>07300</CodigoPostal>
+                    <Estado>Ciudad de México</Estado>
+                    <MunicipioAlcaldia>Gustavo A. Madero</MunicipioAlcaldia>
+                    <TipoAsentamiento>Colonia</TipoAsentamiento>
+                </ContactoMexico>
+            </ContactoEmergencia>
+        </ContactosDeEmergencia>
+
+        <DependientesEconomicos>
+            <DependienteEconomico Nacionalidad="Mexican">
+                <DependienteMexicano>
+                    <CURP>LOPS050720HDFPRN02</CURP>
+                    <Nombre>Carlos</Nombre>
+                    <PrimerApellido>López</PrimerApellido>
+                    <SegundoApellido>García</SegundoApellido>
+                    <FechaDeNacimiento>2005-07-20</FechaDeNacimiento>
+                    <Edad>18</Edad>
+                    <Parentesco>Hijo mayor de edad</Parentesco>
+                    <Sexo>Masculino</Sexo>
+                    <Orden>1</Orden>
+                </DependienteMexicano>
+            </DependienteEconomico>
+        </DependientesEconomicos>
+    </MiPerfil>
+
+    <TrayectoriaAcademica>
+        <Trayectoria>
+            <NivelDeEscolaridad>Doctorado</NivelDeEscolaridad>
+            <Titulo>Doctorado en Ciencias de la Computación</Titulo>
+            <EstadoDelGrado>Grado obtenido</EstadoDelGrado>
+            <InstitucionCompleja TipoDeInstitucion="Nacional">
+                <InstitucionNacional>
+                    <SectorSimple Sector="Pública-Federal">
+                        <Nombre>Instituto de Investigaciones Eléctricas</Nombre>
+                    </SectorSimple>
+                </InstitucionNacional>
+            </InstitucionCompleja>
+        </Trayectoria>
+
+        <CursosTomados>
+            <CursoComplejo>
+                <TipoDeFormacionContinua>Educación continua</TipoDeFormacionContinua>
+                <Nombre>Ética en Inteligencia Artificial</Nombre>
+                <Anio>2023</Anio>
+                <HorasTotales>40</HorasTotales>
+                <InstitucionCompleja TipoDeInstitucion="Extranjera">
+                    <InstitucionExtranjera>
+                        <Nombre>Cambridge Assessment English</Nombre>
+                        <Pais>Estados Unidos</Pais>
+                    </InstitucionExtranjera>
+                </InstitucionCompleja>
+            </CursoComplejo>
+        </CursosTomados>
+
+        <CertificacionesTomadas>
+            <CertificacionCompleja Tipo="Certificacion">
+                <NumeroDeFolio>CERT-AI-2022-001</NumeroDeFolio>
+                <ConsejoOtorgado>Consejo Mexicano de Inteligencia Artificial</ConsejoOtorgado>
+                <Nombre>Especialista en Aprendizaje Profundo</Nombre>
+                <Especialidad>Redes Neuronales</Especialidad>
+                <Vigencia Inicio="2022-01-15" Fin="2025-01-15" />
+            </CertificacionCompleja>
+        </CertificacionesTomadas>
+
+        <LogrosAlcanzados>
+            <LogroComplejo Tipo="SECIHTI">
+                <LogroSECIHTI>
+                    <Nombre>Premio Nacional de Ciencias 2020</Nombre>
+                    <Anio>2020</Anio>
+                </LogroSECIHTI>
+            </LogroComplejo>
+        </LogrosAlcanzados>
+
+        <IdiomasLenguas>
+            <IdiomaComplejo> <!-- Sin atributo Certificacion (implícitamente es "False") -->
+                <Idioma>Inglés</Idioma>
+                <GradoDeDominio>Avanzado</GradoDeDominio>
+                <NivelDeConversacion>C2</NivelDeConversacion>
+                <NivelDeLectura>C2</NivelDeLectura>
+                <NivelDeEscritura>C1</NivelDeEscritura>
+                <CertificacionIdioma Certificacion="True"> <!-- Atributo opcional aquí -->
+                    <Institucion>Cambridge University</Institucion>
+                    <FechaDeEvaluacion>2018-05-12</FechaDeEvaluacion>
+                    <Documento>CPE Certificate</Documento>
+                    <Vigencia Inicio="2018-05-12" Fin="2028-05-12" />
+                    <Puntos>230</Puntos>
+                    <Nivel>C2</Nivel>
+                </CertificacionIdioma>
+            </IdiomaComplejo>
+        </IdiomasLenguas>
+    </TrayectoriaAcademica>
+
+    <TrayectoriaProfesional>
+        <Empleos>
+            <EmpleoComplejo EmpleoActual="true" EmpleoPrincipal="true">
+                <InstitucionCompleja TipoDeInstitucion="Nacional">
+                    <InstitucionNacional>
+                        <SectorSimple Sector="Pública-Federal">
+                            <Nombre>Instituto de Investigaciones Eléctricas</Nombre>
+                        </SectorSimple>
+                    </InstitucionNacional>
+                </InstitucionCompleja>
+                <FechaInicio>2010-08-15</FechaInicio>
+                <Nombre>Investigadora Titular</Nombre>
+                <Logros>Lideré el desarrollo de 5 proyectos de investigación aplicada en IA. Formé
+                    12 estudiantes de posgrado. Publiqué 25 artículos en revistas indexadas.</Logros>
+            </EmpleoComplejo>
+        </Empleos>
+
+        <Produccion Tipo="Humanista">
+            <Articulo ISNN="Electrónico" ApoyoSECIHTI="true">
+                <ISNNElectronico>1234-5678</ISNNElectronico>
+                <DOI>10.1234/abc123</DOI>
+                <NombreDeLaRevista>Journal of Artificial Intelligence Research</NombreDeLaRevista>
+                <TituloDeArticulo>Nuevos algoritmos para clasificación de imágenes médicas usando
+                    redes neuronales convolucionales</TituloDeArticulo>
+                <Anio>2022</Anio>
+                <Programa>PEI CONACYT</Programa>
+                <Rol>Autor principal</Rol>
+                <Estatus>Publicado</Estatus>
+                <Objetivo>Desarrollar nuevos algoritmos para diagnóstico médico asistido por
+                    computadora</Objetivo>
+                <Citas>
+                    <Cita>
+                        <URLCita>https://doi.org/10.1234/abc123</URLCita>
+                        <CitaA>15</CitaA>
+                        <CitaB>8</CitaB>
+                        <TotalDeCitas>23</TotalDeCitas>
+                    </Cita>
+                </Citas>
+                <Autores>
+                    <Autor Orden="1">
+                        <Nombre>Ana María</Nombre>
+                        <PrimerApellido>López</PrimerApellido>
+                        <SegundoApellido>García</SegundoApellido>
+                        <ORCID>0000-0002-1825-0097</ORCID>
+                    </Autor>
+                </Autores>
+                <EjeSECIHTI>Tecnologías de la Información</EjeSECIHTI>
+            </Articulo>
+
+            <Libro ApoyoSECIHTI="false" Dictaminado="true">
+                <ISBN>978-607-123-456-7</ISBN>
+                <DOI>10.1234/book123</DOI>
+                <Titulo>Inteligencia Artificial: Fundamentos y Aplicaciones</Titulo>
+                <Anio>2021</Anio>
+                <Editorial>Editorial Científica Mexicana</Editorial>
+                <Pais>México</Pais>
+                <Idioma>Español</Idioma>
+                <ISBNTraducido>978-1-234-56789-0</ISBNTraducido>
+                <IdiomaTraducido>Inglés</IdiomaTraducido>
+                <TituloTraducido>Artificial Intelligence: Fundamentals and Applications</TituloTraducido>
+                <Rol>Coordinadora</Rol>
+                <EstadoDePublicacion>Publicado</EstadoDePublicacion>
+                <Objetivo>Libro de texto para cursos de inteligencia artificial a nivel licenciatura</Objetivo>
+                <CitasLibro>
+                    <CitaLibro>
+                        <URLCita>https://doi.org/10.1234/book123</URLCita>
+                        <CitaA>5</CitaA>
+                        <CitaB>12</CitaB>
+                        <TotalDeCitas>17</TotalDeCitas>
+                        <EjeSECIHTI>Educación en Ciencias</EjeSECIHTI>
+                    </CitaLibro>
+                </CitasLibro>
+                <Autores>
+                    <Autor Orden="1">
+                        <Nombre>Ana María</Nombre>
+                        <PrimerApellido>López</PrimerApellido>
+                        <SegundoApellido>García</SegundoApellido>
+                        <ORCID>0000-0002-1825-0097</ORCID>
+                    </Autor>
+                </Autores>
+            </Libro>
+        </Produccion>
+
+        <EstanciasTomadas>
+            <Estancia>
+                <InstitucionCompleja TipoDeInstitucion="Extranjera">
+                    <InstitucionExtranjera>
+                        <Nombre>Universidad de Toronto</Nombre>
+                        <Pais>Canadá</Pais>
+                    </InstitucionExtranjera>
+                </InstitucionCompleja>
+                <Nombre>Estancia de Investigación en la Universidad de Toronto</Nombre>
+                <FechaInicio>2018-09-01</FechaInicio>
+                <FechaFinalizacion>2019-03-01</FechaFinalizacion>
+                <Tipo>Sabática</Tipo>
+                <Logros>Desarrollo de nuevos algoritmos para procesamiento de lenguaje natural en
+                    colaboración con el Dr. Smith</Logros>
+            </Estancia>
+        </EstanciasTomadas>
+    </TrayectoriaProfesional>
+</cvu>

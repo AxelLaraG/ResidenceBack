@@ -1,10 +1,10 @@
-from fastapi import FastAPI, HTTPException, File, UploadFile, status
+from fastapi import FastAPI, Depends,HTTPException, File, UploadFile, status
 from fastapi.responses import Response
 from pydantic import BaseModel
-from validation import validation_main
+from .FileValidation import validation_main
+from .Auth import create_jwt_token,verify_jwt_token
 import xml.etree.ElementTree as ET
 from fastapi.middleware.cors import CORSMiddleware
-
 
 users = [
     {"id":1,
@@ -53,11 +53,21 @@ async def login(credentials: UserCredentials):
             detail = "Contraseña incorrecta"
         )
     
+    token = create_jwt_token({"id": user["id"], 
+                              "role": user["role"],
+                              "email":user["email"] })
     return {
-        "role":user["role"],
-        "id":user["id"]
+        "access_token":token,
+        "token_type":"bearer",
+        "role": user["role"],
+        "id": user["id"]
     }
 
+@app.get("/usuario_actual")
+async def usuario_actual(payload: dict = Depends(verify_jwt_token)):
+    # payload contiene los datos del usuario
+    print(payload)
+    return {"usuario": payload}
 
 @app.post("/xml_gen")
 async def xml_generator(datos: dict):

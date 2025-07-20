@@ -17,13 +17,13 @@ def validation_main(xml_file: UploadFile) -> tuple[bool, list]:
             json = xml_to_json(content)
             return True, 0, json
         else:
-            return False, code
+            return False, code, {}
     else:
-        return False, code
+        return False, code, {}
 
 def validate_schema(xml_content: bytes) -> tuple[bool, list]:
     try:
-        schema_path = os.path.join(dir_base, "files/Schema.xsd")
+        schema_path = os.path.join(dir_base, "files/XSD/Rizoma.xsd")
         
         with open(schema_path, 'rb') as xsd_file:
             xmlschema_doc = etree.parse(xsd_file)
@@ -42,7 +42,7 @@ def validate_schema(xml_content: bytes) -> tuple[bool, list]:
 
 def validate_xml_with_dtd(xml_content: bytes) -> tuple[bool, int]:
     try:
-        dtd_path = os.path.join(dir_base, "files/Schema.dtd")
+        dtd_path = os.path.join(dir_base, "files/DTD/Rizoma.dtd")
 
         if not os.path.exists(dtd_path):
             raise FileNotFoundError(f"El archivo DTD no se encuentra en la ruta: {dtd_path}")
