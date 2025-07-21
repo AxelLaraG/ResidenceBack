@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends,HTTPException, File, UploadFile, status
 from fastapi.responses import Response
 from pydantic import BaseModel
 from .FileValidation import validation_main
-from .Auth import create_jwt_token,verify_jwt_token
+from .Auth import create_jwt_token,verify_jwt_from_cookie
 import xml.etree.ElementTree as ET
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -39,7 +39,7 @@ app.add_middleware(
 )
 
 @app.post("/login")
-async def login(credentials: UserCredentials):
+async def login(credentials: UserCredentials, response:Response):
     user = next((u for u in users if u["email"] == credentials.email), None)
     if not user:
         raise HTTPException(
@@ -56,15 +56,25 @@ async def login(credentials: UserCredentials):
     token = create_jwt_token({"id": user["id"], 
                               "role": user["role"],
                               "email":user["email"] })
+    
+    response.set_cookie(
+        key="token",
+        value=token,
+        httponly=True,
+        secure=False,
+        samesite="Lax",
+        max_age=60*60*24,
+        path="/"
+    )
+
     return {
-        "access_token":token,
-        "token_type":"bearer",
+        "success":True,
         "role": user["role"],
         "id": user["id"]
     }
 
 @app.get("/usuario_actual")
-async def usuario_actual(payload: dict = Depends(verify_jwt_token)):
+async def usuario_actual(payload: dict = Depends(verify_jwt_from_cookie)):
     # payload contiene los datos del usuario
     print(payload)
     return {"usuario": payload}
@@ -102,7 +112,6 @@ async def upload_xml(documento_xml: UploadFile = File(...)):
 
         if result:
             print("Everything is OK")
-            print(json_data)
             return {"valido": True, "data": json_data}  # Retorna un solo JSON válido
         else:
             raise HTTPException(status_code=code, detail="Documento XML inválido")
