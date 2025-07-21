@@ -2,6 +2,7 @@ import os
 import xml.etree.ElementTree as ET
 from lxml import etree
 from fastapi import UploadFile
+import requests
 from io import BytesIO
 
 dir_base = os.path.dirname(os.path.abspath(__file__))
@@ -23,43 +24,43 @@ def validation_main(xml_file: UploadFile) -> tuple[bool, list]:
 
 def validate_schema(xml_content: bytes) -> tuple[bool, list]:
     try:
-        schema_path = os.path.join(dir_base, "files/XSD/Rizoma.xsd")
-        
-        with open(schema_path, 'rb') as xsd_file:
-            xmlschema_doc = etree.parse(xsd_file)
-            xmlschema = etree.XMLSchema(xmlschema_doc)
-        
-        xml_doc = etree.parse(BytesIO(xml_content))  # Usamos BytesIO para evitar modificar el archivo original
-        
+        xsd_url = "http://localhost:8080/SECIHTIServ/Rizoma.xsd"
+        response = requests.get(xsd_url)
+        response.raise_for_status()
+        xsd_content = response.content
+
+        xmlschema_doc = etree.parse(BytesIO(xsd_content))
+        xmlschema = etree.XMLSchema(xmlschema_doc)
+
+        xml_doc = etree.parse(BytesIO(xml_content))
+
         if xmlschema.validate(xml_doc):
             return True, 0
         else:
             validation_errors = [str(error) for error in xmlschema.error_log]
-            return False, validation_errors  
-    
+            return False, validation_errors
+
     except Exception as e:
         return False, [f"Error inesperado: {str(e)}"]
 
 def validate_xml_with_dtd(xml_content: bytes) -> tuple[bool, int]:
     try:
-        dtd_path = os.path.join(dir_base, "files/DTD/Rizoma.dtd")
+        dtd_url = "http://localhost:8080/SECIHTIServ/Rizoma.dtd"
+        response = requests.get(dtd_url)
+        response.raise_for_status()
+        dtd_content = response.content
 
-        if not os.path.exists(dtd_path):
-            raise FileNotFoundError(f"El archivo DTD no se encuentra en la ruta: {dtd_path}")
-        
-        with open(dtd_path, 'rb') as dtd_file:
-            dtd = etree.DTD(dtd_file)
-        
-        xml_doc = etree.parse(BytesIO(xml_content))  # Reusamos BytesIO para evitar problemas
-        
+        dtd = etree.DTD(BytesIO(dtd_content))
+        xml_doc = etree.parse(BytesIO(xml_content))
+
         if dtd.validate(xml_doc):
             return True, 0
         else:
-            print(dtd.error_log.filter_from_errors()) 
-            return False, 1003  
-            
-    except FileNotFoundError as fnf_error:
-        print(fnf_error)  
+            print(dtd.error_log.filter_from_errors())
+            return False, 1003
+
+    except requests.RequestException as req_error:
+        print(f"Error al descargar el DTD: {req_error}")
         return False, 1004
     except etree.XMLSyntaxError as syntax_error:
         print(f"Error de sintaxis XML: {syntax_error}")
@@ -67,7 +68,7 @@ def validate_xml_with_dtd(xml_content: bytes) -> tuple[bool, int]:
     except Exception as e:
         print(f"Error inesperado: {e}")
         return False, 1004
-    
+
 def xml_to_json(xml_content: bytes) -> dict:
     try:
         tree = ET.parse(BytesIO(xml_content))

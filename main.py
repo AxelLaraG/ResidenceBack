@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends,HTTPException, File, UploadFile, status
-from fastapi.responses import Response
+from fastapi.responses import FileResponse, PlainTextResponse, Response
 from pydantic import BaseModel
 from .FileValidation import validation_main
 from .Auth import create_jwt_token,verify_jwt_from_cookie
