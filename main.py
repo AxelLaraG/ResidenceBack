@@ -63,7 +63,7 @@ async def login(credentials: UserCredentials, response:Response):
         httponly=True,
         secure=False,
         samesite="Lax",
-        max_age=60*60*24,
+        max_age=60*60*2,
         path="/"
     )
 
@@ -73,10 +73,19 @@ async def login(credentials: UserCredentials, response:Response):
         "id": user["id"]
     }
 
+@app.post("/logout")
+async def logout(response: Response):
+    try:
+        response.delete_cookie("token")
+        return {"success": True}
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error al cerrar sesión")
+    
+
+
 @app.get("/usuario_actual")
 async def usuario_actual(payload: dict = Depends(verify_jwt_from_cookie)):
-    # payload contiene los datos del usuario
-    print(payload)
     return {"usuario": payload}
 
 @app.post("/xml_gen")
