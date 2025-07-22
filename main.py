@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Depends,HTTPException, File, UploadFile, status
 from fastapi.responses import FileResponse, PlainTextResponse, Response
 from pydantic import BaseModel
+
+from ResidenceBack.Parser import parse_xsd_from_url
 from .FileValidation import validation_main
 from .Auth import create_jwt_token,verify_jwt_from_cookie
 import xml.etree.ElementTree as ET
@@ -82,8 +84,6 @@ async def logout(response: Response):
         print(e)
         raise HTTPException(status_code=500, detail="Error al cerrar sesión")
     
-
-
 @app.get("/usuario_actual")
 async def usuario_actual(payload: dict = Depends(verify_jwt_from_cookie)):
     return {"usuario": payload}
@@ -128,3 +128,9 @@ async def upload_xml(documento_xml: UploadFile = File(...)):
     except Exception as e:
         print(f"Error en validación: {e}")
         raise HTTPException(status_code=500, detail=f"Error interno del servidor: {e}")
+
+@app.get("/api/xsd")
+def get_xsd_structure():
+    xsd_path = "http://localhost:8080/SECIHTIServ/Rizoma.xsd"
+    result = parse_xsd_from_url(xsd_path)
+    return result
