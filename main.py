@@ -7,6 +7,7 @@ from .FileValidation import validation_main
 from .Auth import create_jwt_token,verify_jwt_from_cookie
 import xml.etree.ElementTree as ET
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
 users = [
     {"id":1,
@@ -144,5 +145,7 @@ def get_xsd_structure(opt:str =""):
     if xsd_path.startswith(('http://','https://')):
         result = parse_xsd_from_url(xsd_path)
     else:
-        result = parse_xsd_from_file(xsd_path)
+        with open("./ResidenceBack/files/Base.json","r",encoding="utf-8") as f:
+            result = json.load(f)
     return result
+

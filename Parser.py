@@ -98,6 +98,17 @@ def parse_xsd_from_url(url: str) -> Dict[str, List[dict]]:
     return sections
 
 def parse_xsd_from_file(file_path: str) -> Dict[str, List[dict]]:
+    """
+    Parse an XSD file and extract its structure.
+
+    Args:
+        file_path (str): The path to the XSD file.
+    
+    Returns:
+        Dict[str, List[dict]]: A dictionary where keys are section names and values are
+    
+    Deprecated Function, maybe util in a future
+    """
     dir_base = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(dir_base, file_path)
     tree = ET.parse(file_path)
