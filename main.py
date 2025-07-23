@@ -149,3 +149,85 @@ def get_xsd_structure(opt:str =""):
             result = json.load(f)
     return result
 
+@app.post("/api/update-base")
+async def update_base_data(changes_data: dict):
+    try:
+        base_file_path = "./ResidenceBack/files/Base.json"
+        
+        # Leer el archivo Base.json actual
+        try:
+            with open(base_file_path, "r", encoding="utf-8") as f:
+                current_base = json.load(f)
+        except FileNotFoundError:
+            # Si no existe, crear estructura básica
+            current_base = {}
+        
+        # Procesar los cambios recibidos
+        manual_elements = changes_data.get("manual", [])
+        automated_elements = changes_data.get("automated", [])
+        
+        # Combinar todos los elementos
+        all_elements = manual_elements + automated_elements
+        
+        print(f"Procesando {len(all_elements)} elementos para agregar a Base.json")
+        print(f"Estructura recibida: {changes_data}")
+        
+        # Debug: mostrar algunos elementos de ejemplo
+        if all_elements:
+            print(f"Ejemplo de elemento: {all_elements[0]}")
+        
+        elements_added = 0
+        
+        # Agregar elementos por sección
+        for element in all_elements:
+            element_name = element.get("name")
+            element_data = element.get("data", {})
+            unique_id = element.get("uniqueId", "")
+            
+            # Extraer la sección del uniqueId
+            # Los IDs tienen formato: "seccion_elemento" o "seccion_parentelement_elemento"
+            if unique_id and "_" in unique_id:
+                section = unique_id.split("_")[0]
+            else:
+                print(f"⚠️ No se pudo determinar la sección para {element_name}")
+                continue
+            
+            if not section or not element_name:
+                print(f"⚠️ Datos faltantes: section={section}, name={element_name}")
+                continue
+                
+            # Asegurar que la sección existe en el base
+            if section not in current_base:
+                current_base[section] = []
+            
+            # Verificar si el elemento ya existe
+            element_exists = any(
+                existing.get("name") == element_name 
+                for existing in current_base[section]
+            )
+            
+            if not element_exists:
+                current_base[section].append(element_data)
+                elements_added += 1
+                print(f"✅ Agregado: {element_name} a sección {section}")
+            else:
+                print(f"⚠️ Ya existe: {element_name} en sección {section}")
+        
+        # Guardar el archivo actualizado
+        with open(base_file_path, "w", encoding="utf-8") as f:
+            json.dump(current_base, f, indent=2, ensure_ascii=False)
+        
+        return {
+            "success": True,
+            "message": f"Base.json actualizado. Se agregaron {elements_added} elementos nuevos de {len(all_elements)} procesados",
+            "elements_processed": len(all_elements),
+            "elements_added": elements_added
+        }
+        
+    except Exception as e:
+        print(f"Error al actualizar Base.json: {e}")
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error al actualizar la base de datos: {str(e)}"
+        )
+
