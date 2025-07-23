@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 from typing import Dict, List
 import requests
 import io
-
+import os
 
 def parse_element(element: ET.Element, schema: ET.Element) -> dict:
     name = element.attrib.get("name")
@@ -75,6 +75,32 @@ def parse_xsd_from_url(url: str) -> Dict[str, List[dict]]:
     response.raise_for_status()
 
     tree = ET.parse(io.BytesIO(response.content))
+    root = tree.getroot()
+    namespace = "{http://www.w3.org/2001/XMLSchema}"
+
+    sections = {}
+
+    for el in root.findall(f"{namespace}element"):
+        section_name = el.attrib.get("name")
+        if not section_name:
+            continue
+
+        section_structure = []
+        complex_type = el.find(f"{namespace}complexType")
+        if complex_type is not None:
+            sequence = complex_type.find(f"{namespace}sequence")
+            if sequence is not None:
+                for child in sequence.findall(f"{namespace}element"):
+                    section_structure.append(parse_element(child, root))
+
+        sections[section_name] = section_structure
+
+    return sections
+
+def parse_xsd_from_file(file_path: str) -> Dict[str, List[dict]]:
+    dir_base = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(dir_base, file_path)
+    tree = ET.parse(file_path)
     root = tree.getroot()
     namespace = "{http://www.w3.org/2001/XMLSchema}"
 

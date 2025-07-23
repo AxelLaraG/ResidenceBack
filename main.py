@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends,HTTPException, File, UploadFile, status
 from fastapi.responses import FileResponse, PlainTextResponse, Response
 from pydantic import BaseModel
 
-from ResidenceBack.Parser import parse_xsd_from_url
+from ResidenceBack.Parser import parse_xsd_from_file, parse_xsd_from_url
 from .FileValidation import validation_main
 from .Auth import create_jwt_token,verify_jwt_from_cookie
 import xml.etree.ElementTree as ET
@@ -13,7 +13,8 @@ users = [
     "email":"adminTec@gmail.com",
     "name":"FedericoDelRazoLopez",
     "password":"12345678",
-    "role":"admin"},
+    "role":"admin",
+    "institution":"TecNM"},
     {"id":2,
      "name":"JuanPerezLopez",
     "email":"user@gmail.com",
@@ -23,7 +24,8 @@ users = [
      "name":"MariaGarciaHernandez",
     "email":"adminPRODEP@gmail.com",
     "password":"12345678",
-    "role":"admin"}
+    "role":"admin",
+    "institution":"PRODEP"}
     ]
 
 class UserCredentials(BaseModel):
@@ -57,7 +59,8 @@ async def login(credentials: UserCredentials, response:Response):
     
     token = create_jwt_token({"id": user["id"], 
                               "role": user["role"],
-                              "email":user["email"] })
+                              "email":user["email"],
+                              "institution": user["institution"] if "institution" in user else None})
     
     response.set_cookie(
         key="token",
@@ -130,7 +133,16 @@ async def upload_xml(documento_xml: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Error interno del servidor: {e}")
 
 @app.get("/api/xsd")
-def get_xsd_structure():
-    xsd_path = "http://localhost:8080/SECIHTIServ/Rizoma.xsd"
-    result = parse_xsd_from_url(xsd_path)
+def get_xsd_structure(opt:str =""):
+    xsd_urls = {
+        "rizoma": "http://localhost:8080/SECIHTIServ/Rizoma.xsd",
+        "prodep": "http://localhost:8080/PRODEPServ/PRODEP.xsd",
+        "tecnm": "http://localhost:8080/TecNMServ/TecNM.xsd",
+        "base": "./files/XSD/Base.xsd"
+    }
+    xsd_path = xsd_urls.get(opt.lower())
+    if xsd_path.startswith(('http://','https://')):
+        result = parse_xsd_from_url(xsd_path)
+    else:
+        result = parse_xsd_from_file(xsd_path)
     return result
