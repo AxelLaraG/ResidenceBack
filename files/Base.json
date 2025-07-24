@@ -1,3 +1,27 @@
 {
-  
+  "cvu": [
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "children": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_MiPerfil_Nombre",
+        "institution": [
+          "TecNM",
+          "PRODEP"
+        ]
+      }
+    }
+  ]
 }

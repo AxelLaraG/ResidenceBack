@@ -150,11 +150,10 @@ def get_xsd_structure(opt:str =""):
     return result
 
 @app.post("/api/update-base")
-async def update_base_data(changes_data: dict):
+async def update_base_data(changes_data: dict, institute: str = None):
     try:
         base_file_path = "./ResidenceBack/files/Base.json"
         
-        # Leer el archivo Base.json actual
         try:
             with open(base_file_path, "r", encoding="utf-8") as f:
                 current_base = json.load(f)
@@ -169,13 +168,6 @@ async def update_base_data(changes_data: dict):
         # Combinar todos los elementos
         all_elements = manual_elements + automated_elements
         
-        print(f"Procesando {len(all_elements)} elementos para agregar a Base.json")
-        print(f"Estructura recibida: {changes_data}")
-        
-        # Debug: mostrar algunos elementos de ejemplo
-        if all_elements:
-            print(f"Ejemplo de elemento: {all_elements[0]}")
-        
         elements_added = 0
         
         # Agregar elementos por sección
@@ -183,36 +175,55 @@ async def update_base_data(changes_data: dict):
             element_name = element.get("name")
             element_data = element.get("data", {})
             unique_id = element.get("uniqueId", "")
+            section = element.get("section")
+            parent_element = element.get("parentElement")
+            institution = institute
+            context = element.get("context", {})
             
-            # Extraer la sección del uniqueId
-            # Los IDs tienen formato: "seccion_elemento" o "seccion_parentelement_elemento"
-            if unique_id and "_" in unique_id:
+            if not section and unique_id and "_" in unique_id:
                 section = unique_id.split("_")[0]
-            else:
-                print(f"⚠️ No se pudo determinar la sección para {element_name}")
-                continue
             
-            if not section or not element_name:
-                print(f"⚠️ Datos faltantes: section={section}, name={element_name}")
-                continue
+            # Si no tenemos el parent_element, extraerlo del uniqueId
+            if not parent_element and unique_id and "_" in unique_id:
+                unique_id_parts = unique_id.split("_")
+                if len(unique_id_parts) > 2:
+                    parent_element = unique_id_parts[1]
                 
-            # Asegurar que la sección existe en el base
             if section not in current_base:
                 current_base[section] = []
             
-            # Verificar si el elemento ya existe
-            element_exists = any(
-                existing.get("name") == element_name 
-                for existing in current_base[section]
-            )
-            
-            if not element_exists:
-                current_base[section].append(element_data)
-                elements_added += 1
-                print(f"✅ Agregado: {element_name} a sección {section}")
+            existing_element = None
+
+            for existing in current_base[section]:
+                print(existing)
+                if existing.get("context", {}).get("uniqueId") == unique_id:
+                    existing_element = existing
+                    break
+
+            if existing_element:
+                current_institutions = existing_element.get("context").get("institution", [])
+
+                if not isinstance(current_institutions,list):
+                    current_institutions = [current_institutions] if current_institutions else []
+
+                if institution and institution not in current_institutions:
+                    current_institutions.append(institution)
+                    existing_element["context"]["institution"] = current_institutions
             else:
-                print(f"⚠️ Ya existe: {element_name} en sección {section}")
-        
+                element_with_context = {
+                    **element_data,  # Incluir todos los datos originales del elemento
+                    "context": {
+                        "section": section,
+                        "parent": parent_element,
+                        "path": context.get("path", [element_name]),
+                        "uniqueId": unique_id,
+                        "institution": [institution] if institution else [],
+                    }
+                }
+
+                current_base[section].append(element_with_context)
+                elements_added += 1
+                
         # Guardar el archivo actualizado
         with open(base_file_path, "w", encoding="utf-8") as f:
             json.dump(current_base, f, indent=2, ensure_ascii=False)
@@ -225,7 +236,6 @@ async def update_base_data(changes_data: dict):
         }
         
     except Exception as e:
-        print(f"Error al actualizar Base.json: {e}")
         raise HTTPException(
             status_code=500, 
             detail=f"Error al actualizar la base de datos: {str(e)}"
