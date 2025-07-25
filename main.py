@@ -164,11 +164,13 @@ async def update_base_data(changes_data: dict, institute: str = None):
         # Procesar los cambios recibidos
         manual_elements = changes_data.get("manual", [])
         automated_elements = changes_data.get("automated", [])
+        removed_elements = changes_data.get("removed", [])
         
         # Combinar todos los elementos
         all_elements = manual_elements + automated_elements
         
         elements_added = 0
+        elements_removed = 0
         
         # Agregar elementos por sección
         for element in all_elements:
@@ -195,7 +197,6 @@ async def update_base_data(changes_data: dict, institute: str = None):
             existing_element = None
 
             for existing in current_base[section]:
-                print(existing)
                 if existing.get("context", {}).get("uniqueId") == unique_id:
                     existing_element = existing
                     break
@@ -223,6 +224,49 @@ async def update_base_data(changes_data: dict, institute: str = None):
 
                 current_base[section].append(element_with_context)
                 elements_added += 1
+        
+        # Procesar elementos removidos
+                # Procesar elementos removidos
+        for element in removed_elements:
+            print(f"Procesando elemento removido: {element.get('section')}")
+            unique_id = element.get("uniqueId", "")
+            section = element.get("section")
+            institution = institute  # Definir la variable institution aquí también
+            
+            if not section and unique_id and "_" in unique_id:
+                section = unique_id.split("_")[0]
+            
+            if section in current_base:
+                # Buscar el elemento en la sección usando una copia de la lista para evitar problemas de modificación durante iteración
+                elements_to_remove = []
+                
+                for i, existing in enumerate(current_base[section]):
+                    if existing.get("context", {}).get("uniqueId") == unique_id:
+                        current_institutions = existing.get("context", {}).get("institution", [])
+                        
+                        if not isinstance(current_institutions, list):
+                            current_institutions = [current_institutions] if current_institutions else []
+                        
+                        # Remover la institución de la lista
+                        if institution and institution in current_institutions:
+                            current_institutions.remove(institution)
+                            elements_removed += 1
+                            
+                            # Si la lista queda vacía, marcar el elemento para eliminación
+                            if not current_institutions:
+                                elements_to_remove.append(i)
+                            else:
+                                # Actualizar la lista de instituciones
+                                existing["context"]["institution"] = current_institutions
+                        break
+                
+                # Eliminar elementos marcados (en orden inverso para no afectar los índices)
+                for i in reversed(elements_to_remove):
+                    current_base[section].pop(i)
+                
+                # Si la sección queda vacía, eliminarla
+                if not current_base[section]:
+                    del current_base[section]
                 
         # Guardar el archivo actualizado
         with open(base_file_path, "w", encoding="utf-8") as f:
@@ -230,9 +274,10 @@ async def update_base_data(changes_data: dict, institute: str = None):
         
         return {
             "success": True,
-            "message": f"Base.json actualizado. Se agregaron {elements_added} elementos nuevos de {len(all_elements)} procesados",
+            "message": f"Base.json actualizado. Se agregaron {elements_added} elementos nuevos y se removieron {elements_removed} elementos",
             "elements_processed": len(all_elements),
-            "elements_added": elements_added
+            "elements_added": elements_added,
+            "elements_removed": elements_removed
         }
         
     except Exception as e:
