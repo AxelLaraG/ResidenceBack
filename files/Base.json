@@ -18,7 +18,30 @@
         ],
         "uniqueId": "cvu_MiPerfil_Nombre",
         "institution": [
-          "PRODEP"
+          "PRODEP",
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Semblanza",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "children": [],
+      "isSimpleContent": true,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "Semblanza"
+        ],
+        "uniqueId": "cvu_MiPerfil_Semblanza",
+        "institution": [
+          "TecNM"
         ]
       }
     }

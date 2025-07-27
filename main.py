@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import FastAPI, Depends,HTTPException, File, UploadFile, status
 from fastapi.responses import FileResponse, PlainTextResponse, Response
 from pydantic import BaseModel
@@ -28,6 +29,10 @@ users = [
     "role":"admin",
     "institution":"PRODEP"}
     ]
+
+class SharingUpdate(BaseModel):
+    uniqueId: str
+    institutions: List[str]
 
 class UserCredentials(BaseModel):
     email: str
@@ -286,3 +291,38 @@ async def update_base_data(changes_data: dict, institute: str = None):
             detail=f"Error al actualizar la base de datos: {str(e)}"
         )
 
+@app.post("/api/update-sharing")
+async def update_sharing_settings(update_data: SharingUpdate):
+    try:
+        base_file_path = "./ResidenceBack/files/Base.json"
+        
+        try:
+            with open(base_file_path, "r", encoding="utf-8") as f:
+                current_base = json.load(f)
+        except FileNotFoundError:
+            raise HTTPException(status_code=404, detail="Base.json not found")
+
+        element_found = False
+        for section, elements in current_base.items():
+            for element in elements:
+                if element.get("context", {}).get("uniqueId") == update_data.uniqueId:
+                    # Actualiza la lista de instituciones para el elemento encontrado
+                    element["context"]["institution"] = update_data.institutions
+                    element_found = True
+                    break
+            if element_found:
+                break
+        
+        if not element_found:
+            raise HTTPException(status_code=404, detail="Elemento no encontrado en Base.json")
+
+        with open(base_file_path, "w", encoding="utf-8") as f:
+            json.dump(current_base, f, indent=2, ensure_ascii=False)
+            
+        return {"success": True, "message": f"Permisos para {update_data.uniqueId} actualizados."}
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error al actualizar permisos: {str(e)}"
+        )
