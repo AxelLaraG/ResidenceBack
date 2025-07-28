@@ -216,8 +216,11 @@ async def update_base_data(changes_data: dict, institute: str = None):
                     current_institutions.append(institution)
                     existing_element["context"]["institution"] = current_institutions
             else:
+                element_data_copy =  element_data.copy()
+                element_data_copy.pop("children", None)
+
                 element_with_context = {
-                    **element_data,  # Incluir todos los datos originales del elemento
+                    **element_data_copy,
                     "context": {
                         "section": section,
                         "parent": parent_element,
