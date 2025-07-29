@@ -13,17 +13,17 @@ import json
 users = [
     {"id":1,
     "email":"adminTec@gmail.com",
-    "name":"FedericoDelRazoLopez",
+    "name":"Federico DelRazo Lopez",
     "password":"12345678",
     "role":"admin",
     "institution":"TecNM"},
     {"id":2,
-     "name":"JuanPerezLopez",
+     "name":"Juan Perez Lopez",
     "email":"user@gmail.com",
     "password":"12345678",
     "role":"user"},
     {"id":3,
-     "name":"MariaGarciaHernandez",
+     "name":"Maria Garcia Hernandez",
     "email":"adminPRODEP@gmail.com",
     "password":"12345678",
     "role":"admin",
@@ -63,11 +63,14 @@ async def login(credentials: UserCredentials, response:Response):
             detail = "Contraseña incorrecta"
         )
     
-    token = create_jwt_token({"id": user["id"], 
-                              "role": user["role"],
-                              "email":user["email"],
-                              "institution": user["institution"] if "institution" in user else None})
-    
+    token = create_jwt_token({
+        "id": user["id"], 
+        "role": user["role"],
+        "email": user["email"],
+        "institution": user.get("institution", None),
+        "name": user["name"]  # Agregar el nombre del usuario
+    })  
+
     response.set_cookie(
         key="token",
         value=token,
@@ -144,13 +147,13 @@ def get_xsd_structure(opt:str =""):
         "rizoma": "http://localhost:8080/SECIHTIServ/Rizoma.xsd",
         "prodep": "http://localhost:8080/PRODEPServ/PRODEP.xsd",
         "tecnm": "http://localhost:8080/TecNMServ/TecNM.xsd",
-        "base": "./files/XSD/Base.xsd"
+        "base": "./ResidenceBack/files/Base.json"
     }
     xsd_path = xsd_urls.get(opt.lower())
     if xsd_path.startswith(('http://','https://')):
         result = parse_xsd_from_url(xsd_path)
     else:
-        with open("./ResidenceBack/files/Base.json","r",encoding="utf-8") as f:
+        with open(xsd_path,"r",encoding="utf-8") as f:
             result = json.load(f)
     return result
 
@@ -163,21 +166,17 @@ async def update_base_data(changes_data: dict, institute: str = None):
             with open(base_file_path, "r", encoding="utf-8") as f:
                 current_base = json.load(f)
         except FileNotFoundError:
-            # Si no existe, crear estructura básica
             current_base = {}
         
-        # Procesar los cambios recibidos
         manual_elements = changes_data.get("manual", [])
         automated_elements = changes_data.get("automated", [])
         removed_elements = changes_data.get("removed", [])
         
-        # Combinar todos los elementos
         all_elements = manual_elements + automated_elements
         
         elements_added = 0
         elements_removed = 0
         
-        # Agregar elementos por sección
         for element in all_elements:
             element_name = element.get("name")
             element_data = element.get("data", {})
@@ -190,7 +189,6 @@ async def update_base_data(changes_data: dict, institute: str = None):
             if not section and unique_id and "_" in unique_id:
                 section = unique_id.split("_")[0]
             
-            # Si no tenemos el parent_element, extraerlo del uniqueId
             if not parent_element and unique_id and "_" in unique_id:
                 unique_id_parts = unique_id.split("_")
                 if len(unique_id_parts) > 2:
@@ -233,19 +231,16 @@ async def update_base_data(changes_data: dict, institute: str = None):
                 current_base[section].append(element_with_context)
                 elements_added += 1
         
-        # Procesar elementos removidos
-                # Procesar elementos removidos
         for element in removed_elements:
             print(f"Procesando elemento removido: {element.get('section')}")
             unique_id = element.get("uniqueId", "")
             section = element.get("section")
-            institution = institute  # Definir la variable institution aquí también
+            institution = institute  
             
             if not section and unique_id and "_" in unique_id:
                 section = unique_id.split("_")[0]
             
             if section in current_base:
-                # Buscar el elemento en la sección usando una copia de la lista para evitar problemas de modificación durante iteración
                 elements_to_remove = []
                 
                 for i, existing in enumerate(current_base[section]):
@@ -255,28 +250,22 @@ async def update_base_data(changes_data: dict, institute: str = None):
                         if not isinstance(current_institutions, list):
                             current_institutions = [current_institutions] if current_institutions else []
                         
-                        # Remover la institución de la lista
                         if institution and institution in current_institutions:
                             current_institutions.remove(institution)
                             elements_removed += 1
                             
-                            # Si la lista queda vacía, marcar el elemento para eliminación
                             if not current_institutions:
                                 elements_to_remove.append(i)
                             else:
-                                # Actualizar la lista de instituciones
                                 existing["context"]["institution"] = current_institutions
                         break
                 
-                # Eliminar elementos marcados (en orden inverso para no afectar los índices)
                 for i in reversed(elements_to_remove):
                     current_base[section].pop(i)
                 
-                # Si la sección queda vacía, eliminarla
                 if not current_base[section]:
                     del current_base[section]
                 
-        # Guardar el archivo actualizado
         with open(base_file_path, "w", encoding="utf-8") as f:
             json.dump(current_base, f, indent=2, ensure_ascii=False)
         
@@ -309,7 +298,6 @@ async def update_sharing_settings(update_data: SharingUpdate):
         for section, elements in current_base.items():
             for element in elements:
                 if element.get("context", {}).get("uniqueId") == update_data.uniqueId:
-                    # Actualiza la lista de instituciones para el elemento encontrado
                     element["context"]["institution"] = update_data.institutions
                     element_found = True
                     break
