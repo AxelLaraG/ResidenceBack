@@ -9,6 +9,22 @@ from .Auth import create_jwt_token,verify_jwt_from_cookie
 import xml.etree.ElementTree as ET
 from fastapi.middleware.cors import CORSMiddleware
 import json
+from typing import Dict
+import os
+import requests as http_requests
+
+xsd_urls = {
+        "rizoma": "http://localhost:8080/SECIHTIServ/Rizoma.xsd",
+        "prodep": "http://localhost:8080/PRODEPServ/PRODEP.xsd",
+        "tecnm": "http://localhost:8080/TecNMServ/TecNM.xsd",
+        "base": "./ResidenceBack/files/Base.json"
+    }
+
+xml_urls = {
+    "TecNM": f"http://localhost:8080/TecNMServ/files/",
+    "PRODEP": f"http://localhost:8080/PRODEPServ/files/",
+    "SECIHTI": f"http://localhost:8080/SECIHTIServ/files/"
+}
 
 users = [
     {"id":1,
@@ -37,6 +53,10 @@ class SharingUpdate(BaseModel):
 class UserCredentials(BaseModel):
     email: str
     password: str
+
+class UpdateXmlData(BaseModel):
+    institution: str
+    data: Dict[str, str]
 
 app = FastAPI()
 
@@ -143,12 +163,6 @@ async def upload_xml(documento_xml: UploadFile = File(...)):
 
 @app.get("/api/xsd")
 def get_xsd_structure(opt:str =""):
-    xsd_urls = {
-        "rizoma": "http://localhost:8080/SECIHTIServ/Rizoma.xsd",
-        "prodep": "http://localhost:8080/PRODEPServ/PRODEP.xsd",
-        "tecnm": "http://localhost:8080/TecNMServ/TecNM.xsd",
-        "base": "./ResidenceBack/files/Base.json"
-    }
     xsd_path = xsd_urls.get(opt.lower())
     if xsd_path.startswith(('http://','https://')):
         result = parse_xsd_from_url(xsd_path)
@@ -160,8 +174,8 @@ def get_xsd_structure(opt:str =""):
 @app.post("/api/update-base")
 async def update_base_data(changes_data: dict, institute: str = None):
     try:
-        base_file_path = "./ResidenceBack/files/Base.json"
-        
+        base_file_path = xsd_urls.get("base")
+
         try:
             with open(base_file_path, "r", encoding="utf-8") as f:
                 current_base = json.load(f)
@@ -286,7 +300,7 @@ async def update_base_data(changes_data: dict, institute: str = None):
 @app.post("/api/update-sharing")
 async def update_sharing_settings(update_data: SharingUpdate):
     try:
-        base_file_path = "./ResidenceBack/files/Base.json"
+        base_file_path = xsd_urls.get("base")
         
         try:
             with open(base_file_path, "r", encoding="utf-8") as f:
@@ -317,3 +331,55 @@ async def update_sharing_settings(update_data: SharingUpdate):
             status_code=500,
             detail=f"Error al actualizar permisos: {str(e)}"
         )
+    
+@app.post("/api/update-xml")
+async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_jwt_from_cookie)):
+    try:
+        username = payload.get("name")
+        if not username:
+            raise HTTPException(status_code=401, detail="Token inválido: falta el nombre de usuario")
+
+        institution_paths = {
+            "TecNM": f"/srv/TecNMServ/files/{username}.xml",
+            "PRODEP": f"/srv/PRODEPServ/files/{username}.xml",
+            "SECIHTI": f"/srv/SECIHTIServ/files/{username}.xml"
+        }
+        
+        institution_key = update_data.institution
+        if institution_key == "rizoma":
+            institution_key = "SECIHTI"
+
+        xml_file_path = institution_paths.get(institution_key)
+        if not xml_file_path:
+            raise HTTPException(status_code=404, detail="Institución no encontrada o ruta no definida")
+
+        if os.path.exists(xml_file_path):
+            tree = ET.parse(xml_file_path)
+            root = tree.getroot()
+        else:
+            root = ET.Element("cvu")
+            os.makedirs(os.path.dirname(xml_file_path), exist_ok=True)
+            tree = ET.ElementTree(root)
+            if institution_key == "TecNM":
+                ET.SubElement(root, "DatosPersonales")
+            elif institution_key == "PRODEP":
+                ET.SubElement(root, "Identificacion")
+            else: # SECIHTI/rizoma
+                ET.SubElement(root, "MiPerfil")
+
+        for key, value in update_data.data.items():
+            element_to_update = root.find(f".//{key}")
+            if element_to_update is not None:
+                element_to_update.text = str(value)
+            else:
+                parent = next(root.iter(), root)
+                ET.SubElement(parent, key).text = str(value)
+
+        tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
+
+        return {"success": True, "message": "Archivo XML actualizado correctamente"}
+
+    except Exception as e:
+        print(f"Error al actualizar el XML: {e}")
+        # Devuelve un error 500 más genérico pero informativo
+        raise HTTPException(status_code=500, detail=f"Error interno del servidor al escribir el archivo: {str(e)}")
