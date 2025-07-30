@@ -40,18 +40,12 @@ def parse_xsd_structure(root: ET.Element) -> Dict[str, List[dict]]:
 
         if type_definition_node is not None:
             
-            # --- INICIO DE LA CORRECCIÓN ---
-            # En lugar de buscar atributos en toda la profundidad (.//),
-            # ahora buscamos solo los atributos que son hijos directos del nodo de definición.
-
-            # 1. Buscar atributos directamente en complexType
             for attr in type_definition_node.findall(f"./{namespace}attribute"):
                 attributes.append({
                     "name": attr.attrib.get("name"), "type": attr.attrib.get("type"),
                     "use": attr.attrib.get("use", "optional")
                 })
             
-            # 2. Buscar atributos dentro de extensiones (simpleContent o complexContent)
             for content_type in ["simpleContent", "complexContent"]:
                 content_node = type_definition_node.find(f"./{namespace}{content_type}")
                 if content_node:
@@ -63,9 +57,7 @@ def parse_xsd_structure(root: ET.Element) -> Dict[str, List[dict]]:
                                 "name": attr.attrib.get("name"), "type": attr.attrib.get("type"),
                                 "use": attr.attrib.get("use", "optional")
                             })
-            # --- FIN DE LA CORRECCIÓN ---
-
-            # Lógica para encontrar hijos (esta parte no cambia)
+                            
             sequence = type_definition_node.find(f".//{namespace}sequence")
             choice = type_definition_node.find(f".//{namespace}choice")
             
