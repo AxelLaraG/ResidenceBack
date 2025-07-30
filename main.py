@@ -368,7 +368,6 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
         if not username:
             raise HTTPException(status_code=401, detail="Token inválido: falta el nombre de usuario")
 
-        # Obtener la institución y la URL base del diccionario global
         institution = update_data.institution
         institution_key = institution.lower()
         base_url = xml_urls.get(institution_key)
@@ -376,9 +375,7 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
         if not base_url:
             raise HTTPException(status_code=404, detail=f"No se encontró la URL para la institución: {institution}")
 
-        # Derivar la ruta del archivo del servidor desde la URL
         try:
-            # Extrae el nombre del servicio (ej. "TecNMServ") de la URL
             service_name = base_url.split('/')[3]
             xml_file_path = f"/srv/{service_name}/files/{username}.xml"
         except IndexError:
