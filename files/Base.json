@@ -1,1 +1,100 @@
-{}
+{
+  "cvu": [
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_MiPerfil_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Semblanza",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": true,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "Semblanza"
+        ],
+        "uniqueId": "cvu_MiPerfil_Semblanza",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "CorreoDocente",
+      "type": "CorreoContenido",
+      "minOccurs": "0",
+      "maxOccurs": "unbounded",
+      "attributes": [
+        {
+          "name": "Principal",
+          "type": "xs:boolean",
+          "use": "required"
+        }
+      ],
+      "isSimpleContent": true,
+      "hasComplexType": true,
+      "baseType": "CorreoContenido",
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "CorreoDocente"
+        ],
+        "uniqueId": "cvu_MiPerfil_ContactoDocente_CorreoDocente",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "MovilDocente",
+      "type": "DiezDigitos",
+      "minOccurs": "0",
+      "maxOccurs": "unbounded",
+      "attributes": [
+        {
+          "name": "Principal",
+          "type": "xs:boolean",
+          "use": "required"
+        }
+      ],
+      "isSimpleContent": true,
+      "hasComplexType": true,
+      "baseType": "DiezDigitos",
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "MovilDocente"
+        ],
+        "uniqueId": "cvu_MiPerfil_ContactoDocente_MovilDocente",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    }
+  ]
+}

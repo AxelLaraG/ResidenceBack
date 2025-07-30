@@ -177,33 +177,35 @@ def get_xsd_structure(opt:str =""):
             result = json.load(f)
     return result
 
-# En axellarag/residenceback/ResidenceBack-190d8da5534fdff3be82de1bf451c5ea769d028e/main.py
-
 @app.post("/api/update-base")
 async def update_base_data(changes_data: dict, institute: str = None):
     try:
         base_file_path = xsd_urls.get("base")
         mapping_file_path = xsd_urls.get("mapa")
 
-        # Cargar Base.json
         try:
             with open(base_file_path, "r", encoding="utf-8") as f:
                 current_base = json.load(f)
         except FileNotFoundError:
             current_base = {}
         
-        # Cargar dynamic_mapping.json
         try:
             with open(mapping_file_path, "r", encoding="utf-8") as f:
                 mappings = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
-            mappings = {} # Si no existe o está vacío, empezamos con un objeto vacío
+            mappings = {} 
 
         manual_elements = changes_data.get("manual", [])
         automated_elements = changes_data.get("automated", [])
         removed_elements = changes_data.get("removed", [])
+        pending_mappings = changes_data.get("mappings", {})
         
         all_elements = manual_elements + automated_elements
+
+        if institute and pending_mappings:
+            if institute not in mappings:
+                mappings[institute] = {}
+            mappings[institute].update(pending_mappings)
         
         elements_added = 0
         elements_removed = 0
@@ -263,7 +265,6 @@ async def update_base_data(changes_data: dict, institute: str = None):
                 current_base[section].append(element_with_context)
                 elements_added += 1
         
-        # --- Lógica para ELIMINAR elementos y sus MAPEoS ---
         for element in removed_elements:
             unique_id = element.get("uniqueId", "")
             section = element.get("section")
@@ -285,15 +286,12 @@ async def update_base_data(changes_data: dict, institute: str = None):
                         if institution_to_remove_from and institution_to_remove_from in current_institutions:
                             current_institutions.remove(institution_to_remove_from)
                             elements_removed += 1
-                            
-                            # --- LÓGICA AÑADIDA PARA ELIMINAR EL MAPEO ---
+
                             if institution_to_remove_from in mappings and unique_id in mappings[institution_to_remove_from]:
                                 del mappings[institution_to_remove_from][unique_id]
                                 mappings_removed += 1
-                                # Si ya no quedan mapeos para esa institución, se puede eliminar la clave
                                 if not mappings[institution_to_remove_from]:
                                     del mappings[institution_to_remove_from]
-                            # --- FIN DE LA LÓGICA AÑADIDA ---
 
                             if not current_institutions:
                                 element_to_fully_delete = i
@@ -307,11 +305,9 @@ async def update_base_data(changes_data: dict, institute: str = None):
                 if not current_base[section]:
                     del current_base[section]
                 
-        # Guardar los cambios en Base.json
         with open(base_file_path, "w", encoding="utf-8") as f:
             json.dump(current_base, f, indent=2, ensure_ascii=False)
         
-        # Guardar los cambios en dynamic_mapping.json
         with open(mapping_file_path, "w", encoding="utf-8") as f:
             json.dump(mappings, f, indent=2, ensure_ascii=False)
         
