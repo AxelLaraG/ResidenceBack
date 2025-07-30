@@ -6,7 +6,19 @@
     "cvu_MiPerfil_ContactoDocente_MovilDocente": "Telefono",
     "cvu_MiPerfil_InformacionGeneral_CURP": "CURP",
     "cvu_MiPerfil_InformacionGeneral_FechaDeNacimiento": "FechaNacimiento",
+    "cvu_MiPerfil_InformacionGeneral_Sexo": "Genero",
     "cvu_MiPerfil_InformacionGeneral_PaisDeNacimiento": "PaisNacimiento",
-    "cvu_MiPerfil_InformacionGeneral_RFC": "RFC"
+    "cvu_MiPerfil_InformacionGeneral_RFC": "RFC",
+    "cvu_TrayectoriaAcademica_Trayectoria_Titulo": "Titulo",
+    "cvu_TrayectoriaAcademica_Trayectoria_InstitucionCompleja_InstitucionExtranjera_Nombre": "LugarDeEstudios",
+    "cvu_TrayectoriaAcademica_Trayectoria_InstitucionCompleja_InstitucionNacional_SectorSimple_Nombre": "LugarDeEstudios",
+    "cvu_TrayectoriaAcademica_Trayectoria_InstitucionCompleja_InstitucionNacional_SectorEstatal_Nombre": "LugarDeEstudios",
+    "cvu_TrayectoriaAcademica_Trayectoria_InstitucionCompleja_InstitucionNacional_SectorMunicipal_Nombre": "LugarDeEstudios",
+    "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_Nombre": "Puesto",
+    "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_FechaInicio": "Vigencia",
+    "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_FechaFin": "Vigencia",
+    "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_InstitucionCompleja_InstitucionNacional_SectorSimple_Nombre": "Institución",
+    "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_InstitucionCompleja_InstitucionNacional_SectorEstatal_Nombre": "Institución",
+    "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_InstitucionCompleja_InstitucionNacional_SectorMunicipal_Nombre": "Institución"
   }
 }

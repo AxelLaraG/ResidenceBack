@@ -139,6 +139,27 @@
       }
     },
     {
+      "name": "Sexo",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": true,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "Sexo"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_Sexo",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
       "name": "PaisDeNacimiento",
       "type": "xs:string",
       "minOccurs": "1",
@@ -175,6 +196,237 @@
           "RFC"
         ],
         "uniqueId": "cvu_MiPerfil_InformacionGeneral_RFC",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Titulo",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaAcademica",
+        "path": [
+          "Titulo"
+        ],
+        "uniqueId": "cvu_TrayectoriaAcademica_Trayectoria_Titulo",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaAcademica",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_TrayectoriaAcademica_Trayectoria_InstitucionCompleja_InstitucionNacional_SectorSimple_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaAcademica",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_TrayectoriaAcademica_Trayectoria_InstitucionCompleja_InstitucionNacional_SectorEstatal_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaAcademica",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_TrayectoriaAcademica_Trayectoria_InstitucionCompleja_InstitucionNacional_SectorMunicipal_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaAcademica",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_TrayectoriaAcademica_Trayectoria_InstitucionCompleja_InstitucionExtranjera_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaProfesional",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_InstitucionCompleja_InstitucionNacional_SectorSimple_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaProfesional",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_InstitucionCompleja_InstitucionNacional_SectorEstatal_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Nombre",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaProfesional",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_InstitucionCompleja_InstitucionNacional_SectorMunicipal_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "FechaInicio",
+      "type": "xs:date",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaProfesional",
+        "path": [
+          "FechaInicio"
+        ],
+        "uniqueId": "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_FechaInicio",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Nombre",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": true,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaProfesional",
+        "path": [
+          "Nombre"
+        ],
+        "uniqueId": "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_Nombre",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "FechaFin",
+      "type": "xs:date",
+      "minOccurs": "0",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaProfesional",
+        "path": [
+          "FechaFin"
+        ],
+        "uniqueId": "cvu_TrayectoriaProfesional_Empleos_EmpleoComplejo_FechaFin",
         "institution": [
           "TecNM"
         ]
