@@ -3,7 +3,7 @@ from fastapi import FastAPI, Depends,HTTPException, File, UploadFile, status
 from fastapi.responses import FileResponse, PlainTextResponse, Response
 from pydantic import BaseModel
 
-from ResidenceBack.Parser import parse_xsd_from_file, parse_xsd_from_url
+from ResidenceBack.Parser import parse_xsd_from_url
 from .FileValidation import validation_main
 from .Auth import create_jwt_token,verify_jwt_from_cookie
 import xml.etree.ElementTree as ET
@@ -390,7 +390,7 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
         if not username:
             raise HTTPException(status_code=401, detail="Token inválido: falta el nombre de usuario")
 
-        mapping_file_path = os.path.join(os.path.dirname(__file__), "files", "dynamic_mapping.json")
+        mapping_file_path = os.path.join(xsd_urls.get("mapa"))
         rizoma_xsd = get_xsd_structure("rizoma") 
         
         with open(mapping_file_path, "r", encoding="utf-8") as f:
