@@ -360,27 +360,80 @@ async def update_sharing_settings(update_data: SharingUpdate):
             detail=f"Error al actualizar permisos: {str(e)}"
         )
     
-def find_element_definition(xsd_data, unique_id):
-    parts = unique_id.split('_')
-    if len(parts) < 2:
+def find_element_definition(xsd_structure, unique_id):
+    """
+    Busca la definición de un elemento en la estructura XSD usando su uniqueId.
+    Retorna el elemento con sus propiedades (incluyendo maxOccurs) o None si no se encuentra.
+    """
+    if not xsd_structure or not unique_id:
         return None
     
-    section_name = parts[0]
-    current_elements = xsd_data.get(section_name, [])
-    found_element = None
-
-    for part in parts[1:]:
-        found = False
-        for element in current_elements:
-            if element.get("name") == part:
-                found_element = element
-                current_elements = element.get("children", [])
-                found = True
-                break
-        if not found:
-            return None 
+    def search_in_structure(structure, target_unique_id, current_path=[]):
+        if isinstance(structure, dict):
+            for section_name, section_data in structure.items():
+                current_section_path = current_path + [section_name]
+                
+                if isinstance(section_data, list):
+                    for item in section_data:
+                        result = search_in_structure(item, target_unique_id, current_section_path)
+                        if result:
+                            return result
+                elif isinstance(section_data, dict):
+                    result = search_in_structure(section_data, target_unique_id, current_section_path)
+                    if result:
+                        return result
+        
+        elif isinstance(structure, list):
+            for item in structure:
+                result = search_in_structure(item, target_unique_id, current_path)
+                if result:
+                    return result
+    
+    def search_element_recursive(elements, target_unique_id, path=[]):
+        """Busca recursivamente en los elementos"""
+        if not isinstance(elements, list):
+            return None
             
-    return found_element
+        for element in elements:
+            if not isinstance(element, dict):
+                continue
+                
+            element_name = element.get('name', '')
+            current_path = path + [element_name]
+            current_unique_id = '_'.join(current_path)
+            
+            # Si encontramos el elemento que buscamos
+            if current_unique_id == target_unique_id:
+                return element
+            
+            # Buscar en los hijos si existen
+            children = element.get('children', [])
+            if children:
+                result = search_element_recursive(children, target_unique_id, current_path)
+                if result:
+                    return result
+                    
+        return None
+    
+    # Buscar en toda la estructura XSD
+    for section_name, section_elements in xsd_structure.items():
+        if isinstance(section_elements, list):
+            result = search_element_recursive(section_elements, unique_id, [section_name])
+            if result:
+                return result
+    
+    return None
+
+# También agregar una función auxiliar para verificar si un elemento es aditivo
+def is_element_additive(element_def):
+    """
+    Verifica si un elemento permite múltiples ocurrencias
+    """
+    if not element_def:
+        return False
+    
+    max_occurs = element_def.get('maxOccurs', '1')
+    return max_occurs == 'unbounded' or (max_occurs != '1' and max_occurs != '0')
 
 @app.post("/api/update-xml")
 async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_jwt_from_cookie)):
@@ -403,11 +456,11 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
 
         for source_unique_id, new_value in update_data.data.items():
             element_def = find_element_definition(rizoma_xsd, source_unique_id)
-            is_additive = element_def and element_def.get("maxOccurs") == "unbounded"
+            is_additive = is_element_additive(element_def)
 
             for institution, xml_file_path in institution_paths.items():
-                target_field = mappings.get(institution, {}).get(source_unique_id)
-                if not target_field:
+                target_unique_id = mappings.get(institution, {}).get(source_unique_id)
+                if not target_unique_id:
                     continue
 
                 if not os.path.exists(xml_file_path):
@@ -416,14 +469,33 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
                 tree = ET.parse(xml_file_path)
                 root = tree.getroot()
                 
+                # Usar el uniqueId completo para navegar
+                target_parts = target_unique_id.split('_')[1:]  # Saltamos la sección raíz
+                
                 if is_additive:
-                    parent_element = root.find(f".//{target_field}/..")
+                    # Para elementos aditivos, encontrar el padre del último elemento
+                    parent_path = target_parts[:-1]
+                    parent_element = root
+                    
+                    for part in parent_path:
+                        parent_element = parent_element.find(f".//{part}")
+                        if parent_element is None:
+                            break
+                    
                     if parent_element is not None:
-                        ET.SubElement(parent_element, target_field).text = str(new_value)
+                        ET.SubElement(parent_element, target_parts[-1]).text = str(new_value)
                 else:
-                    element_to_update = root.find(f".//{target_field}")
-                    if element_to_update is not None:
-                        element_to_update.text = str(new_value)
+                    current_element = root
+                    for part in target_parts:
+                        found_element = current_element.find(f".//{part}")
+                        if found_element is not None:
+                            current_element = found_element
+                        else:
+                            current_element = None
+                            break
+                    
+                    if current_element is not None:
+                        current_element.text = str(new_value)
                 
                 tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
 
@@ -447,7 +519,8 @@ async def update_mapping(mapping_data: FieldMapping, payload: dict = Depends(ver
             if mapping_data.institution not in mappings:
                 mappings[mapping_data.institution] = {}
             
-            mappings[mapping_data.institution][mapping_data.sourceUniqueId] = mapping_data.targetFieldName
+            # Guardar el uniqueId completo en lugar del nombre del campo
+            mappings[mapping_data.institution][mapping_data.sourceUniqueId] = mapping_data.targetUniqueId
             
             f.seek(0)
             json.dump(mappings, f, indent=2)
