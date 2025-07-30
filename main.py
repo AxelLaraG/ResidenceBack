@@ -360,6 +360,29 @@ async def update_sharing_settings(update_data: SharingUpdate):
             detail=f"Error al actualizar permisos: {str(e)}"
         )
     
+def find_element_definition(xsd_data, unique_id):
+    """Busca la definición de un elemento en el XSD parseado por su uniqueId."""
+    parts = unique_id.split('_')
+    if len(parts) < 2:
+        return None
+    
+    section_name = parts[0]
+    current_elements = xsd_data.get(section_name, [])
+    found_element = None
+
+    for part in parts[1:]:
+        found = False
+        for element in current_elements:
+            if element.get("name") == part:
+                found_element = element
+                current_elements = element.get("children", [])
+                found = True
+                break
+        if not found:
+            return None 
+            
+    return found_element
+
 @app.post("/api/update-xml")
 async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_jwt_from_cookie)):
     try:
@@ -368,34 +391,44 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
             raise HTTPException(status_code=401, detail="Token inválido: falta el nombre de usuario")
 
         mapping_file_path = os.path.join(os.path.dirname(__file__), "files", "dynamic_mapping.json")
+        rizoma_xsd = get_xsd_structure("rizoma") 
+        
         with open(mapping_file_path, "r", encoding="utf-8") as f:
             mappings = json.load(f)
 
-        institution_paths = {
+        institution_paths = { 
             "TecNM": f"/srv/TecNMServ/files/{username}.xml",
             "PRODEP": f"/srv/PRODEPServ/files/{username}.xml",
             "SECIHTI": f"/srv/SECIHTIServ/files/{username}.xml"
         }
-        
-        for institution, xml_file_path in institution_paths.items():
-            if os.path.exists(xml_file_path):
+
+        for source_unique_id, new_value in update_data.data.items():
+            element_def = find_element_definition(rizoma_xsd, source_unique_id)
+            is_additive = element_def and element_def.get("maxOccurs") == "unbounded"
+
+            for institution, xml_file_path in institution_paths.items():
+                target_field = mappings.get(institution, {}).get(source_unique_id)
+                if not target_field:
+                    continue
+
+                if not os.path.exists(xml_file_path):
+                    continue 
+                
                 tree = ET.parse(xml_file_path)
                 root = tree.getroot()
-                file_updated = False
-
-                for source_unique_id, new_value in update_data.data.items():
-                    target_field = mappings.get(institution, {}).get(source_unique_id, None)
-                    
-                    if target_field:
-                        element = root.find(f".//{target_field}")
-                        if element is not None and element.text != new_value:
-                            element.text = str(new_value)
-                            file_updated = True
                 
-                if file_updated:
-                    tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
+                if is_additive:
+                    parent_element = root.find(f".//{target_field}/..")
+                    if parent_element is not None:
+                        ET.SubElement(parent_element, target_field).text = str(new_value)
+                else:
+                    element_to_update = root.find(f".//{target_field}")
+                    if element_to_update is not None:
+                        element_to_update.text = str(new_value)
+                
+                tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
 
-        return {"success": True, "message": "Archivos XML actualizados dinámicamente con mapeo"}
+        return {"success": True, "message": "Archivos XML actualizados dinámicamente"}
 
     except Exception as e:
         print(f"Error al actualizar el XML dinámicamente: {e}")

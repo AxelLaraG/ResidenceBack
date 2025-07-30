@@ -3,6 +3,10 @@
     "cvu_MiPerfil_Nombre": "Nombre",
     "cvu_MiPerfil_Semblanza": "ResumenBibliografico",
     "cvu_MiPerfil_ContactoDocente_CorreoDocente": "Correo",
-    "cvu_MiPerfil_ContactoDocente_MovilDocente": "Telefono"
+    "cvu_MiPerfil_ContactoDocente_MovilDocente": "Telefono",
+    "cvu_MiPerfil_InformacionGeneral_CURP": "CURP",
+    "cvu_MiPerfil_InformacionGeneral_FechaDeNacimiento": "FechaNacimiento",
+    "cvu_MiPerfil_InformacionGeneral_PaisDeNacimiento": "PaisNacimiento",
+    "cvu_MiPerfil_InformacionGeneral_RFC": "RFC"
   }
 }

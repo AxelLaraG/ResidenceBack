@@ -95,6 +95,90 @@
           "TecNM"
         ]
       }
+    },
+    {
+      "name": "CURP",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": true,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "CURP"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_CURP",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "FechaDeNacimiento",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": true,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "FechaDeNacimiento"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_FechaDeNacimiento",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "PaisDeNacimiento",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "PaisDeNacimiento"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_PaisDeNacimiento",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "RFC",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": true,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "RFC"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_RFC",
+        "institution": [
+          "TecNM"
+        ]
+      }
     }
   ]
 }
