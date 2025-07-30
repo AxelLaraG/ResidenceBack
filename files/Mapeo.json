@@ -1,1 +1,8 @@
-{}
+{
+  "TecNM": {
+    "cvu_MiPerfil_Nombre": "Nombre",
+    "cvu_MiPerfil_Semblanza": "ResumenBibliografico",
+    "cvu_MiPerfil_ContactoDocente_CorreoDocente": "Correo",
+    "cvu_MiPerfil_ContactoDocente_MovilDocente": "Telefono"
+  }
+}
