@@ -368,74 +368,80 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
         if not username:
             raise HTTPException(status_code=401, detail="Token inválido: falta el nombre de usuario")
 
+        # Obtener la institución y la URL base del diccionario global
+        institution = update_data.institution
+        institution_key = institution.lower()
+        base_url = xml_urls.get(institution_key)
+
+        if not base_url:
+            raise HTTPException(status_code=404, detail=f"No se encontró la URL para la institución: {institution}")
+
+        # Derivar la ruta del archivo del servidor desde la URL
+        try:
+            # Extrae el nombre del servicio (ej. "TecNMServ") de la URL
+            service_name = base_url.split('/')[3]
+            xml_file_path = f"/srv/{service_name}/files/{username}.xml"
+        except IndexError:
+            raise HTTPException(status_code=500, detail=f"No se pudo analizar la URL para la institución: {institution}")
+
         mapping_file_path = os.path.join(xsd_urls.get("mapa"))
-        rizoma_xsd = get_xsd_structure("rizoma") 
-        
+        rizoma_xsd = get_xsd_structure("rizoma")
+
         with open(mapping_file_path, "r", encoding="utf-8") as f:
             mappings = json.load(f)
-
-        institution_paths = { 
-            "TecNM": f"/srv/TecNMServ/files/{username}.xml",
-            "PRODEP": f"/srv/PRODEPServ/files/{username}.xml",
-            "SECIHTI": f"/srv/SECIHTIServ/files/{username}.xml"
-        }
 
         updates_made = {}
 
         for source_unique_id, new_value in update_data.data.items():
             element_def = find_element_definition(rizoma_xsd, source_unique_id)
             is_additive = is_element_additive(element_def)
-            
             parsed_value = parse_complex_value(new_value)
 
-            for institution, xml_file_path in institution_paths.items():
-                target_unique_id = mappings.get(institution, {}).get(source_unique_id)
-                if not target_unique_id:
+            target_unique_id = mappings.get(institution, {}).get(source_unique_id)
+            if not target_unique_id:
+                continue
+
+            if not os.path.exists(xml_file_path):
+                continue
+
+            try:
+                tree = ET.parse(xml_file_path)
+                root = tree.getroot()
+
+                target_parts = target_unique_id.split('_')[1:]
+                if not target_parts:
                     continue
 
-                if not os.path.exists(xml_file_path):
-                    continue 
-                
-                try:
-                    tree = ET.parse(xml_file_path)
-                    root = tree.getroot()
-                    
-                    target_parts = target_unique_id.split('_')[1:]
-                    
-                    if len(target_parts) == 0:
-                        continue
-                    
-                    parent_element = find_or_create_element_path(root, target_parts)
-                    
-                    element_name = target_parts[-1]
-                    updated_element = handle_complex_element_update(
-                        parent_element, 
-                        element_name, 
-                        parsed_value, 
-                        is_additive
-                    )
-                    
-                    tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
-                    
-                    if institution not in updates_made:
-                        updates_made[institution] = []
-                    updates_made[institution].append({
-                        "source_id": source_unique_id,
-                        "target_id": target_unique_id,
-                        "is_additive": is_additive,
-                        "updated": True
-                    })
-                    
-                except ET.ParseError as e:
-                    print(f"Error parsing XML file {xml_file_path}: {e}")
-                    continue
-                except Exception as e:
-                    print(f"Error updating XML file {xml_file_path}: {e}")
-                    continue
+                parent_element = find_or_create_element_path(root, target_parts)
+                element_name = target_parts[-1]
+                handle_complex_element_update(
+                    parent_element,
+                    element_name,
+                    parsed_value,
+                    is_additive
+                )
+
+                tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
+
+                if institution not in updates_made:
+                    updates_made[institution] = []
+                updates_made[institution].append({
+                    "source_id": source_unique_id,
+                    "target_id": target_unique_id,
+                    "is_additive": is_additive,
+                    "updated": True
+                })
+
+            except ET.ParseError as e:
+                print(f"Error parsing XML file {xml_file_path}: {e}")
+                continue
+            except Exception as e:
+                print(f"Error updating XML file {xml_file_path}: {e}")
+                continue
 
         return {
-            "success": True, 
-            "message": "Archivos XML actualizados dinámicamente",
+            "success": True,
+            "message": f"Archivo XML para {institution} actualizado correctamente.",
             "updates_made": updates_made
         }
 
