@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-from typing import Dict, List, Tuple
+from typing import Dict, List
 import requests
 import io
 import os
@@ -22,53 +22,98 @@ def parse_xsd_structure(root: ET.Element) -> Dict[str, List[dict]]:
             
     memo = {}
 
-    def parse_element_recursive(element_node: ET.Element) -> dict:
+    def parse_element_recursive(element_node: ET.Element, context_path="") -> dict:
         element_name = element_node.attrib.get("name")
         element_type_name = strip_prefix(element_node.attrib.get("type"))
         
-        memo_key = f"{element_name}-{element_type_name}"
-        if memo_key in memo:
+        # Clave de memoización más robusta que incluye contexto
+        current_path = f"{context_path}/{element_name}" if context_path else element_name
+        memo_key = f"{element_node.tag}-{current_path}-{element_type_name}"
+        
+        # Evitar referencias circulares profundas
+        if memo_key in memo and len(context_path.split('/')) > 5:
             return memo[memo_key]
 
         children = []
         attributes = []
         base_type = None
         
+        # Identificar el nodo de definición de tipo
         type_definition_node = element_node.find(f"{namespace}complexType")
-        if type_definition_node is None and element_type_name in schema_types:
+        
+        # Si el elemento actual ES un complexType
+        if element_node.tag == f"{namespace}complexType":
+            type_definition_node = element_node
+        # Si no tiene tipo inline pero tiene referencia a tipo nombrado
+        elif type_definition_node is None and element_type_name in schema_types:
             type_definition_node = schema_types[element_type_name]
 
-        if type_definition_node is not None:
+        if type_definition_node is not None and type_definition_node.tag != f"{namespace}simpleType":
             
+            # Procesar atributos directos
             for attr in type_definition_node.findall(f"./{namespace}attribute"):
                 attributes.append({
-                    "name": attr.attrib.get("name"), "type": attr.attrib.get("type"),
+                    "name": attr.attrib.get("name"), 
+                    "type": attr.attrib.get("type"),
                     "use": attr.attrib.get("use", "optional")
                 })
             
+            # Manejar contenido complejo y simple con extensiones
             for content_type in ["simpleContent", "complexContent"]:
                 content_node = type_definition_node.find(f"./{namespace}{content_type}")
                 if content_node:
                     extension = content_node.find(f"./{namespace}extension")
                     if extension is not None:
                         base_type = extension.attrib.get("base")
+                        base_type_name = strip_prefix(base_type)
+                        
+                        # Resolver tipo base si está definido en el schema
+                        if base_type_name in schema_types:
+                            base_type_node = schema_types[base_type_name]
+                            parsed_base = parse_element_recursive(base_type_node, current_path)
+                            children.extend(parsed_base.get("children", []))
+                            attributes.extend(parsed_base.get("attributes", []))
+                        
+                        # Procesar atributos de la extensión
                         for attr in extension.findall(f"./{namespace}attribute"):
                             attributes.append({
-                                "name": attr.attrib.get("name"), "type": attr.attrib.get("type"),
+                                "name": attr.attrib.get("name"), 
+                                "type": attr.attrib.get("type"),
                                 "use": attr.attrib.get("use", "optional")
                             })
-                            
-            sequence = type_definition_node.find(f".//{namespace}sequence")
-            choice = type_definition_node.find(f".//{namespace}choice")
+                        
+                        # Procesar elementos de la extensión
+                        ext_sequence = extension.find(f"./{namespace}sequence")
+                        ext_choice = extension.find(f"./{namespace}choice")
+                        ext_container = ext_sequence if ext_sequence is not None else ext_choice
+                        if ext_container is not None:
+                            for child_element in ext_container.findall(f"./{namespace}element"):
+                                children.append(parse_element_recursive(child_element, current_path))
+                            if ext_sequence is not None:
+                                for choice_in_seq in ext_sequence.findall(f"./{namespace}choice"):
+                                    for child_in_choice in choice_in_seq.findall(f"./{namespace}element"):
+                                        children.append(parse_element_recursive(child_in_choice, current_path))
+            
+            # Procesar elementos directos (sequence, choice)
+            sequence = type_definition_node.find(f"./{namespace}sequence")
+            choice = type_definition_node.find(f"./{namespace}choice")
             
             container = sequence if sequence is not None else choice
             if container is not None:
                 for child_element in container.findall(f"./{namespace}element"):
-                    children.append(parse_element_recursive(child_element))
+                    children.append(parse_element_recursive(child_element, current_path))
+                    
+                # Procesar choices dentro de sequences
                 if sequence is not None:
                     for choice_in_seq in sequence.findall(f"./{namespace}choice"):
                         for child_in_choice in choice_in_seq.findall(f"./{namespace}element"):
-                            children.append(parse_element_recursive(child_in_choice))
+                            children.append(parse_element_recursive(child_in_choice, current_path))
+                            
+                # Procesar sequences dentro de choices
+                if choice is not None:
+                    for seq_in_choice in choice.findall(f"./{namespace}sequence"):
+                        for child_in_seq in seq_in_choice.findall(f"./{namespace}element"):
+                            children.append(parse_element_recursive(child_in_seq, current_path))
 
         parsed_data = {
             "name": element_name,
@@ -78,11 +123,14 @@ def parse_xsd_structure(root: ET.Element) -> Dict[str, List[dict]]:
             "attributes": attributes,
             "children": children,
             "isSimpleContent": type_definition_node is not None and type_definition_node.find(f".//{namespace}simpleContent") is not None,
-            "hasComplexType": type_definition_node is not None,
+            "hasComplexType": type_definition_node is not None and type_definition_node.tag != f"{namespace}simpleType",
             "baseType": base_type
         }
         
-        memo[memo_key] = parsed_data
+        # Solo memoizar si no estamos muy profundo para evitar problemas de memoria
+        if len(current_path.split('/')) <= 5:
+            memo[memo_key] = parsed_data
+            
         return parsed_data
 
     sections = {}
