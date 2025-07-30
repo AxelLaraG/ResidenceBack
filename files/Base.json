@@ -17,7 +17,8 @@
         ],
         "uniqueId": "cvu_MiPerfil_Nombre",
         "institution": [
-          "TecNM"
+          "TecNM",
+          "PRODEP"
         ]
       }
     },
@@ -141,6 +142,136 @@
         "uniqueId": "cvu_TrayectoriaAcademica_Trayectoria_Titulo",
         "institution": [
           "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "NivelDeEscolaridad",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "unbounded",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "TrayectoriaAcademica",
+        "path": [
+          "NivelDeEscolaridad"
+        ],
+        "uniqueId": "cvu_TrayectoriaAcademica_Trayectoria_NivelDeEscolaridad",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "CURP",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "CURP"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_CURP",
+        "institution": [
+          "TecNM",
+          "PRODEP"
+        ]
+      }
+    },
+    {
+      "name": "FechaDeNacimiento",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "FechaDeNacimiento"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_FechaDeNacimiento",
+        "institution": [
+          "TecNM"
+        ]
+      }
+    },
+    {
+      "name": "Sexo",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "Sexo"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_Sexo",
+        "institution": [
+          "TecNM",
+          "PRODEP"
+        ]
+      }
+    },
+    {
+      "name": "PaisDeNacimiento",
+      "type": "xs:string",
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "PaisDeNacimiento"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_PaisDeNacimiento",
+        "institution": [
+          "TecNM",
+          "PRODEP"
+        ]
+      }
+    },
+    {
+      "name": "RFC",
+      "type": null,
+      "minOccurs": "1",
+      "maxOccurs": "1",
+      "attributes": [],
+      "isSimpleContent": false,
+      "hasComplexType": false,
+      "baseType": null,
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "RFC"
+        ],
+        "uniqueId": "cvu_MiPerfil_InformacionGeneral_RFC",
+        "institution": [
+          "TecNM",
+          "PRODEP"
         ]
       }
     }

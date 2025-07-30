@@ -5,6 +5,19 @@
     "cvu_MiPerfil_ContactoDocente_CorreoDocente": "cvu_Contacto_Correo",
     "cvu_MiPerfil_ContactoDocente_MovilDocente": "cvu_Contacto_Telefono",
     "cvu_MiPerfil_ContactoDocente_TelefonoDocente": "cvu_Contacto_Telefono",
-    "cvu_TrayectoriaAcademica_Trayectoria_Titulo": "cvu_TitulosAcademicos_Titulo"
+    "cvu_TrayectoriaAcademica_Trayectoria_Titulo": "cvu_TitulosAcademicos_Titulo",
+    "cvu_TrayectoriaAcademica_Trayectoria_NivelDeEscolaridad": "cvu_TitulosAcademicos_@Tipo",
+    "cvu_MiPerfil_InformacionGeneral_CURP": "cvu_DatosPersonales_CURP",
+    "cvu_MiPerfil_InformacionGeneral_FechaDeNacimiento": "cvu_DatosPersonales_FechaNacimiento",
+    "cvu_MiPerfil_InformacionGeneral_Sexo": "cvu_DatosPersonales_Genero",
+    "cvu_MiPerfil_InformacionGeneral_PaisDeNacimiento": "cvu_DatosPersonales_PaisNacimiento",
+    "cvu_MiPerfil_InformacionGeneral_RFC": "cvu_DatosPersonales_RFC"
+  },
+  "PRODEP": {
+    "cvu_MiPerfil_Nombre": "cvu_Identificacion_Nombre",
+    "cvu_MiPerfil_InformacionGeneral_CURP": "cvu_Identificacion_CURP",
+    "cvu_MiPerfil_InformacionGeneral_RFC": "cvu_Identificacion_RFC",
+    "cvu_MiPerfil_InformacionGeneral_PaisDeNacimiento": "cvu_Identificacion_NacidoEn",
+    "cvu_MiPerfil_InformacionGeneral_Sexo": "cvu_Identificacion_Genero"
   }
 }
