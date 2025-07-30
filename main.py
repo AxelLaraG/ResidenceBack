@@ -58,6 +58,11 @@ class UpdateXmlData(BaseModel):
     institution: str
     data: Dict[str, str]
 
+class FieldMapping(BaseModel):
+    institution: str
+    sourceUniqueId: str
+    targetFieldName: str
+
 app = FastAPI()
 
 app.add_middleware(
@@ -339,47 +344,60 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
         if not username:
             raise HTTPException(status_code=401, detail="Token inválido: falta el nombre de usuario")
 
+        mapping_file_path = os.path.join(os.path.dirname(__file__), "files", "dynamic_mapping.json")
+        with open(mapping_file_path, "r", encoding="utf-8") as f:
+            mappings = json.load(f)
+
         institution_paths = {
             "TecNM": f"/srv/TecNMServ/files/{username}.xml",
             "PRODEP": f"/srv/PRODEPServ/files/{username}.xml",
             "SECIHTI": f"/srv/SECIHTIServ/files/{username}.xml"
         }
         
-        institution_key = update_data.institution
-        if institution_key == "rizoma":
-            institution_key = "SECIHTI"
+        for institution, xml_file_path in institution_paths.items():
+            if os.path.exists(xml_file_path):
+                tree = ET.parse(xml_file_path)
+                root = tree.getroot()
+                file_updated = False
 
-        xml_file_path = institution_paths.get(institution_key)
-        if not xml_file_path:
-            raise HTTPException(status_code=404, detail="Institución no encontrada o ruta no definida")
+                for source_unique_id, new_value in update_data.data.items():
+                    target_field = mappings.get(institution, {}).get(source_unique_id, None)
+                    
+                    if target_field:
+                        element = root.find(f".//{target_field}")
+                        if element is not None and element.text != new_value:
+                            element.text = str(new_value)
+                            file_updated = True
+                
+                if file_updated:
+                    tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
 
-        if os.path.exists(xml_file_path):
-            tree = ET.parse(xml_file_path)
-            root = tree.getroot()
-        else:
-            root = ET.Element("cvu")
-            os.makedirs(os.path.dirname(xml_file_path), exist_ok=True)
-            tree = ET.ElementTree(root)
-            if institution_key == "TecNM":
-                ET.SubElement(root, "DatosPersonales")
-            elif institution_key == "PRODEP":
-                ET.SubElement(root, "Identificacion")
-            else: # SECIHTI/rizoma
-                ET.SubElement(root, "MiPerfil")
-
-        for key, value in update_data.data.items():
-            element_to_update = root.find(f".//{key}")
-            if element_to_update is not None:
-                element_to_update.text = str(value)
-            else:
-                parent = next(root.iter(), root)
-                ET.SubElement(parent, key).text = str(value)
-
-        tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
-
-        return {"success": True, "message": "Archivo XML actualizado correctamente"}
+        return {"success": True, "message": "Archivos XML actualizados dinámicamente con mapeo"}
 
     except Exception as e:
-        print(f"Error al actualizar el XML: {e}")
-        # Devuelve un error 500 más genérico pero informativo
-        raise HTTPException(status_code=500, detail=f"Error interno del servidor al escribir el archivo: {str(e)}")
+        print(f"Error al actualizar el XML dinámicamente: {e}")
+        raise HTTPException(status_code=500, detail=f"Error interno del servidor: {str(e)}")
+
+@app.post("/api/update-mapping")
+async def update_mapping(mapping_data: FieldMapping, payload: dict = Depends(verify_jwt_from_cookie)):
+    if payload.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="No tienes permiso para realizar esta acción")
+
+    mapping_file_path = os.path.join(os.path.dirname(__file__), "files", "Mapeo.json")
+    
+    try:
+        with open(mapping_file_path, "r+", encoding="utf-8") as f:
+            mappings = json.load(f)
+            
+            if mapping_data.institution not in mappings:
+                mappings[mapping_data.institution] = {}
+            
+            mappings[mapping_data.institution][mapping_data.sourceUniqueId] = mapping_data.targetFieldName
+            
+            f.seek(0)
+            json.dump(mappings, f, indent=2)
+            f.truncate()
+
+        return {"success": True, "message": "Mapeo guardado correctamente"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al guardar el mapeo: {str(e)}")
