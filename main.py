@@ -22,9 +22,9 @@ xsd_urls = {
     }
 
 xml_urls = {
-    "TecNM": f"http://localhost:8080/TecNMServ/files/",
-    "PRODEP": f"http://localhost:8080/PRODEPServ/files/",
-    "SECIHTI": f"http://localhost:8080/SECIHTIServ/files/"
+    "tecnm": f"http://localhost:8080/TecNMServ/files/",
+    "prodep": f"http://localhost:8080/PRODEPServ/files/",
+    "rizoma": f"http://localhost:8080/SECIHTIServ/files/"
 }
 
 users = [
@@ -361,7 +361,6 @@ async def update_sharing_settings(update_data: SharingUpdate):
         )
     
 def find_element_definition(xsd_data, unique_id):
-    """Busca la definición de un elemento en el XSD parseado por su uniqueId."""
     parts = unique_id.split('_')
     if len(parts) < 2:
         return None
@@ -457,3 +456,7 @@ async def update_mapping(mapping_data: FieldMapping, payload: dict = Depends(ver
         return {"success": True, "message": "Mapeo guardado correctamente"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al guardar el mapeo: {str(e)}")
+
+@app.get("/api/xml-urls")
+async def get_xml_urls():
+    return xml_urls
