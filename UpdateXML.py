@@ -39,30 +39,30 @@ def _find_or_create_parent_element(root, target_path_parts, source_indices, mapp
     """
     current_element = root
     
+    # Extrae el primer índice disponible para aplicarlo.
+    # Esto asume un nivel de anidación con índice, que coincide con tu caso.
+    index_to_apply = next(iter(source_indices.values())) if source_indices else None
+
     # Recorremos la ruta hasta el penúltimo elemento (el padre)
     for i in range(1, len(target_path_parts) - 1):
         part_name = target_path_parts[i]
         
-        current_target_path_key = '_'.join(target_path_parts[:i+1])
-        index_to_find = None
-
-        # Busca el índice correspondiente a esta ruta de destino
-        for source_path, index in source_indices.items():
-            if mappings.get(institution, {}).get(source_path) == current_target_path_key:
-                index_to_find = index
-                break
-        
-        if index_to_find is not None:
-            # Este es un elemento repetido, hay que encontrar la instancia correcta
+        # Si tenemos un índice, lo aplicamos en este nivel para encontrar el elemento correcto en la lista.
+        if index_to_apply is not None:
             existing_children = current_element.findall(part_name)
-            if index_to_find < len(existing_children):
-                current_element = existing_children[index_to_find]
+            if index_to_apply < len(existing_children):
+                current_element = existing_children[index_to_apply]
             else:
+                # Si el elemento no existe, lo creamos hasta alcanzar el índice necesario.
                 new_child = None
-                for _ in range(len(existing_children), index_to_find + 1):
+                for _ in range(len(existing_children), index_to_apply + 1):
                     new_child = ET.SubElement(current_element, part_name)
                 current_element = new_child
+            
+            # Una vez usado el índice, lo anulamos para no volver a aplicarlo en niveles más profundos.
+            index_to_apply = None 
         else:
+            # Lógica estándar para partes de la ruta que no son listas indexadas.
             found_child = current_element.find(part_name)
             if found_child is None:
                 found_child = ET.SubElement(current_element, part_name)
