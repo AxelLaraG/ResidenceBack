@@ -1,221 +1,130 @@
-import json
 import xml.etree.ElementTree as ET
 
-def find_element_definition(xsd_structure, unique_id):
+def _parse_indexed_id(unique_id):
     """
-    Busca la definición de un elemento en la estructura XSD usando su uniqueId.
-    Retorna el elemento con sus propiedades (incluyendo maxOccurs) o None si no se encuentra.
+    Parsea un ID del frontend para separar el ID base de sus índices.
+    Ejemplo: 'cvu_TrayectoriaAcademica_Trayectoria_0_Titulo'
+    Retorna:
+        - normalized_id: 'cvu_TrayectoriaAcademica_Trayectoria_Titulo'
+        - indices: {'cvu_TrayectoriaAcademica_Trayectoria': 0}
     """
-    if not xsd_structure or not unique_id:
-        return None
+    parts = unique_id.split('_')
+    normalized_parts = []
+    indices = {}
     
-    def search_in_structure(structure, target_unique_id, current_path=[]):
-        if isinstance(structure, dict):
-            for section_name, section_data in structure.items():
-                current_section_path = current_path + [section_name]
-                
-                if isinstance(section_data, list):
-                    for item in section_data:
-                        result = search_in_structure(item, target_unique_id, current_section_path)
-                        if result:
-                            return result
-                elif isinstance(section_data, dict):
-                    result = search_in_structure(section_data, target_unique_id, current_section_path)
-                    if result:
-                        return result
+    i = 0
+    current_path_base = []
+    while i < len(parts):
+        current_part = parts[i]
         
-        elif isinstance(structure, list):
-            for item in structure:
-                result = search_in_structure(item, target_unique_id, current_path)
-                if result:
-                    return result
-    
-    def search_element_recursive(elements, target_unique_id, path=[]):
-        """Busca recursivamente en los elementos"""
-        if not isinstance(elements, list):
-            return None
-            
-        for element in elements:
-            if not isinstance(element, dict):
-                continue
-                
-            element_name = element.get('name', '')
-            current_path = path + [element_name]
-            current_unique_id = '_'.join(current_path)
-            
-            # Si encontramos el elemento que buscamos
-            if current_unique_id == target_unique_id:
-                return element
-            
-            # Buscar en los hijos si existen
-            children = element.get('children', [])
-            if children:
-                result = search_element_recursive(children, target_unique_id, current_path)
-                if result:
-                    return result
-                    
-        return None
-    
-    # Buscar en toda la estructura XSD
-    for section_name, section_elements in xsd_structure.items():
-        if isinstance(section_elements, list):
-            result = search_element_recursive(section_elements, unique_id, [section_name])
-            if result:
-                return result
-    
-    return None
-
-def is_element_additive(element_def):
-    """
-    Verifica si un elemento permite múltiples ocurrencias o es parte de un contenedor aditivo
-    """
-    if not element_def:
-        return False
-    
-    # Verificar maxOccurs directo
-    max_occurs = element_def.get('maxOccurs', '1')
-    if max_occurs == 'unbounded' or (max_occurs != '1' and max_occurs != '0'):
-        return True
-    
-    # Verificar si tiene atributos que indiquen que es aditivo
-    if element_def.get('type') == 'array' or element_def.get('multiple', False):
-        return True
-    
-    # Verificar patrones comunes de elementos aditivos por nombre
-    element_name = element_def.get('name', '').lower()
-    additive_patterns = [
-        'item', 'entry', 'record', 'element', 'publicacion', 
-        'experiencia', 'titulo', 'actividad', 'proyecto'
-    ]
-    
-    if any(pattern in element_name for pattern in additive_patterns):
-        return True
-    
-    return False
-
-def find_element_definition(xsd_structure, unique_id):
-    """
-    Busca la definición de un elemento en la estructura XSD usando su uniqueId.
-    Versión mejorada que maneja mejor los elementos anidados.
-    """
-    if not xsd_structure or not unique_id:
-        return None
-    
-    def search_element_recursive(elements, target_unique_id, path=[]):
-        """Busca recursivamente en los elementos con mejor manejo de rutas"""
-        if not isinstance(elements, list):
-            return None
-            
-        for element in elements:
-            if not isinstance(element, dict):
-                continue
-                
-            element_name = element.get('name', '')
-            current_path = path + [element_name]
-            current_unique_id = '_'.join(current_path)
-            
-            # Si encontramos el elemento que buscamos
-            if current_unique_id == target_unique_id:
-                return element
-            
-            # También verificar coincidencias parciales para elementos anidados
-            if target_unique_id.endswith('_' + element_name):
-                partial_match = element.copy()
-                partial_match['_matched_path'] = current_path
-                return partial_match
-            
-            # Buscar en los hijos si existen
-            children = element.get('children', [])
-            if children:
-                result = search_element_recursive(children, target_unique_id, current_path)
-                if result:
-                    return result
-                    
-        return None
-    
-    # Buscar en toda la estructura XSD
-    for section_name, section_elements in xsd_structure.items():
-        if isinstance(section_elements, list):
-            result = search_element_recursive(section_elements, unique_id, [section_name])
-            if result:
-                return result
-    
-    return None
-
-def find_or_create_element_path(root, path_parts, namespaces=None):
-    """
-    Encuentra o crea una ruta de elementos en un XML.
-    Retorna el elemento padre donde se debe insertar/actualizar el elemento final.
-    """
-    current = root
-    
-    for i, part in enumerate(path_parts[:-1]):  # Excluimos el último elemento
-        # Buscar si el elemento ya existe
-        existing = current.find(part)
-        if existing is not None:
-            current = existing
+        # Si la siguiente parte es un número, lo tratamos como un índice
+        if i + 1 < len(parts) and parts[i+1].isdigit():
+            current_path_base.append(current_part)
+            normalized_parts.append(current_part)
+            path_key = '_'.join(current_path_base)
+            indices[path_key] = int(parts[i+1])
+            i += 2  # Saltamos la parte actual y el número
         else:
-            # Crear el elemento si no existe
-            new_element = ET.SubElement(current, part)
-            current = new_element
-    
-    return current
+            current_path_base.append(current_part)
+            normalized_parts.append(current_part)
+            i += 1
+            
+    normalized_id = '_'.join(normalized_parts)
+    return normalized_id, indices
 
-def handle_complex_element_update(parent_element, element_name, new_value, is_additive=False):
+def _find_or_create_parent_element(root, target_path_parts, source_indices, mappings, institution):
     """
-    Maneja la actualización de elementos complejos.
+    Navega o crea la ruta hasta el elemento padre correcto en el XML de destino.
+    Devuelve el elemento padre final.
     """
-    if is_additive:
-        # Para elementos aditivos, siempre crear uno nuevo
-        new_element = ET.SubElement(parent_element, element_name)
+    current_element = root
+    
+    # Recorremos la ruta hasta el penúltimo elemento (el padre)
+    for i in range(1, len(target_path_parts) - 1):
+        part_name = target_path_parts[i]
         
-        # Si el valor es un diccionario, crear subelementos
-        if isinstance(new_value, dict):
-            for key, value in new_value.items():
-                sub_element = ET.SubElement(new_element, key)
-                sub_element.text = str(value) if value is not None else ""
+        current_target_path_key = '_'.join(target_path_parts[:i+1])
+        index_to_find = None
+
+        # Busca el índice correspondiente a esta ruta de destino
+        for source_path, index in source_indices.items():
+            if mappings.get(institution, {}).get(source_path) == current_target_path_key:
+                index_to_find = index
+                break
+        
+        if index_to_find is not None:
+            # Este es un elemento repetido, hay que encontrar la instancia correcta
+            existing_children = current_element.findall(part_name)
+            if index_to_find < len(existing_children):
+                current_element = existing_children[index_to_find]
+            else:
+                new_child = None
+                for _ in range(len(existing_children), index_to_find + 1):
+                    new_child = ET.SubElement(current_element, part_name)
+                current_element = new_child
         else:
-            new_element.text = str(new_value) if new_value is not None else ""
-        
-        return new_element
+            found_child = current_element.find(part_name)
+            if found_child is None:
+                found_child = ET.SubElement(current_element, part_name)
+            current_element = found_child
+            
+    return current_element
+
+def _update_child_element(parent, element_name, new_value):
+    """
+    Dentro de un elemento padre ya localizado, busca un hijo por su nombre.
+    - Si lo encuentra, actualiza su valor.
+    - Si no lo encuentra, lo crea.
+    """
+    # Maneja la actualización de atributos (ej. @Tipo)
+    if element_name.startswith('@'):
+        attr_name = element_name[1:]
+        parent.set(attr_name, str(new_value))
+        return
+
+    # Busca el elemento hijo
+    existing_element = parent.find(element_name)
+    
+    if existing_element is not None:
+        # 2. Actualización: El elemento hijo ya existe, solo se actualiza.
+        existing_element.text = str(new_value) if new_value is not None else ""
     else:
-        # Para elementos no aditivos, buscar existente o crear nuevo
-        existing = parent_element.find(element_name)
-        
-        if existing is not None:
-            # Actualizar elemento existente
-            if isinstance(new_value, dict):
-                # Limpiar subelementos existentes
-                existing.clear()
-                for key, value in new_value.items():
-                    sub_element = ET.SubElement(existing, key)
-                    sub_element.text = str(value) if value is not None else ""
-            else:
-                existing.text = str(new_value) if new_value is not None else ""
-        else:
-            # Crear nuevo elemento
-            new_element = ET.SubElement(parent_element, element_name)
-            if isinstance(new_value, dict):
-                for key, value in new_value.items():
-                    sub_element = ET.SubElement(new_element, key)
-                    sub_element.text = str(value) if value is not None else ""
-            else:
-                new_element.text = str(new_value) if new_value is not None else ""
-        
-        return existing if existing is not None else new_element
+        # 3. Adición: El elemento hijo no existe, se crea dentro del padre correcto.
+        new_element = ET.SubElement(parent, element_name)
+        new_element.text = str(new_value) if new_value is not None else ""
 
-def parse_complex_value(value_str):
+def apply_updates_to_xml(xml_path, updates, mappings, institution):
     """
-    Intenta parsear un valor que podría ser un JSON u objeto complejo.
+    Función principal que orquesta todo el proceso de actualización del XML.
     """
-    if not value_str:
-        return value_str
-    
-    # Si parece ser JSON, intentar parsearlo
-    if isinstance(value_str, str) and (value_str.strip().startswith('{') or value_str.strip().startswith('[')):
-        try:
-            return json.loads(value_str)
-        except json.JSONDecodeError:
-            return value_str
-    
-    return value_str
+    try:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+    except (FileNotFoundError, ET.ParseError):
+        # El nombre del nodo raíz debe ser el prefijo común en tus mapeos.
+        root_name = list(mappings.get(institution, {}).values())[0].split('_')[0] if mappings.get(institution) else "cvu"
+        root = ET.Element(root_name, {"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"})
+        tree = ET.ElementTree(root)
+
+    for source_id, new_value in updates.items():
+        # 1. Interpretar el ID del frontend
+        normalized_id, source_indices_by_path = _parse_indexed_id(source_id)
+
+        # 2. Encontrar el mapeo en Mapeo.json
+        target_id = mappings.get(institution, {}).get(normalized_id)
+        if not target_id:
+            print(f"Advertencia: No se encontró mapeo para '{normalized_id}' en la institución '{institution}'")
+            continue
+
+        # 3. Localizar el elemento padre correcto en el XML
+        target_path_parts = target_id.split('_')
+        parent_element = _find_or_create_parent_element(root, target_path_parts, source_indices_by_path, mappings, institution)
+        
+        # 4. Obtener el nombre del elemento a modificar
+        element_name_to_update = target_path_parts[-1]
+
+        # 5. Actualizar o crear el elemento hijo dentro del padre
+        _update_child_element(parent_element, element_name_to_update, new_value)
+
+    # 6. Guardar el archivo XML modificado
+    tree.write(xml_path, encoding='utf-8', xml_declaration=True)

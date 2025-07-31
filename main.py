@@ -6,13 +6,13 @@ from pydantic import BaseModel
 from ResidenceBack.Parser import parse_xsd_from_url
 from .FileValidation import validation_main
 from .Auth import create_jwt_token,verify_jwt_from_cookie
-from .UpdateXML import find_element_definition,is_element_additive,find_element_definition,find_or_create_element_path,handle_complex_element_update,parse_complex_value
+from .UpdateXML import apply_updates_to_xml
 import xml.etree.ElementTree as ET
 from fastapi.middleware.cors import CORSMiddleware
 import json
 from typing import Dict
 import os
-import requests as http_requests
+import re
 
 xsd_urls = {
         "rizoma": "http://localhost:8080/SECIHTIServ/Rizoma.xsd",
@@ -375,75 +375,33 @@ async def update_xml(update_data: UpdateXmlData, payload: dict = Depends(verify_
         if not base_url:
             raise HTTPException(status_code=404, detail=f"No se encontró la URL para la institución: {institution}")
 
+        # Construye la ruta al archivo XML del usuario
         try:
             service_name = base_url.split('/')[3]
             xml_file_path = f"/srv/{service_name}/files/{username}.xml"
         except IndexError:
             raise HTTPException(status_code=500, detail=f"No se pudo analizar la URL para la institución: {institution}")
 
-        mapping_file_path = os.path.join(xsd_urls.get("mapa"))
-        rizoma_xsd = get_xsd_structure("rizoma")
-
+        # Carga el archivo de mapeo
+        mapping_file_path = os.path.join(os.path.dirname(__file__), "files", "Mapeo.json")
         with open(mapping_file_path, "r", encoding="utf-8") as f:
             mappings = json.load(f)
 
-        updates_made = {}
-
-        for source_unique_id, new_value in update_data.data.items():
-            element_def = find_element_definition(rizoma_xsd, source_unique_id)
-            is_additive = is_element_additive(element_def)
-            parsed_value = parse_complex_value(new_value)
-
-            target_unique_id = mappings.get(institution, {}).get(source_unique_id)
-            if not target_unique_id:
-                continue
-
-            if not os.path.exists(xml_file_path):
-                continue
-
-            try:
-                tree = ET.parse(xml_file_path)
-                root = tree.getroot()
-
-                target_parts = target_unique_id.split('_')[1:]
-                if not target_parts:
-                    continue
-
-                parent_element = find_or_create_element_path(root, target_parts)
-                element_name = target_parts[-1]
-                handle_complex_element_update(
-                    parent_element,
-                    element_name,
-                    parsed_value,
-                    is_additive
-                )
-
-                tree.write(xml_file_path, encoding='utf-8', xml_declaration=True)
-
-                if institution not in updates_made:
-                    updates_made[institution] = []
-                updates_made[institution].append({
-                    "source_id": source_unique_id,
-                    "target_id": target_unique_id,
-                    "is_additive": is_additive,
-                    "updated": True
-                })
-
-            except ET.ParseError as e:
-                print(f"Error parsing XML file {xml_file_path}: {e}")
-                continue
-            except Exception as e:
-                print(f"Error updating XML file {xml_file_path}: {e}")
-                continue
+        # Llama a la nueva función centralizada para aplicar todos los cambios
+        apply_updates_to_xml(
+            xml_path=xml_file_path,
+            updates=update_data.data,
+            mappings=mappings,
+            institution=institution
+        )
 
         return {
             "success": True,
-            "message": f"Archivo XML para {institution} actualizado correctamente.",
-            "updates_made": updates_made
+            "message": f"Archivo XML para {institution} actualizado correctamente."
         }
 
     except Exception as e:
-        print(f"Error al actualizar el XML dinámicamente: {e}")
+        print(f"Error crítico al actualizar el XML: {e}")
         raise HTTPException(status_code=500, detail=f"Error interno del servidor: {str(e)}")
 
 @app.post("/api/update-mapping")
