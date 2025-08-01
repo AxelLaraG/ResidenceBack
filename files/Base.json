@@ -17,8 +17,8 @@
         ],
         "uniqueId": "cvu_MiPerfil_Nombre",
         "institution": [
-          "TecNM",
-          "PRODEP"
+          "PRODEP",
+          "TecNM"
         ]
       }
     },
@@ -65,60 +65,6 @@
           "CorreoDocente"
         ],
         "uniqueId": "cvu_MiPerfil_ContactoDocente_CorreoDocente",
-        "institution": [
-          "TecNM"
-        ]
-      }
-    },
-    {
-      "name": "MovilDocente",
-      "type": "DiezDigitos",
-      "minOccurs": "0",
-      "maxOccurs": "unbounded",
-      "attributes": [
-        {
-          "name": "Principal",
-          "type": "xs:boolean",
-          "use": "required"
-        }
-      ],
-      "isSimpleContent": true,
-      "hasComplexType": true,
-      "baseType": "DiezDigitos",
-      "context": {
-        "section": "cvu",
-        "parent": "MiPerfil",
-        "path": [
-          "MovilDocente"
-        ],
-        "uniqueId": "cvu_MiPerfil_ContactoDocente_MovilDocente",
-        "institution": [
-          "TecNM"
-        ]
-      }
-    },
-    {
-      "name": "TelefonoDocente",
-      "type": "DiezDigitos",
-      "minOccurs": "0",
-      "maxOccurs": "unbounded",
-      "attributes": [
-        {
-          "name": "Principal",
-          "type": "xs:boolean",
-          "use": "required"
-        }
-      ],
-      "isSimpleContent": true,
-      "hasComplexType": true,
-      "baseType": "DiezDigitos",
-      "context": {
-        "section": "cvu",
-        "parent": "MiPerfil",
-        "path": [
-          "TelefonoDocente"
-        ],
-        "uniqueId": "cvu_MiPerfil_ContactoDocente_TelefonoDocente",
         "institution": [
           "TecNM"
         ]
@@ -272,6 +218,33 @@
         "institution": [
           "TecNM",
           "PRODEP"
+        ]
+      }
+    },
+    {
+      "name": "MovilDocente",
+      "type": "DiezDigitos",
+      "minOccurs": "0",
+      "maxOccurs": "unbounded",
+      "attributes": [
+        {
+          "name": "Principal",
+          "type": "xs:boolean",
+          "use": "required"
+        }
+      ],
+      "isSimpleContent": true,
+      "hasComplexType": true,
+      "baseType": "DiezDigitos",
+      "context": {
+        "section": "cvu",
+        "parent": "MiPerfil",
+        "path": [
+          "MovilDocente"
+        ],
+        "uniqueId": "cvu_MiPerfil_ContactoDocente_MovilDocente",
+        "institution": [
+          "TecNM"
         ]
       }
     }

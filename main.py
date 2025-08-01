@@ -130,23 +130,18 @@ async def usuario_actual(payload: dict = Depends(verify_jwt_from_cookie)):
 @app.post("/xml_gen")
 async def xml_generator(datos: dict):
     try:
-        # Crear el elemento raíz <cvu>
         cvu = ET.Element("cvu", {
             "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"
         })
 
-        # Crear la sección <personalData>
         personal_data = ET.SubElement(cvu, "personalData")
 
-        # Agregar solo los datos seleccionados
         for clave, valor in datos.items():
             ET.SubElement(personal_data, clave).text = valor
 
-        # Convertir el árbol XML a una cadena con la declaración XML
         xml_string = '<?xml version="1.0" encoding="UTF-8"?>\n'
         xml_string += ET.tostring(cvu, encoding="unicode")
 
-        # Retornar el archivo XML como respuesta
         return Response(content=xml_string, media_type="application/xml")
 
     except Exception as e:
